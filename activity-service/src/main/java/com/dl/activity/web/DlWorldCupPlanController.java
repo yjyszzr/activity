@@ -24,6 +24,7 @@ import com.dl.activity.service.DlWorldCupContryService;
 import com.dl.activity.service.DlWorldCupPlanService;
 import com.dl.base.result.BaseResult;
 import com.dl.base.result.ResultGenerator;
+import com.dl.base.util.DateUtil;
 import com.dl.base.util.DateUtilNew;
 import com.dl.base.util.SessionUtil;
 import com.github.pagehelper.PageHelper;
@@ -97,8 +98,18 @@ public class DlWorldCupPlanController {
 		return ResultGenerator.genSuccessResult("", competition);
 	}
 
+	@ApiOperation(value = "提交推演方案", notes = "提交推演方案")
 	@PostMapping("/add")
 	public BaseResult<String> add(@RequestBody PlanStrParam planStrParam) {
+		Integer now = DateUtil.getCurrentTimeLong();
+		String palnStr = planStrParam.getPlanStrParam();
+		if(palnStr.contains("16|") && now > 1529935200) {// a、第一阶段竞猜期：活动开始至6月25日22:00:00；
+			return ResultGenerator.genResult(315060, "16强比赛已结束，不能提交");
+		}else if(palnStr.contains("8|") && now > 1530201900){// b、第二阶段等待期：6月25日22:00:01至6月29日05:00:00；
+			return ResultGenerator.genResult(315060, "8强比赛已结束，不能提交");
+		}else if(palnStr.contains("4|") && now > 1530885600){// c、第二阶段竞猜期：6月29日05:00:01至7月6日22:00:00
+			return ResultGenerator.genResult(315060, "4强比赛已结束，不能提交");
+		}
 		Integer planId = dlWorldCupPlanService.saveWorldCupPlan(planStrParam.getPlanStrParam());
 		return ResultGenerator.genSuccessResult();
 	}
