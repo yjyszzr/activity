@@ -16,6 +16,8 @@ import com.dl.base.result.ResultGenerator;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 
+import dl.lottery.api.PlanStrParam;
+
 /**
  * Created by CodeGenerator on 2018/06/10.
  */
@@ -25,11 +27,12 @@ public class DlWorldCupPlanController {
 	@Resource
 	private DlWorldCupPlanService dlWorldCupPlanService;
 
-	@PostMapping("/add")
-	public BaseResult add(DlWorldCupPlan dlWorldCupPlan) {
-		dlWorldCupPlanService.save(dlWorldCupPlan);
-		return ResultGenerator.genSuccessResult();
-	}
+    @PostMapping("/add")
+    public BaseResult<String> add(PlanStrParam planStrParam) {
+        Integer planId = dlWorldCupPlanService.saveWorldCupPlan(planStrParam.getPlanStrParam());
+        return ResultGenerator.genSuccessResult();
+    }
+	
 
 	@PostMapping("/delete")
 	public BaseResult delete(@RequestParam Integer id) {

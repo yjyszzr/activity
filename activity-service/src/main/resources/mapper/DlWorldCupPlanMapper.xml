@@ -29,4 +29,10 @@
     <result column="reward_time_all_true" jdbcType="INTEGER" property="rewardTimeAllTrue" />
     <result column="reward_amount_all_true" jdbcType="DECIMAL" property="rewardAmountAllTrue" />
   </resultMap>
+  
+  
+  <insert id="insertWorldCupPlan"  parameterType="com.dl.activity.model.DlWorldCupPlan" useGeneratedKeys="true" keyProperty="id">
+	INSERT INTO dl_world_cup_plan(user_id,add_time,modify_time,plan_json)
+	VALUES(#{userId},#{addTime},#{modifyTime},#{planJson})
+  </insert>
 </mapper>

@@ -4,4 +4,7 @@ import com.dl.activity.model.DlWorldCupPlan;
 import com.dl.base.mapper.Mapper;
 
 public interface DlWorldCupPlanMapper extends Mapper<DlWorldCupPlan> {
+	
+	int insertWorldCupPlan(DlWorldCupPlan worldCupPlan);
+	
 }
