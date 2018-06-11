@@ -2,11 +2,11 @@ package com.dl.activity.service;
 
 import javax.annotation.Resource;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.dl.activity.dao.DlWorldCupPlanMapper;
-import com.dl.activity.dao2.DlWorldCupContryMapper;
 import com.dl.activity.model.DlWorldCupPlan;
 import com.dl.base.service.AbstractService;
 import com.dl.base.util.DateUtil;
@@ -27,8 +27,8 @@ public class DlWorldCupPlanService extends AbstractService<DlWorldCupPlan> {
 		worldCupPlan.setAddTime(addTime);
 		worldCupPlan.setModifyTime(addTime);
 		worldCupPlan.setPlanJson(palnStr);
-		int planId = dlWorldCupPlanMapper.insertWorldCupPlan(worldCupPlan);
-		return planId;
+		dlWorldCupPlanMapper.insertWorldCupPlan(worldCupPlan);
+		return worldCupPlan.getId();
 	}
 
 }

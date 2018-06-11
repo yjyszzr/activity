@@ -5,6 +5,6 @@ import com.dl.base.mapper.Mapper;
 
 public interface DlWorldCupPlanMapper extends Mapper<DlWorldCupPlan> {
 	
-	int insertWorldCupPlan(DlWorldCupPlan worldCupPlan);
+	public void insertWorldCupPlan(DlWorldCupPlan worldCupPlan);
 	
 }

@@ -40,7 +40,7 @@ public class DlWorldCupPlan {
      * 16强状态(0是未获奖,1是获奖)
      */
     @Column(name = "status_16")
-    private Byte status16;
+    private Integer status16;
 
     /**
      * 16强派奖时间
@@ -58,7 +58,7 @@ public class DlWorldCupPlan {
      * 8强状态(0是未获奖,1是获奖)
      */
     @Column(name = "status_8")
-    private Byte status8;
+    private Integer status8;
 
     /**
      * 8强派奖时间
@@ -76,7 +76,7 @@ public class DlWorldCupPlan {
      * 4强状态(0是未获奖,1是获奖)
      */
     @Column(name = "status_4")
-    private Byte status4;
+    private Integer status4;
 
     /**
      * 4强派奖时间
@@ -94,7 +94,7 @@ public class DlWorldCupPlan {
      * 冠亚军状态(0是未获奖,1是获奖)
      */
     @Column(name = "status_gyj")
-    private Byte statusGyj;
+    private Integer statusGyj;
 
     /**
      * 冠亚军强派奖时间
@@ -112,7 +112,7 @@ public class DlWorldCupPlan {
      * 冠军状态(0是未获奖,1是获奖)
      */
     @Column(name = "status_gj")
-    private Byte statusGj;
+    private Integer statusGj;
 
     /**
      * 冠军强派奖时间
@@ -130,7 +130,7 @@ public class DlWorldCupPlan {
      * 终极大奖状态(0是未获奖,1是获奖)
      */
     @Column(name = "status_all_true")
-    private Byte statusAllTrue;
+    private Integer statusAllTrue;
 
     /**
      * 终极派奖时间
@@ -239,7 +239,7 @@ public class DlWorldCupPlan {
      *
      * @return status_16 - 16强状态(0是未获奖,1是获奖)
      */
-    public Byte getStatus16() {
+    public Integer getStatus16() {
         return status16;
     }
 
@@ -248,7 +248,7 @@ public class DlWorldCupPlan {
      *
      * @param status16 16强状态(0是未获奖,1是获奖)
      */
-    public void setStatus16(Byte status16) {
+    public void setStatus16(Integer status16) {
         this.status16 = status16;
     }
 
@@ -293,7 +293,7 @@ public class DlWorldCupPlan {
      *
      * @return status_8 - 8强状态(0是未获奖,1是获奖)
      */
-    public Byte getStatus8() {
+    public Integer getStatus8() {
         return status8;
     }
 
@@ -302,7 +302,7 @@ public class DlWorldCupPlan {
      *
      * @param status8 8强状态(0是未获奖,1是获奖)
      */
-    public void setStatus8(Byte status8) {
+    public void setStatus8(Integer status8) {
         this.status8 = status8;
     }
 
@@ -347,7 +347,7 @@ public class DlWorldCupPlan {
      *
      * @return status_4 - 4强状态(0是未获奖,1是获奖)
      */
-    public Byte getStatus4() {
+    public Integer getStatus4() {
         return status4;
     }
 
@@ -356,7 +356,7 @@ public class DlWorldCupPlan {
      *
      * @param status4 4强状态(0是未获奖,1是获奖)
      */
-    public void setStatus4(Byte status4) {
+    public void setStatus4(Integer status4) {
         this.status4 = status4;
     }
 
@@ -401,7 +401,7 @@ public class DlWorldCupPlan {
      *
      * @return status_gyj - 冠亚军状态(0是未获奖,1是获奖)
      */
-    public Byte getStatusGyj() {
+    public Integer getStatusGyj() {
         return statusGyj;
     }
 
@@ -410,7 +410,7 @@ public class DlWorldCupPlan {
      *
      * @param statusGyj 冠亚军状态(0是未获奖,1是获奖)
      */
-    public void setStatusGyj(Byte statusGyj) {
+    public void setStatusGyj(Integer statusGyj) {
         this.statusGyj = statusGyj;
     }
 
@@ -455,7 +455,7 @@ public class DlWorldCupPlan {
      *
      * @return status_gj - 冠军状态(0是未获奖,1是获奖)
      */
-    public Byte getStatusGj() {
+    public Integer getStatusGj() {
         return statusGj;
     }
 
@@ -464,7 +464,7 @@ public class DlWorldCupPlan {
      *
      * @param statusGj 冠军状态(0是未获奖,1是获奖)
      */
-    public void setStatusGj(Byte statusGj) {
+    public void setStatusGj(Integer statusGj) {
         this.statusGj = statusGj;
     }
 
@@ -509,7 +509,7 @@ public class DlWorldCupPlan {
      *
      * @return status_all_true - 终极大奖状态(0是未获奖,1是获奖)
      */
-    public Byte getStatusAllTrue() {
+    public Integer getStatusAllTrue() {
         return statusAllTrue;
     }
 
@@ -518,7 +518,7 @@ public class DlWorldCupPlan {
      *
      * @param statusAllTrue 终极大奖状态(0是未获奖,1是获奖)
      */
-    public void setStatusAllTrue(Byte statusAllTrue) {
+    public void setStatusAllTrue(Integer statusAllTrue) {
         this.statusAllTrue = statusAllTrue;
     }
 
