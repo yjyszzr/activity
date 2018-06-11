@@ -10,13 +10,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.dl.activity.model.DlWorldCupPlan;
+import com.dl.activity.param.PlanStrParam;
 import com.dl.activity.service.DlWorldCupPlanService;
 import com.dl.base.result.BaseResult;
 import com.dl.base.result.ResultGenerator;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 
-import dl.lottery.param.PlanStrParam;
 
 /**
  * Created by CodeGenerator on 2018/06/10.

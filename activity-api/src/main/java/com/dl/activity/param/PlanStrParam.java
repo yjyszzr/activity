@@ -1,4 +1,4 @@
-package dl.lottery.param;
+package com.dl.activity.param;
 
 import javax.validation.constraints.NotNull;
 
