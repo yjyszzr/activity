@@ -16,7 +16,7 @@ import com.dl.base.result.ResultGenerator;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 
-import dl.lottery.api.PlanStrParam;
+import dl.lottery.param.PlanStrParam;
 
 /**
  * Created by CodeGenerator on 2018/06/10.

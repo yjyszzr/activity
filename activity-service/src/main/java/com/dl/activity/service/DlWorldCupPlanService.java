@@ -3,6 +3,7 @@ package com.dl.activity.service;
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.dl.activity.dao.DlWorldCupPlanMapper;
 import com.dl.activity.dao2.DlWorldCupContryMapper;
@@ -12,7 +13,7 @@ import com.dl.base.util.DateUtil;
 import com.dl.base.util.SessionUtil;
 
 @Service
-// @Transactional(value = "transactionManager1")
+@Transactional(value = "transactionManager1")
 public class DlWorldCupPlanService extends AbstractService<DlWorldCupPlan> {
 	@Resource
 	private DlWorldCupPlanMapper dlWorldCupPlanMapper;
