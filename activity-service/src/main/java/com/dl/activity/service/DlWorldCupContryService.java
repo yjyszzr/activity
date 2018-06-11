@@ -1,7 +1,9 @@
 package com.dl.activity.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -39,5 +41,26 @@ public class DlWorldCupContryService extends AbstractService<DlWorldCupContry> {
 			}
 		}
 		return dtos;
+	}
+	@Transactional(value="transactionManager2",readOnly=true)
+	public Map<Integer, WCContryDTO> wcContryMap() {
+		Map<Integer, WCContryDTO> map = new HashMap<Integer, WCContryDTO>(0);
+		List<DlWorldCupContry> wcContrys = dlWorldCupContryMapper.selectAll();
+		if(CollectionUtils.isNotEmpty(wcContrys)) {
+			map = new HashMap<Integer, WCContryDTO>(wcContrys.size());
+			for(DlWorldCupContry contry: wcContrys) {
+				WCContryDTO dto = new WCContryDTO();
+				dto.setContryName(contry.getContryName());
+				dto.setContryPic(contry.getContryPic());
+				dto.setCountryId(contry.getCountryId());
+				dto.setIs1(contry.getIs1());
+				dto.setIs16(contry.getIs16());
+				dto.setIs2(contry.getIs2());
+				dto.setIs4(contry.getIs4());
+				dto.setIs8(contry.getIs8());
+				map.put(contry.getCountryId(), dto);
+			}
+		}
+		return map;
 	}
 }

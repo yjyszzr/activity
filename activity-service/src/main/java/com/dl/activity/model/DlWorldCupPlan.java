@@ -143,8 +143,19 @@ public class DlWorldCupPlan {
      */
     @Column(name = "reward_amount_all_true")
     private BigDecimal rewardAmountAllTrue;
+    
+    @Column(name = "is_open")
+    private Integer isOpen;
 
-    /**
+    public Integer getIsOpen() {
+		return isOpen;
+	}
+
+	public void setIsOpen(Integer isOpen) {
+		this.isOpen = isOpen;
+	}
+
+	/**
      * 获取id
      *
      * @return id - id

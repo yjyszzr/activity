@@ -28,11 +28,21 @@
     <result column="status_all_true" jdbcType="TINYINT" property="statusAllTrue" />
     <result column="reward_time_all_true" jdbcType="INTEGER" property="rewardTimeAllTrue" />
     <result column="reward_amount_all_true" jdbcType="DECIMAL" property="rewardAmountAllTrue" />
+    <result column="is_open" jdbcType="TINYINT" property="isOpen" />
   </resultMap>
   
-  
+  <sql id="allFields">
+  id,user_id,add_time,modify_time,plan_json,status_16,reward_time_16,reward_amount_16,status_8,reward_time_8,reward_amount_8,
+  status_4,reward_time_4,reward_amount_4,status_gyj,reward_time_gyj,reward_amount_gyj,status_gj,reward_time_gj,reward_amount_gj,
+  status_all_true,reward_time_all_true,reward_amount_all_true,is_open
+  </sql>
   <insert id="insertWorldCupPlan"  parameterType="com.dl.activity.model.DlWorldCupPlan" useGeneratedKeys="true" keyProperty="id">
 	INSERT INTO dl_world_cup_plan(user_id,add_time,modify_time,plan_json)
 	VALUES(#{userId},#{addTime},#{modifyTime},#{planJson})
   </insert>
+  
+  <select id="getWorldCupPlanList" resultMap="BaseResultMap">
+  	select * from dl_world_cup_plan where user_id = #{userId}
+  </select>
+  
 </mapper>
