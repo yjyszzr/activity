@@ -36,7 +36,7 @@
 		</filter> 
 	</appender>
 
-	<logger name="com.pgt.shop.servicename" level="INFO" />
+	<logger name="com.dl.activity" level="INFO" />
 	<logger name="org.springframework" level="INFO"/>
 	<logger name="com.dl.base.mapper" level="debug" />
 	<logger name="com.alibaba.druid" level="WARN" />

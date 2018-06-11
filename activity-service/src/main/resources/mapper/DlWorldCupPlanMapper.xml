@@ -36,7 +36,7 @@
 	VALUES(#{userId},#{addTime},#{modifyTime},#{planJson})
   </insert>
     
-  <select  id = "findAllOrderAmount" >
+  <select  id = "findAllOrderAmount"  parameterType="Integer" resultType="java.math.BigDecimal" >
 SELECT
 	SUM( a.ticket_amount ) 
 FROM
