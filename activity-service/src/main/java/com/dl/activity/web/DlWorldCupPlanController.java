@@ -32,7 +32,7 @@ import io.swagger.annotations.ApiOperation;
  * Created by CodeGenerator on 2018/06/10.
  */
 @RestController
-@RequestMapping("/dl/activity/worldCupPlan")
+@RequestMapping("/worldCupPlan")
 public class DlWorldCupPlanController {
 	@Resource
 	private DlWorldCupPlanService dlWorldCupPlanService;
