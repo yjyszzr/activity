@@ -18,8 +18,8 @@ import com.dl.activity.dto.DlWorldCupContryDTO;
 import com.dl.activity.dto.GuessingCompetitionDTO;
 import com.dl.activity.model.DlWorldCupContry;
 import com.dl.activity.model.DlWorldCupPlan;
-import com.dl.activity.param.GuessingCompetitionParam;
 import com.dl.activity.param.PlanStrParam;
+import com.dl.activity.param.StrParam;
 import com.dl.activity.service.DlWorldCupContryService;
 import com.dl.activity.service.DlWorldCupPlanService;
 import com.dl.base.result.BaseResult;
@@ -43,7 +43,7 @@ public class DlWorldCupPlanController {
 
 	@ApiOperation(value = "世界杯竞猜", notes = "世界杯竞猜")
 	@PostMapping("/guessingCompetition")
-	public BaseResult<GuessingCompetitionDTO> guessingCompetition(@RequestBody GuessingCompetitionParam guessingCompetition) {
+	public BaseResult<GuessingCompetitionDTO> guessingCompetition(@RequestBody StrParam strParam) {
 		Integer currentTimeInt = DateUtilNew.getCurrentTimeLong();
 		// a、第一阶段竞猜期：活动开始至6月25日22:00:00；小于 1529935200
 		GuessingCompetitionDTO competition = new GuessingCompetitionDTO();
@@ -51,7 +51,10 @@ public class DlWorldCupPlanController {
 			// Integer userId = 400253;
 			Integer userId = SessionUtil.getUserId();
 			BigDecimal amount = dlWorldCupPlanService.findAllOrderAmount(userId);
-			int amountInt = amount.intValue();
+			int amountInt = 0;
+			if (amount != null) {
+				amountInt = amount.intValue();
+			}
 			// 判断订单购彩金额（每超过二百元可有一次投注机会）
 			int bettingNum = amountInt / 200;
 			List<DlWorldCupPlan> worldCupPlanList = dlWorldCupPlanService.findByUserId(userId);
@@ -60,7 +63,11 @@ public class DlWorldCupPlanController {
 				bettingNum = 0;
 			}
 			competition.setBettingNum(bettingNum);
-			competition.setJumpStatus(1);
+			if (bettingNum != 0) {
+				competition.setJumpStatus(1);
+			} else {
+				competition.setJumpStatus(0);
+			}
 			// b、第二阶段等待期：6月25日22:00:01至6月29日05:00:00； 大于1529935200 小于 1530201900
 		} else if (currentTimeInt > 1529935200 || currentTimeInt <= 1530201900) {
 			competition.setBettingNum(0);
