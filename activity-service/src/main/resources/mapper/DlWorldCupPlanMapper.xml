@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dl.activity.dao.DlWorldCupPlanMapper">
+  <resultMap id="BaseResultMap" type="com.dl.activity.model.DlWorldCupPlan">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="add_time" jdbcType="INTEGER" property="addTime" />
+    <result column="modify_time" jdbcType="INTEGER" property="modifyTime" />
+    <result column="plan_json" jdbcType="VARCHAR" property="planJson" />
+    <result column="status_16" jdbcType="TINYINT" property="status16" />
+    <result column="reward_time_16" jdbcType="INTEGER" property="rewardTime16" />
+    <result column="reward_amount_16" jdbcType="DECIMAL" property="rewardAmount16" />
+    <result column="status_8" jdbcType="TINYINT" property="status8" />
+    <result column="reward_time_8" jdbcType="INTEGER" property="rewardTime8" />
+    <result column="reward_amount_8" jdbcType="DECIMAL" property="rewardAmount8" />
+    <result column="status_4" jdbcType="TINYINT" property="status4" />
+    <result column="reward_time_4" jdbcType="INTEGER" property="rewardTime4" />
+    <result column="reward_amount_4" jdbcType="DECIMAL" property="rewardAmount4" />
+    <result column="status_gyj" jdbcType="TINYINT" property="statusGyj" />
+    <result column="reward_time_gyj" jdbcType="INTEGER" property="rewardTimeGyj" />
+    <result column="reward_amount_gyj" jdbcType="DECIMAL" property="rewardAmountGyj" />
+    <result column="status_gj" jdbcType="TINYINT" property="statusGj" />
+    <result column="reward_time_gj" jdbcType="INTEGER" property="rewardTimeGj" />
+    <result column="reward_amount_gj" jdbcType="DECIMAL" property="rewardAmountGj" />
+    <result column="status_all_true" jdbcType="TINYINT" property="statusAllTrue" />
+    <result column="reward_time_all_true" jdbcType="INTEGER" property="rewardTimeAllTrue" />
+    <result column="reward_amount_all_true" jdbcType="DECIMAL" property="rewardAmountAllTrue" />
+  </resultMap>
+</mapper>
