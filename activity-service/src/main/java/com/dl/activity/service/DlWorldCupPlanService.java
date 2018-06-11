@@ -13,13 +13,12 @@ import com.dl.base.util.DateUtil;
 import com.dl.base.util.SessionUtil;
 
 @Service
-@Transactional(value = "transactionManager1")
+//@Transactional(value = "transactionManager1")
 public class DlWorldCupPlanService extends AbstractService<DlWorldCupPlan> {
 	@Resource
 	private DlWorldCupPlanMapper dlWorldCupPlanMapper;
-	@Resource
-	private DlWorldCupContryMapper dlWorldCupContryMapper;
 	
+	@Transactional(value="transactionManager1")
     public Integer saveWorldCupPlan(String palnStr) {
 		Integer userId = SessionUtil.getUserId();
 		Integer addTime = DateUtil.getCurrentTimeLong();

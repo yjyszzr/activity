@@ -5,6 +5,7 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -28,7 +29,7 @@ public class DlWorldCupPlanController {
 	private DlWorldCupPlanService dlWorldCupPlanService;
 
     @PostMapping("/add")
-    public BaseResult<String> add(PlanStrParam planStrParam) {
+    public BaseResult<String> add(@RequestBody PlanStrParam planStrParam) {
         Integer planId = dlWorldCupPlanService.saveWorldCupPlan(planStrParam.getPlanStrParam());
         return ResultGenerator.genSuccessResult();
     }
