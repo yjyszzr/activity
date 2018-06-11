@@ -15,7 +15,7 @@ import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.transaction.PlatformTransactionManager;
 
 @Configuration
-@MapperScan(basePackages= {"com.dl.shop.lottery.dao"}, sqlSessionFactoryRef="sqlSessionFactory1")
+@MapperScan(basePackages= {"com.dl.activity.dao"}, sqlSessionFactoryRef="sqlSessionFactory1")
 public class MybatisDb1Config {
 
 	@Resource(name="dataSource1")
