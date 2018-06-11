@@ -100,14 +100,34 @@ public class DlWorldCupPlanController {
 	@PostMapping("/add")
 	public BaseResult<String> add(@RequestBody PlanStrParam planStrParam) {
 		Integer now = DateUtil.getCurrentTimeLong();
-		String palnStr = planStrParam.getPlanStrParam();
-		if(palnStr.contains("16|") && now > 1529935200) {// a、第一阶段竞猜期：活动开始至6月25日22:00:00；
-			return ResultGenerator.genResult(315060, "16强比赛已结束，不能提交");
-		}else if(palnStr.contains("8|") && now > 1530201900){// b、第二阶段等待期：6月25日22:00:01至6月29日05:00:00；
-			return ResultGenerator.genResult(315060, "8强比赛已结束，不能提交");
-		}else if(palnStr.contains("4|") && now > 1530885600){// c、第二阶段竞猜期：6月29日05:00:01至7月6日22:00:00
-			return ResultGenerator.genResult(315060, "4强比赛已结束，不能提交");
+		Integer userId = SessionUtil.getUserId();
+		BigDecimal amount = dlWorldCupPlanService.findAllOrderAmount(userId);
+		int amountInt = 0;
+		if (amount != null) {
+			amountInt = amount.intValue();
 		}
+		// 判断订单购彩金额（每超过二百元可有一次投注机会）
+		int bettingNum = amountInt / 200;
+		List<DlWorldCupPlan> worldCupPlanList = dlWorldCupPlanService.findByUserId(userId);
+		// 总机会不得超过12次
+		if (worldCupPlanList.size() >= 12) {
+			bettingNum = 0;
+		}
+		
+		Integer leftNum = bettingNum - worldCupPlanList.size();
+		if(leftNum < 1) {
+			return ResultGenerator.genResult(ActivityEnums.WORLD_CUP_JUDGE_NOT_CERT.getCode(), ActivityEnums.WORLD_CUP_JUDGE_NOT_CERT.getMsg());
+		}
+		
+		String palnStr = planStrParam.getPlanStrParam();
+		if(now > 1529935200 && now < 1530201900){// b、第二阶段等待期：6月25日22:00:01至6月29日05:00:00；
+			return ResultGenerator.genResult(ActivityEnums.WORLD_CUP_JUDGE_WARN.getCode(), "16强比赛正在进行中,6月29日05:00:01 之后可以参与推演8强比赛");
+		}else if(now > 1530201900 && now < 1530885600 && palnStr.contains("16|")) {
+			return ResultGenerator.genResult(ActivityEnums.WORLD_CUP_JUDGE_WARN.getCode(), "不能提交16强数据");
+		}else if(now > 1530885600){// c、第二阶段竞猜期：6月29日05:00:01至7月6日22:00:00
+			return ResultGenerator.genResult(ActivityEnums.WORLD_CUP_JUDGE_WARN.getCode(), "4强比赛不能再推演");
+		}
+		
 		Integer planId = dlWorldCupPlanService.saveWorldCupPlan(planStrParam.getPlanStrParam());
 		return ResultGenerator.genSuccessResult();
 	}
