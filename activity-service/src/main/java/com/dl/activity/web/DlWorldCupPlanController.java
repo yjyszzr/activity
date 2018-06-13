@@ -177,8 +177,8 @@ public class DlWorldCupPlanController {
 	@ApiOperation(value = "提交推演方案", notes = "提交推演方案")
 	@PostMapping("/add")
 	public BaseResult<String> add(@RequestBody PlanStrParam planStrParam) {
-		Integer now = DateUtil.getCurrentTimeLong();
-		// Integer now = 1530201902;
+		// Integer now = DateUtil.getCurrentTimeLong();
+		Integer now = 1529935199;
 		Integer userId = SessionUtil.getUserId();
 		// Integer userId = 400295;
 		BigDecimal amount = dlWorldCupPlanService.findAllOrderAmount(userId);
