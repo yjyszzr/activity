@@ -51,8 +51,8 @@ public class DlWorldCupPlanController {
 	@PostMapping("/guessingCompetition")
 	public BaseResult<GuessingCompetitionDTO> guessingCompetition(@RequestBody StrParam strParam) {
 		// Integer currentTimeInt = DateUtilNew.getCurrentTimeLong();
-		Integer currentTimeInt = 1529935202;
-		// Integer userId = 400253;
+		Integer currentTimeInt = 1530201902;
+		// Integer userId = 400305;
 		Integer userId = SessionUtil.getUserId();
 		BigDecimal amount = dlWorldCupPlanService.findAllOrderAmount(userId);
 		int amountInt = 0;
@@ -180,7 +180,7 @@ public class DlWorldCupPlanController {
 	@PostMapping("/add")
 	public BaseResult<String> add(@RequestBody PlanStrParam planStrParam) {
 		// Integer now = DateUtil.getCurrentTimeLong();
-		Integer now = 1529935202;
+		Integer now = 1530201902;
 		Integer userId = SessionUtil.getUserId();
 		// Integer userId = 400295;
 		BigDecimal amount = dlWorldCupPlanService.findAllOrderAmount(userId);
