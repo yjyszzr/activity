@@ -33,7 +33,6 @@ import com.dl.activity.service.DlWorldCupContryService;
 import com.dl.activity.service.DlWorldCupPlanService;
 import com.dl.base.result.BaseResult;
 import com.dl.base.result.ResultGenerator;
-import com.dl.base.util.DateUtil;
 import com.dl.base.util.SessionUtil;
 
 /**
@@ -96,7 +95,9 @@ public class DlWorldCupPlanController {
 			for (int i = 0; i < worldCupContry16List.size(); i++) {
 				DlWorldCupContryDTO wcContryDTO = new DlWorldCupContryDTO();
 				wcContryDTO.setName(worldCupContry16List.get(i).getContryName());
-				wcContryDTO.setIcon(worldCupContry16List.get(i).getContryPic());
+				String pic = worldCupContry16List.get(i).getContryPic();
+				wcContryDTO.setIcon(pic.replace("contry", "contry1"));
+				// wcContryDTO.setIcon(worldCupContry16List.get(i).getContryPic());
 				wcContryDTO.setId(worldCupContry16List.get(i).getCountryId().toString());
 				wcContryDTO.setSld(worldCupContry16List.get(i).getIs16());
 				wcContry16List.add(wcContryDTO);
