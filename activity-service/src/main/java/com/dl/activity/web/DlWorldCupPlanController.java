@@ -4,7 +4,9 @@ import io.swagger.annotations.ApiOperation;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import javax.annotation.Resource;
@@ -15,6 +17,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.dl.activity.dto.GuessingCompetitionDTO;
+import com.dl.activity.dto.SixteenGroupFourDTO;
+import com.dl.activity.dto.SixteenGroupSixteenDTO;
+import com.dl.activity.dto.SixteenGroupTwoDTO;
 import com.dl.activity.dto.WCContryDTO;
 import com.dl.activity.dto.WCPlanDTO;
 import com.dl.activity.enums.ActivityEnums;
@@ -28,7 +33,6 @@ import com.dl.activity.service.DlWorldCupPlanService;
 import com.dl.base.result.BaseResult;
 import com.dl.base.result.ResultGenerator;
 import com.dl.base.util.DateUtil;
-import com.dl.base.util.DateUtilNew;
 import com.dl.base.util.SessionUtil;
 
 /**
@@ -46,7 +50,8 @@ public class DlWorldCupPlanController {
 	@ApiOperation(value = "世界杯竞猜", notes = "世界杯竞猜")
 	@PostMapping("/guessingCompetition")
 	public BaseResult<GuessingCompetitionDTO> guessingCompetition(@RequestBody StrParam strParam) {
-		Integer currentTimeInt = DateUtilNew.getCurrentTimeLong();
+		// Integer currentTimeInt = DateUtilNew.getCurrentTimeLong();
+		Integer currentTimeInt = 1530201902;
 		// a、第一阶段竞猜期：活动开始至6月25日22:00:00；小于 1529935200
 		GuessingCompetitionDTO competition = new GuessingCompetitionDTO();
 		if (currentTimeInt <= 1529935200) {
@@ -64,7 +69,6 @@ public class DlWorldCupPlanController {
 			if (worldCupPlanList.size() >= 12) {
 				bettingNum = 0;
 			}
-			bettingNum = 1;
 			competition.setBettingNum(bettingNum);
 			if (bettingNum != 0) {
 				competition.setJumpStatus(1);
@@ -73,30 +77,91 @@ public class DlWorldCupPlanController {
 			}
 			competition.setDescribetion("活动开始至6月25日22:00:00");
 			// b、第二阶段等待期：6月25日22:00:01至6月29日05:00:00； 大于1529935200 小于 1530201900
-		} else if (currentTimeInt > 1529935200 || currentTimeInt <= 1530201900) {
+		} else if (currentTimeInt > 1529935200 && currentTimeInt <= 1530201900) {
 			competition.setBettingNum(0);
 			competition.setJumpStatus(2);
 			competition.setDescribetion("6月25日22:00:00至6月29日05:00:00为等待期");
 			// c、第三阶段竞猜期：6月29日05:00:01至7月6日22:00:00。大于1530201900 小于 1530885600
-		} else if (currentTimeInt > 1530201900 || currentTimeInt <= 1530885600) {
+		} else if (currentTimeInt > 1530201900 && currentTimeInt <= 1530885600) {
 			competition.setBettingNum(0);
 			competition.setJumpStatus(2);
 			List<DlWorldCupContry> worldCupContryList = dlWorldCupContryService.findAll();
 			List<DlWorldCupContry> worldCupContry16List = worldCupContryList.stream().filter(s -> !s.getIs16().equals("0")).collect(Collectors.toList());
+			// List转DTO
 			List<WCContryDTO> wcContry16List = new ArrayList<WCContryDTO>();
 			for (int i = 0; i < worldCupContry16List.size(); i++) {
-				DlWorldCupContry worldCupContry = worldCupContry16List.get(i);
 				WCContryDTO wcContryDTO = new WCContryDTO();
-				if (worldCupContry.getIs16().equals("A1")) {
-					wcContryDTO.setContryName(worldCupContryList.get(i).getContryName());
-					wcContryDTO.setCountryId(worldCupContryList.get(i).getCountryId());
-					wcContryDTO.setContryPic(worldCupContryList.get(i).getContryPic());
-					wcContryDTO.setIs16(worldCupContryList.get(i).getIs16());
-				}
+				wcContryDTO.setContryName(worldCupContry16List.get(i).getContryName());
+				wcContryDTO.setContryPic(worldCupContry16List.get(i).getContryPic());
+				wcContryDTO.setCountryId(worldCupContry16List.get(i).getCountryId());
+				wcContryDTO.setIs16(worldCupContry16List.get(i).getIs16());
 				wcContry16List.add(wcContryDTO);
 			}
+			// DTO转Map
+			Map<Integer, WCContryDTO> worldCupContryMap = new HashMap<Integer, WCContryDTO>(wcContry16List.size());
+			wcContry16List.forEach(item -> worldCupContryMap.put(item.getIs16(), item));
+			// 组装数据
+			SixteenGroupSixteenDTO sixteenGroupSixteenDTO = new SixteenGroupSixteenDTO();
+			SixteenGroupFourDTO sixteenGroupFourDTO1 = new SixteenGroupFourDTO();
+			List<SixteenGroupFourDTO> sixteenGroupFourDTOList = new ArrayList<SixteenGroupFourDTO>();
+			List<SixteenGroupTwoDTO> sixteenGroupTwoList1 = new ArrayList<SixteenGroupTwoDTO>();
+			SixteenGroupTwoDTO sixteenGroupTwoDTO1 = new SixteenGroupTwoDTO();
+			List<WCContryDTO> wcContryList1 = new ArrayList<WCContryDTO>();
+			wcContryList1.add(worldCupContryMap.get("A1"));
+			wcContryList1.add(worldCupContryMap.get("B2"));
+			sixteenGroupTwoDTO1.setWcContryList(wcContryList1);
+			sixteenGroupTwoList1.add(sixteenGroupTwoDTO1);
+			SixteenGroupTwoDTO sixteenGroupTwoDTO2 = new SixteenGroupTwoDTO();
+			List<WCContryDTO> wcContryList2 = new ArrayList<WCContryDTO>();
+			wcContryList2.add(worldCupContryMap.get("C1"));
+			wcContryList2.add(worldCupContryMap.get("D2"));
+			sixteenGroupTwoDTO2.setWcContryList(wcContryList2);
+			sixteenGroupTwoList1.add(sixteenGroupTwoDTO2);
+			SixteenGroupTwoDTO sixteenGroupTwoDTO3 = new SixteenGroupTwoDTO();
+			List<WCContryDTO> wcContryList3 = new ArrayList<WCContryDTO>();
+			wcContryList3.add(worldCupContryMap.get("E1"));
+			wcContryList3.add(worldCupContryMap.get("F2"));
+			sixteenGroupTwoDTO3.setWcContryList(wcContryList3);
+			sixteenGroupTwoList1.add(sixteenGroupTwoDTO3);
+			SixteenGroupTwoDTO sixteenGroupTwoDTO4 = new SixteenGroupTwoDTO();
+			List<WCContryDTO> wcContryList4 = new ArrayList<WCContryDTO>();
+			wcContryList4.add(worldCupContryMap.get("G1"));
+			wcContryList4.add(worldCupContryMap.get("H2"));
+			sixteenGroupTwoDTO4.setWcContryList(wcContryList4);
+			sixteenGroupTwoList1.add(sixteenGroupTwoDTO4);
+			sixteenGroupFourDTO1.setSixteenGroupTwoList(sixteenGroupTwoList1);
+			sixteenGroupFourDTOList.add(sixteenGroupFourDTO1);
+			SixteenGroupFourDTO sixteenGroupFourDTO2 = new SixteenGroupFourDTO();
+			List<SixteenGroupTwoDTO> sixteenGroupTwoList2 = new ArrayList<SixteenGroupTwoDTO>();
+			SixteenGroupTwoDTO sixteenGroupTwoDTO5 = new SixteenGroupTwoDTO();
+			List<WCContryDTO> wcContryList5 = new ArrayList<WCContryDTO>();
+			wcContryList5.add(worldCupContryMap.get("B1"));
+			wcContryList5.add(worldCupContryMap.get("A2"));
+			sixteenGroupTwoDTO5.setWcContryList(wcContryList5);
+			sixteenGroupTwoList2.add(sixteenGroupTwoDTO5);
+			SixteenGroupTwoDTO sixteenGroupTwoDTO6 = new SixteenGroupTwoDTO();
+			List<WCContryDTO> wcContryList6 = new ArrayList<WCContryDTO>();
+			wcContryList6.add(worldCupContryMap.get("F1"));
+			wcContryList6.add(worldCupContryMap.get("E2"));
+			sixteenGroupTwoDTO6.setWcContryList(wcContryList6);
+			sixteenGroupTwoList2.add(sixteenGroupTwoDTO6);
+			SixteenGroupTwoDTO sixteenGroupTwoDTO7 = new SixteenGroupTwoDTO();
+			List<WCContryDTO> wcContryList7 = new ArrayList<WCContryDTO>();
+			wcContryList7.add(worldCupContryMap.get("E1"));
+			wcContryList7.add(worldCupContryMap.get("F2"));
+			sixteenGroupTwoDTO7.setWcContryList(wcContryList7);
+			sixteenGroupTwoList2.add(sixteenGroupTwoDTO7);
+			SixteenGroupTwoDTO sixteenGroupTwoDTO8 = new SixteenGroupTwoDTO();
+			List<WCContryDTO> wcContryList8 = new ArrayList<WCContryDTO>();
+			wcContryList8.add(worldCupContryMap.get("H1"));
+			wcContryList8.add(worldCupContryMap.get("G2"));
+			sixteenGroupTwoDTO8.setWcContryList(wcContryList8);
+			sixteenGroupTwoList2.add(sixteenGroupTwoDTO8);
+			sixteenGroupFourDTO2.setSixteenGroupTwoList(sixteenGroupTwoList2);
+			sixteenGroupFourDTOList.add(sixteenGroupFourDTO2);
+			sixteenGroupSixteenDTO.setSixteenGroupFourList(sixteenGroupFourDTOList);
 			// 将16强的数据带过去
-			competition.setWorldCupContryList(wcContry16List);
+			competition.setSixteenGroupSixteen(sixteenGroupSixteenDTO);
 			competition.setDescribetion("6月29日05:00:01至7月6日22:00:00为竞猜期");
 		} else {
 			competition.setBettingNum(0);
