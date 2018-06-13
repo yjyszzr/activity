@@ -43,7 +43,7 @@
 
   
   <select id="getWorldCupPlanList" resultMap="BaseResultMap">
-  	select * from dl_world_cup_plan where user_id = #{userId}
+  	select * from dl_world_cup_plan where user_id = #{userId} order by add_time desc
   </select>
   
 	<select  id = "findAllOrderAmount"  parameterType="Integer" resultType="java.math.BigDecimal" >
