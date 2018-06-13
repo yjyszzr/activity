@@ -52,23 +52,24 @@ public class DlWorldCupPlanController {
 	public BaseResult<GuessingCompetitionDTO> guessingCompetition(@RequestBody StrParam strParam) {
 		// Integer currentTimeInt = DateUtilNew.getCurrentTimeLong();
 		Integer currentTimeInt = 1530201902;
-		// a、第一阶段竞猜期：活动开始至6月25日22:00:00；小于 1529935200
+		// Integer userId = 400253;
+		Integer userId = SessionUtil.getUserId();
+		BigDecimal amount = dlWorldCupPlanService.findAllOrderAmount(userId);
+		int amountInt = 0;
+		if (amount != null) {
+			amountInt = amount.intValue();
+		}
+		// 判断订单购彩金额（每超过二百元可有一次投注机会）
+		// int bettingNum = amountInt / 200;
+		int bettingNum = 1;
+		List<DlWorldCupPlan> worldCupPlanList = dlWorldCupPlanService.findByUserId(userId);
+		// 总机会不得超过12次
+		if (worldCupPlanList.size() >= 12) {
+			bettingNum = 0;
+		}
 		GuessingCompetitionDTO competition = new GuessingCompetitionDTO();
+		// a、第一阶段竞猜期：活动开始至6月25日22:00:00；小于 1529935200
 		if (currentTimeInt <= 1529935200) {
-			// Integer userId = 400253;
-			Integer userId = SessionUtil.getUserId();
-			BigDecimal amount = dlWorldCupPlanService.findAllOrderAmount(userId);
-			int amountInt = 0;
-			if (amount != null) {
-				amountInt = amount.intValue();
-			}
-			// 判断订单购彩金额（每超过二百元可有一次投注机会）
-			int bettingNum = amountInt / 200;
-			List<DlWorldCupPlan> worldCupPlanList = dlWorldCupPlanService.findByUserId(userId);
-			// 总机会不得超过12次
-			if (worldCupPlanList.size() >= 12) {
-				bettingNum = 0;
-			}
 			competition.setBettingNum(bettingNum);
 			if (bettingNum != 0) {
 				competition.setJumpStatus(1);
@@ -83,7 +84,7 @@ public class DlWorldCupPlanController {
 			competition.setDescribetion("6月25日22:00:00至6月29日05:00:00为等待期");
 			// c、第三阶段竞猜期：6月29日05:00:01至7月6日22:00:00。大于1530201900 小于 1530885600
 		} else if (currentTimeInt > 1530201900 && currentTimeInt <= 1530885600) {
-			competition.setBettingNum(0);
+			competition.setBettingNum(bettingNum);
 			competition.setJumpStatus(2);
 			List<DlWorldCupContry> worldCupContryList = dlWorldCupContryService.findAll();
 			List<DlWorldCupContry> worldCupContry16List = worldCupContryList.stream().filter(s -> !s.getIs16().equals("0")).collect(Collectors.toList());
