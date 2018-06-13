@@ -143,14 +143,14 @@ public class DlWorldCupPlanController {
 			sixteenGroupTwoList2.add(sixteenGroupTwoDTO5);
 			SixteenGroupTwoDTO sixteenGroupTwoDTO6 = new SixteenGroupTwoDTO();
 			List<DlWorldCupContryDTO> wcContryList6 = new ArrayList<DlWorldCupContryDTO>();
-			wcContryList6.add(worldCupContryMap.get("F1"));
-			wcContryList6.add(worldCupContryMap.get("E2"));
+			wcContryList6.add(worldCupContryMap.get("D1"));
+			wcContryList6.add(worldCupContryMap.get("C2"));
 			sixteenGroupTwoDTO6.setWcContryList(wcContryList6);
 			sixteenGroupTwoList2.add(sixteenGroupTwoDTO6);
 			SixteenGroupTwoDTO sixteenGroupTwoDTO7 = new SixteenGroupTwoDTO();
 			List<DlWorldCupContryDTO> wcContryList7 = new ArrayList<DlWorldCupContryDTO>();
-			wcContryList7.add(worldCupContryMap.get("E1"));
-			wcContryList7.add(worldCupContryMap.get("F2"));
+			wcContryList7.add(worldCupContryMap.get("F1"));
+			wcContryList7.add(worldCupContryMap.get("E2"));
 			sixteenGroupTwoDTO7.setWcContryList(wcContryList7);
 			sixteenGroupTwoList2.add(sixteenGroupTwoDTO7);
 			SixteenGroupTwoDTO sixteenGroupTwoDTO8 = new SixteenGroupTwoDTO();
