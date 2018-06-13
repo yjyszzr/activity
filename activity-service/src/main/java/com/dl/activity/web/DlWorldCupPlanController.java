@@ -33,7 +33,6 @@ import com.dl.activity.service.DlWorldCupContryService;
 import com.dl.activity.service.DlWorldCupPlanService;
 import com.dl.base.result.BaseResult;
 import com.dl.base.result.ResultGenerator;
-import com.dl.base.util.DateUtil;
 import com.dl.base.util.SessionUtil;
 
 /**
@@ -175,7 +174,8 @@ public class DlWorldCupPlanController {
 	@ApiOperation(value = "提交推演方案", notes = "提交推演方案")
 	@PostMapping("/add")
 	public BaseResult<String> add(@RequestBody PlanStrParam planStrParam) {
-		Integer now = DateUtil.getCurrentTimeLong();
+		// Integer now = DateUtil.getCurrentTimeLong();
+		Integer now = 1530201902;
 		Integer userId = SessionUtil.getUserId();
 		BigDecimal amount = dlWorldCupPlanService.findAllOrderAmount(userId);
 		int amountInt = 0;
@@ -183,7 +183,8 @@ public class DlWorldCupPlanController {
 			amountInt = amount.intValue();
 		}
 		// 判断订单购彩金额（每超过二百元可有一次投注机会）
-		int bettingNum = amountInt / 200;
+		// int bettingNum = amountInt / 200;
+		int bettingNum = 1;
 		List<DlWorldCupPlan> worldCupPlanList = dlWorldCupPlanService.findByUserId(userId);
 		// 总机会不得超过12次
 		if (worldCupPlanList.size() >= 12) {
