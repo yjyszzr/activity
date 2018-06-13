@@ -33,6 +33,7 @@ import com.dl.activity.service.DlWorldCupContryService;
 import com.dl.activity.service.DlWorldCupPlanService;
 import com.dl.base.result.BaseResult;
 import com.dl.base.result.ResultGenerator;
+import com.dl.base.util.DateUtil;
 import com.dl.base.util.SessionUtil;
 
 /**
@@ -51,7 +52,7 @@ public class DlWorldCupPlanController {
 	@PostMapping("/guessingCompetition")
 	public BaseResult<GuessingCompetitionDTO> guessingCompetition(@RequestBody StrParam strParam) {
 		// Integer currentTimeInt = DateUtilNew.getCurrentTimeLong();
-		Integer currentTimeInt = 1530201902;
+		Integer currentTimeInt = 1529935199;
 		// Integer userId = 400253;
 		Integer userId = SessionUtil.getUserId();
 		BigDecimal amount = dlWorldCupPlanService.findAllOrderAmount(userId);
@@ -60,12 +61,14 @@ public class DlWorldCupPlanController {
 			amountInt = amount.intValue();
 		}
 		// 判断订单购彩金额（每超过二百元可有一次投注机会）
-		// int bettingNum = amountInt / 200;
-		int bettingNum = 1;
+		int bettingNum = amountInt / 200;
+		// int bettingNum = 1;
 		List<DlWorldCupPlan> worldCupPlanList = dlWorldCupPlanService.findByUserId(userId);
 		// 总机会不得超过12次
 		if (worldCupPlanList.size() >= 12) {
 			bettingNum = 0;
+		} else {
+			bettingNum = bettingNum - worldCupPlanList.size();
 		}
 		GuessingCompetitionDTO competition = new GuessingCompetitionDTO();
 		// a、第一阶段竞猜期：活动开始至6月25日22:00:00；小于 1529935200
@@ -174,9 +177,10 @@ public class DlWorldCupPlanController {
 	@ApiOperation(value = "提交推演方案", notes = "提交推演方案")
 	@PostMapping("/add")
 	public BaseResult<String> add(@RequestBody PlanStrParam planStrParam) {
-		// Integer now = DateUtil.getCurrentTimeLong();
-		Integer now = 1530201902;
+		Integer now = DateUtil.getCurrentTimeLong();
+		// Integer now = 1530201902;
 		Integer userId = SessionUtil.getUserId();
+		// Integer userId = 400295;
 		BigDecimal amount = dlWorldCupPlanService.findAllOrderAmount(userId);
 		int amountInt = 0;
 		if (amount != null) {
