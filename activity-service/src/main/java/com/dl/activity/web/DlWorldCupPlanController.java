@@ -85,7 +85,7 @@ public class DlWorldCupPlanController {
 			// c、第三阶段竞猜期：6月29日05:00:01至7月6日22:00:00。大于1530201900 小于 1530885600
 		} else if (currentTimeInt > 1530201900 && currentTimeInt <= 1530885600) {
 			competition.setBettingNum(bettingNum);
-			competition.setJumpStatus(2);
+			competition.setJumpStatus(3);
 			List<DlWorldCupContry> worldCupContryList = dlWorldCupContryService.findAll();
 			List<DlWorldCupContry> worldCupContry16List = worldCupContryList.stream().filter(s -> !s.getIs16().equals("0")).collect(Collectors.toList());
 			// List转DTO
