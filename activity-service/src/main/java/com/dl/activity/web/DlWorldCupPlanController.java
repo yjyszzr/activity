@@ -16,11 +16,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.dl.activity.dto.DlWorldCupContryDTO;
 import com.dl.activity.dto.GuessingCompetitionDTO;
 import com.dl.activity.dto.SixteenGroupFourDTO;
 import com.dl.activity.dto.SixteenGroupSixteenDTO;
 import com.dl.activity.dto.SixteenGroupTwoDTO;
-import com.dl.activity.dto.WCContryDTO;
 import com.dl.activity.dto.WCPlanDTO;
 import com.dl.activity.enums.ActivityEnums;
 import com.dl.activity.model.DlWorldCupContry;
@@ -88,9 +88,9 @@ public class DlWorldCupPlanController {
 			List<DlWorldCupContry> worldCupContryList = dlWorldCupContryService.findAll();
 			List<DlWorldCupContry> worldCupContry16List = worldCupContryList.stream().filter(s -> !s.getIs16().equals("0")).collect(Collectors.toList());
 			// List转DTO
-			List<WCContryDTO> wcContry16List = new ArrayList<WCContryDTO>();
+			List<DlWorldCupContryDTO> wcContry16List = new ArrayList<DlWorldCupContryDTO>();
 			for (int i = 0; i < worldCupContry16List.size(); i++) {
-				WCContryDTO wcContryDTO = new WCContryDTO();
+				DlWorldCupContryDTO wcContryDTO = new DlWorldCupContryDTO();
 				wcContryDTO.setContryName(worldCupContry16List.get(i).getContryName());
 				wcContryDTO.setContryPic(worldCupContry16List.get(i).getContryPic());
 				wcContryDTO.setCountryId(worldCupContry16List.get(i).getCountryId());
@@ -98,7 +98,7 @@ public class DlWorldCupPlanController {
 				wcContry16List.add(wcContryDTO);
 			}
 			// DTO转Map
-			Map<String, WCContryDTO> worldCupContryMap = new HashMap<String, WCContryDTO>(wcContry16List.size());
+			Map<String, DlWorldCupContryDTO> worldCupContryMap = new HashMap<String, DlWorldCupContryDTO>(wcContry16List.size());
 			wcContry16List.forEach(item -> worldCupContryMap.put(item.getIs16(), item));
 			// 组装数据
 			SixteenGroupSixteenDTO sixteenGroupSixteenDTO = new SixteenGroupSixteenDTO();
@@ -106,25 +106,25 @@ public class DlWorldCupPlanController {
 			List<SixteenGroupFourDTO> sixteenGroupFourDTOList = new ArrayList<SixteenGroupFourDTO>();
 			List<SixteenGroupTwoDTO> sixteenGroupTwoList1 = new ArrayList<SixteenGroupTwoDTO>();
 			SixteenGroupTwoDTO sixteenGroupTwoDTO1 = new SixteenGroupTwoDTO();
-			List<WCContryDTO> wcContryList1 = new ArrayList<WCContryDTO>();
+			List<DlWorldCupContryDTO> wcContryList1 = new ArrayList<DlWorldCupContryDTO>();
 			wcContryList1.add(worldCupContryMap.get("A1"));
 			wcContryList1.add(worldCupContryMap.get("B2"));
 			sixteenGroupTwoDTO1.setWcContryList(wcContryList1);
 			sixteenGroupTwoList1.add(sixteenGroupTwoDTO1);
 			SixteenGroupTwoDTO sixteenGroupTwoDTO2 = new SixteenGroupTwoDTO();
-			List<WCContryDTO> wcContryList2 = new ArrayList<WCContryDTO>();
+			List<DlWorldCupContryDTO> wcContryList2 = new ArrayList<DlWorldCupContryDTO>();
 			wcContryList2.add(worldCupContryMap.get("C1"));
 			wcContryList2.add(worldCupContryMap.get("D2"));
 			sixteenGroupTwoDTO2.setWcContryList(wcContryList2);
 			sixteenGroupTwoList1.add(sixteenGroupTwoDTO2);
 			SixteenGroupTwoDTO sixteenGroupTwoDTO3 = new SixteenGroupTwoDTO();
-			List<WCContryDTO> wcContryList3 = new ArrayList<WCContryDTO>();
+			List<DlWorldCupContryDTO> wcContryList3 = new ArrayList<DlWorldCupContryDTO>();
 			wcContryList3.add(worldCupContryMap.get("E1"));
 			wcContryList3.add(worldCupContryMap.get("F2"));
 			sixteenGroupTwoDTO3.setWcContryList(wcContryList3);
 			sixteenGroupTwoList1.add(sixteenGroupTwoDTO3);
 			SixteenGroupTwoDTO sixteenGroupTwoDTO4 = new SixteenGroupTwoDTO();
-			List<WCContryDTO> wcContryList4 = new ArrayList<WCContryDTO>();
+			List<DlWorldCupContryDTO> wcContryList4 = new ArrayList<DlWorldCupContryDTO>();
 			wcContryList4.add(worldCupContryMap.get("G1"));
 			wcContryList4.add(worldCupContryMap.get("H2"));
 			sixteenGroupTwoDTO4.setWcContryList(wcContryList4);
@@ -134,25 +134,25 @@ public class DlWorldCupPlanController {
 			SixteenGroupFourDTO sixteenGroupFourDTO2 = new SixteenGroupFourDTO();
 			List<SixteenGroupTwoDTO> sixteenGroupTwoList2 = new ArrayList<SixteenGroupTwoDTO>();
 			SixteenGroupTwoDTO sixteenGroupTwoDTO5 = new SixteenGroupTwoDTO();
-			List<WCContryDTO> wcContryList5 = new ArrayList<WCContryDTO>();
+			List<DlWorldCupContryDTO> wcContryList5 = new ArrayList<DlWorldCupContryDTO>();
 			wcContryList5.add(worldCupContryMap.get("B1"));
 			wcContryList5.add(worldCupContryMap.get("A2"));
 			sixteenGroupTwoDTO5.setWcContryList(wcContryList5);
 			sixteenGroupTwoList2.add(sixteenGroupTwoDTO5);
 			SixteenGroupTwoDTO sixteenGroupTwoDTO6 = new SixteenGroupTwoDTO();
-			List<WCContryDTO> wcContryList6 = new ArrayList<WCContryDTO>();
+			List<DlWorldCupContryDTO> wcContryList6 = new ArrayList<DlWorldCupContryDTO>();
 			wcContryList6.add(worldCupContryMap.get("F1"));
 			wcContryList6.add(worldCupContryMap.get("E2"));
 			sixteenGroupTwoDTO6.setWcContryList(wcContryList6);
 			sixteenGroupTwoList2.add(sixteenGroupTwoDTO6);
 			SixteenGroupTwoDTO sixteenGroupTwoDTO7 = new SixteenGroupTwoDTO();
-			List<WCContryDTO> wcContryList7 = new ArrayList<WCContryDTO>();
+			List<DlWorldCupContryDTO> wcContryList7 = new ArrayList<DlWorldCupContryDTO>();
 			wcContryList7.add(worldCupContryMap.get("E1"));
 			wcContryList7.add(worldCupContryMap.get("F2"));
 			sixteenGroupTwoDTO7.setWcContryList(wcContryList7);
 			sixteenGroupTwoList2.add(sixteenGroupTwoDTO7);
 			SixteenGroupTwoDTO sixteenGroupTwoDTO8 = new SixteenGroupTwoDTO();
-			List<WCContryDTO> wcContryList8 = new ArrayList<WCContryDTO>();
+			List<DlWorldCupContryDTO> wcContryList8 = new ArrayList<DlWorldCupContryDTO>();
 			wcContryList8.add(worldCupContryMap.get("H1"));
 			wcContryList8.add(worldCupContryMap.get("G2"));
 			sixteenGroupTwoDTO8.setWcContryList(wcContryList8);

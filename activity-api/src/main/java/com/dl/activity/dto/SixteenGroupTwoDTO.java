@@ -6,5 +6,5 @@ import lombok.Data;
 
 @Data
 public class SixteenGroupTwoDTO {
-	private List<WCContryDTO> wcContryList;
+	private List<DlWorldCupContryDTO> wcContryList;
 }

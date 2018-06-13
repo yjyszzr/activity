@@ -13,5 +13,7 @@ public class DlWorldCupContryDTO {
 	private String contryName;
 	@ApiModelProperty("国家队国旗")
 	private String contryPic;
+	@ApiModelProperty("16强")
+	private String is16;
 
 }
