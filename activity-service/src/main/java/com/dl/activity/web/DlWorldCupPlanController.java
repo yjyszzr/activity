@@ -64,6 +64,7 @@ public class DlWorldCupPlanController {
 			if (worldCupPlanList.size() >= 12) {
 				bettingNum = 0;
 			}
+			bettingNum = 1;
 			competition.setBettingNum(bettingNum);
 			if (bettingNum != 0) {
 				competition.setJumpStatus(1);
