@@ -2,9 +2,6 @@ package com.dl.activity.dto;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-
-import java.util.List;
-
 import lombok.Data;
 
 @ApiModel("世界杯竞猜信息")
@@ -17,5 +14,5 @@ public class GuessingCompetitionDTO {
 	@ApiModelProperty("描述")
 	private String describetion;
 	@ApiModelProperty("16强结果")
-	private List<WCContryDTO> worldCupContryList;
+	private SixteenGroupSixteenDTO sixteenGroupSixteen;
 }

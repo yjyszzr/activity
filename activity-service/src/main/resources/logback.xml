@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
-	<property name="LOG_DIR" value="/data/shop/logs" />
+	<property name="LOG_DIR" value="/data/dl/logs" />
 	<appender name="console" class="ch.qos.logback.core.ConsoleAppender">
 		<encoder>
 			<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%p] - %msg %n</pattern>
@@ -8,9 +8,9 @@
 	</appender>
 
 	<appender name="rollingFileINFO" class="ch.qos.logback.core.rolling.RollingFileAppender">
-		<file>${LOG_DIR}/shop-servicename-info.log</file>
+		<file>${LOG_DIR}/activity-info.log</file>
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-			<fileNamePattern>${LOG_DIR}/shop-servicename-info.%d{yyyy-MM-dd}.log</fileNamePattern>
+			<fileNamePattern>${LOG_DIR}/activity-info.%d{yyyy-MM-dd}.log</fileNamePattern>
 			<maxHistory>30</maxHistory>		
 		</rollingPolicy>
 		<encoder>
@@ -23,9 +23,9 @@
 	
 	
 	<appender name="rollingFileERROR" class="ch.qos.logback.core.rolling.RollingFileAppender">
-		<file>${LOG_DIR}/shop-servicename-error.log</file>
+		<file>${LOG_DIR}/activity-error.log</file>
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-			<fileNamePattern>${LOG_DIR}/shop-servicename-error.%d{yyyy-MM-dd}.log</fileNamePattern>
+			<fileNamePattern>${LOG_DIR}/activity-error.%d{yyyy-MM-dd}.log</fileNamePattern>
 			<maxHistory>30</maxHistory>		
 		</rollingPolicy>
 		<encoder>
