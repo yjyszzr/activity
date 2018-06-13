@@ -183,8 +183,8 @@ public class DlWorldCupPlanController {
 			amountInt = amount.intValue();
 		}
 		// 判断订单购彩金额（每超过二百元可有一次投注机会）
-		// int bettingNum = amountInt / 200;
-		int bettingNum = 1;
+		int bettingNum = amountInt / 200;
+		// int bettingNum = 1;
 		List<DlWorldCupPlan> worldCupPlanList = dlWorldCupPlanService.findByUserId(userId);
 		// 总机会不得超过12次
 		if (worldCupPlanList.size() >= 12) {
