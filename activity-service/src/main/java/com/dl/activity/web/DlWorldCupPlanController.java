@@ -65,7 +65,8 @@ public class DlWorldCupPlanController {
 		List<DlWorldCupPlan> worldCupPlanList = dlWorldCupPlanService.findByUserId(userId);
 		// 总机会不得超过12次
 		if (worldCupPlanList.size() >= 12) {
-			bettingNum = 0;
+			return ResultGenerator.genResult(ActivityEnums.WORLD_CUP_TWELVE_FINISH.getCode(), ActivityEnums.WORLD_CUP_TWELVE_FINISH.getMsg());
+			// bettingNum = 0;
 		} else {
 			bettingNum = bettingNum - worldCupPlanList.size();
 		}
@@ -193,7 +194,8 @@ public class DlWorldCupPlanController {
 		List<DlWorldCupPlan> worldCupPlanList = dlWorldCupPlanService.findByUserId(userId);
 		// 总机会不得超过12次
 		if (worldCupPlanList.size() >= 12) {
-			bettingNum = 0;
+			return ResultGenerator.genResult(ActivityEnums.WORLD_CUP_TWELVE_FINISH.getCode(), ActivityEnums.WORLD_CUP_TWELVE_FINISH.getMsg());
+			// bettingNum = 0;
 		}
 
 		Integer leftNum = bettingNum - worldCupPlanList.size();
