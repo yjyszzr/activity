@@ -9,10 +9,10 @@
     <result column="country_id" jdbcType="INTEGER" property="countryId" />
     <result column="contry_name" jdbcType="VARCHAR" property="contryName" />
     <result column="contry_pic" jdbcType="VARCHAR" property="contryPic" />
-    <result column="is_16" jdbcType="INTEGER" property="is16" />
-    <result column="is_8" jdbcType="INTEGER" property="is8" />
-    <result column="is_4" jdbcType="INTEGER" property="is4" />
-    <result column="is_2" jdbcType="INTEGER" property="is2" />
-    <result column="is_1" jdbcType="INTEGER" property="is1" />
+    <result column="is_16" jdbcType="VARCHAR" property="is16" />
+    <result column="is_8" jdbcType="VARCHAR" property="is8" />
+    <result column="is_4" jdbcType="VARCHAR" property="is4" />
+    <result column="is_2" jdbcType="VARCHAR" property="is2" />
+    <result column="is_1" jdbcType="VARCHAR" property="is1" />
   </resultMap>
 </mapper>

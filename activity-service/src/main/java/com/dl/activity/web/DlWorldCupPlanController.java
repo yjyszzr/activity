@@ -98,7 +98,7 @@ public class DlWorldCupPlanController {
 				wcContry16List.add(wcContryDTO);
 			}
 			// DTO转Map
-			Map<Integer, WCContryDTO> worldCupContryMap = new HashMap<Integer, WCContryDTO>(wcContry16List.size());
+			Map<String, WCContryDTO> worldCupContryMap = new HashMap<String, WCContryDTO>(wcContry16List.size());
 			wcContry16List.forEach(item -> worldCupContryMap.put(item.getIs16(), item));
 			// 组装数据
 			SixteenGroupSixteenDTO sixteenGroupSixteenDTO = new SixteenGroupSixteenDTO();

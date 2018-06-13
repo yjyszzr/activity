@@ -9,7 +9,7 @@ public class DlWorldCupContry {
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private String id;
 
     /**
      * 国家id
@@ -33,38 +33,38 @@ public class DlWorldCupContry {
      * 是否16强,1-true,0-false
      */
     @Column(name = "is_16")
-    private Integer is16;
+    private String is16;
 
     /**
      * 是否8强,1-true,0-false
      */
     @Column(name = "is_8")
-    private Integer is8;
+    private String is8;
 
     /**
      * 是否4强,1-true,0-false
      */
     @Column(name = "is_4")
-    private Integer is4;
+    private String is4;
 
     /**
      * 是否冠亚军,1-true,0-false
      */
     @Column(name = "is_2")
-    private Integer is2;
+    private String is2;
 
     /**
      * 是否冠军,1-true,0-false
      */
     @Column(name = "is_1")
-    private Integer is1;
+    private String is1;
 
     /**
      * 获取ID
      *
      * @return id - ID
      */
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
@@ -73,7 +73,7 @@ public class DlWorldCupContry {
      *
      * @param id ID
      */
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -136,7 +136,7 @@ public class DlWorldCupContry {
      *
      * @return is_16 - 是否16强,1-true,0-false
      */
-    public Integer getIs16() {
+    public String getIs16() {
         return is16;
     }
 
@@ -145,7 +145,7 @@ public class DlWorldCupContry {
      *
      * @param is16 是否16强,1-true,0-false
      */
-    public void setIs16(Integer is16) {
+    public void setIs16(String is16) {
         this.is16 = is16;
     }
 
@@ -154,7 +154,7 @@ public class DlWorldCupContry {
      *
      * @return is_8 - 是否8强,1-true,0-false
      */
-    public Integer getIs8() {
+    public String getIs8() {
         return is8;
     }
 
@@ -163,7 +163,7 @@ public class DlWorldCupContry {
      *
      * @param is8 是否8强,1-true,0-false
      */
-    public void setIs8(Integer is8) {
+    public void setIs8(String is8) {
         this.is8 = is8;
     }
 
@@ -172,7 +172,7 @@ public class DlWorldCupContry {
      *
      * @return is_4 - 是否4强,1-true,0-false
      */
-    public Integer getIs4() {
+    public String getIs4() {
         return is4;
     }
 
@@ -181,7 +181,7 @@ public class DlWorldCupContry {
      *
      * @param is4 是否4强,1-true,0-false
      */
-    public void setIs4(Integer is4) {
+    public void setIs4(String is4) {
         this.is4 = is4;
     }
 
@@ -190,7 +190,7 @@ public class DlWorldCupContry {
      *
      * @return is_2 - 是否冠亚军,1-true,0-false
      */
-    public Integer getIs2() {
+    public String getIs2() {
         return is2;
     }
 
@@ -199,7 +199,7 @@ public class DlWorldCupContry {
      *
      * @param is2 是否冠亚军,1-true,0-false
      */
-    public void setIs2(Integer is2) {
+    public void setIs2(String is2) {
         this.is2 = is2;
     }
 
@@ -208,7 +208,7 @@ public class DlWorldCupContry {
      *
      * @return is_1 - 是否冠军,1-true,0-false
      */
-    public Integer getIs1() {
+    public String getIs1() {
         return is1;
     }
 
@@ -217,7 +217,7 @@ public class DlWorldCupContry {
      *
      * @param is1 是否冠军,1-true,0-false
      */
-    public void setIs1(Integer is1) {
+    public void setIs1(String is1) {
         this.is1 = is1;
     }
 }

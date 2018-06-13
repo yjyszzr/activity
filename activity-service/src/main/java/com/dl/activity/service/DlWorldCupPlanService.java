@@ -11,6 +11,7 @@ import java.util.Map;
 import javax.annotation.Resource;
 
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -90,7 +91,11 @@ public class DlWorldCupPlanService extends AbstractService<DlWorldCupPlan> {
 				Integer contryId = Integer.parseInt(contrys[1]);
 				WCContryDTO contryDto = contryMap.get(contryId);
 				WCPlanCellDTO dto = new WCPlanCellDTO(contryId, contryDto.getContryName());
-				dto.setIsGet(contryDto.getIs1());
+				dto.setIsGet(0);
+				String is1 = contryDto.getIs1();
+				if("A1".equals(is1)) {
+					dto.setIsGet(1);
+				}
 				planDto.setPlan1(dto);
 				continue;
 			}
@@ -128,16 +133,29 @@ public class DlWorldCupPlanService extends AbstractService<DlWorldCupPlan> {
 	 * 获取猜中的值 
 	 */
 	private Integer getIsGet(WCContryDTO contryDto, int parseInt) {
+		Integer isGet = 0;
 		if(16 == parseInt) {
-			return contryDto.getIs16();
+			String is16 = contryDto.getIs16();
+			if(StringUtils.isNotBlank(is16) && !is16.equals("0")) {
+				isGet = 1;
+			}
 		}else if(8 == parseInt) {
-			return contryDto.getIs8();
+			String is8 = contryDto.getIs8();
+			if(StringUtils.isNotBlank(is8) && !is8.equals("0")) {
+				isGet = 1;
+			}
 		}else if(4 == parseInt) {
-			return contryDto.getIs4();
+			String is4 = contryDto.getIs4();
+			if(StringUtils.isNotBlank(is4) && !is4.equals("0")) {
+				isGet = 1;
+			}
 		}else if(2 == parseInt) {
-			return contryDto.getIs2();
+			String is2 = contryDto.getIs2();
+			if(StringUtils.isNotBlank(is2) && !is2.equals("0")) {
+				isGet = 1;
+			}
 		}
-		return 0;
+		return isGet;
 	}
 	public BigDecimal findAllOrderAmount(Integer userId) {
 		return dlWorldCupPlanMapper.findAllOrderAmount(userId);
