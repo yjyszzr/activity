@@ -11,6 +11,7 @@ import java.util.stream.Collectors;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -87,20 +88,20 @@ public class DlWorldCupPlanController {
 			competition.setBettingNum(bettingNum);
 			competition.setJumpStatus(3);
 			List<DlWorldCupContry> worldCupContryList = dlWorldCupContryService.findAll();
-			List<DlWorldCupContry> worldCupContry16List = worldCupContryList.stream().filter(s -> !s.getIs16().equals("0")).collect(Collectors.toList());
+			List<DlWorldCupContry> worldCupContry16List = worldCupContryList.stream().filter(s -> StringUtils.isNoneBlank(s.getIs16()) && !s.getIs16().equals("0")).collect(Collectors.toList());
 			// List转DTO
 			List<DlWorldCupContryDTO> wcContry16List = new ArrayList<DlWorldCupContryDTO>();
 			for (int i = 0; i < worldCupContry16List.size(); i++) {
 				DlWorldCupContryDTO wcContryDTO = new DlWorldCupContryDTO();
-				wcContryDTO.setContryName(worldCupContry16List.get(i).getContryName());
-				wcContryDTO.setContryPic(worldCupContry16List.get(i).getContryPic());
-				wcContryDTO.setCountryId(worldCupContry16List.get(i).getCountryId());
-				wcContryDTO.setIs16(worldCupContry16List.get(i).getIs16());
+				wcContryDTO.setName(worldCupContry16List.get(i).getContryName());
+				wcContryDTO.setIcon(worldCupContry16List.get(i).getContryPic());
+				wcContryDTO.setId(worldCupContry16List.get(i).getCountryId().toString());
+				wcContryDTO.setSld(worldCupContry16List.get(i).getIs16());
 				wcContry16List.add(wcContryDTO);
 			}
 			// DTO转Map
 			Map<String, DlWorldCupContryDTO> worldCupContryMap = new HashMap<String, DlWorldCupContryDTO>(wcContry16List.size());
-			wcContry16List.forEach(item -> worldCupContryMap.put(item.getIs16(), item));
+			wcContry16List.forEach(item -> worldCupContryMap.put(item.getSld(), item));
 			// 组装数据
 			SixteenGroupSixteenDTO sixteenGroupSixteenDTO = new SixteenGroupSixteenDTO();
 			SixteenGroupFourDTO sixteenGroupFourDTO1 = new SixteenGroupFourDTO();
