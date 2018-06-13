@@ -157,8 +157,8 @@ public class DlWorldCupPlanService extends AbstractService<DlWorldCupPlan> {
 		}
 		return isGet;
 	}
-	public BigDecimal findAllOrderAmount(Integer userId) {
-		return dlWorldCupPlanMapper.findAllOrderAmount(userId);
+	public BigDecimal findAllOrderAmount(Integer userId, Integer startTime) {
+		return dlWorldCupPlanMapper.findAllOrderAmount(userId, startTime);
 	}
 
 	public List<DlWorldCupPlan> findByUserId(Integer userId) {

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dl.activity.dao.DlWorldCupPlanConfigMapper">
+  <resultMap id="BaseResultMap" type="com.dl.activity.model.DlWorldCupPlanConfig">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="amount" jdbcType="INTEGER" property="amount" />
+    <result column="count" jdbcType="INTEGER" property="count" />
+    <result column="start_time1" jdbcType="INTEGER" property="startTime1" />
+    <result column="end_time1" jdbcType="INTEGER" property="endTime1" />
+    <result column="desc1" jdbcType="VARCHAR" property="desc1" />
+    <result column="start_time2" jdbcType="INTEGER" property="startTime2" />
+    <result column="end_time2" jdbcType="INTEGER" property="endTime2" />
+    <result column="desc2" jdbcType="VARCHAR" property="desc2" />
+    <result column="start_time3" jdbcType="INTEGER" property="startTime3" />
+    <result column="end_time3" jdbcType="INTEGER" property="endTime3" />
+    <result column="desc3" jdbcType="VARCHAR" property="desc3" />
+  </resultMap>
+</mapper>

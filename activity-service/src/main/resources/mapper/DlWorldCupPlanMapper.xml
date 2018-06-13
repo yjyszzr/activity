@@ -46,7 +46,7 @@
   	select * from dl_world_cup_plan where user_id = #{userId} order by add_time desc
   </select>
   
-	<select  id = "findAllOrderAmount"  parameterType="Integer" resultType="java.math.BigDecimal" >
+	<select  id = "findAllOrderAmount"  resultType="java.math.BigDecimal" >
 		SELECT
 			SUM( a.ticket_amount ) 
 		FROM
@@ -55,6 +55,6 @@
 		a.order_status IN (3, 4, 5, 6, 7)
 		 and
 		  a.user_id = #{userId}
-			and a.pay_time > 1528819200
+			and a.pay_time > #{startTime}
 	  </select>
 </mapper>

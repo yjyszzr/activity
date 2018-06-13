@@ -15,5 +15,5 @@ public interface DlWorldCupPlanMapper extends Mapper<DlWorldCupPlan> {
 	
 	List<DlWorldCupPlan> getWorldCupPlanList(@Param("userId") Integer userId);
 
-	BigDecimal findAllOrderAmount(Integer userId);
+	BigDecimal findAllOrderAmount(@Param("userId")Integer userId, @Param("startTime")Integer startTime);
 }
