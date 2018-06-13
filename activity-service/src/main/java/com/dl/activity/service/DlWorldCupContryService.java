@@ -8,6 +8,7 @@ import java.util.Map;
 import javax.annotation.Resource;
 
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -41,6 +42,12 @@ public class DlWorldCupContryService extends AbstractService<DlWorldCupContry> {
 			}
 		}
 		return dtos;
+	}
+	private Integer isGetValue(String str) {
+		if(StringUtils.isNotBlank(str) && !str.equals("0")) {
+			return 1;
+		}
+		return 0;
 	}
 	@Transactional(value="transactionManager2",readOnly=true)
 	public Map<Integer, WCContryDTO> wcContryMap() {

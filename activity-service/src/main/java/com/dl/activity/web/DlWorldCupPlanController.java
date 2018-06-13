@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -80,7 +81,7 @@ public class DlWorldCupPlanController {
 			for (int i = 0; i < worldCupContryList.size(); i++) {
 				DlWorldCupContry worldCupContry = worldCupContryList.get(i);
 				DlWorldCupContryDTO worldCupContryDTO = new DlWorldCupContryDTO();
-				if (worldCupContry.getIs16() == 1) {
+				if (StringUtils.isNotBlank(worldCupContry.getIs16())) {
 					worldCupContryDTO.setContryName(worldCupContryList.get(i).getContryName());
 					worldCupContryDTO.setCountryId(worldCupContryList.get(i).getCountryId());
 					worldCupContryDTO.setContryPic(worldCupContryList.get(i).getContryPic());

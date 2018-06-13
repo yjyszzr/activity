@@ -13,13 +13,13 @@ public class WCContryDTO {
 	@ApiModelProperty("国家图标")
     private String contryPic;
 	@ApiModelProperty("是否16强")
-    private Integer is16;
-	@ApiModelProperty("是否16强")
-    private Integer is8;
-	@ApiModelProperty("是否16强")
-    private Integer is4;
+    private String is16;
+	@ApiModelProperty("是否8强")
+    private String is8;
+	@ApiModelProperty("是否4强")
+    private String is4;
 	@ApiModelProperty("是否冠亚军")
-    private Integer is2;
+    private String is2;
 	@ApiModelProperty("是否冠军")
-    private Integer is1;
+    private String is1;
 }

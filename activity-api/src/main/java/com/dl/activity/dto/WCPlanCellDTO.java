@@ -18,5 +18,6 @@ public class WCPlanCellDTO {
 	public WCPlanCellDTO(Integer countryId, String contryName){
 		this.countryId = countryId;
 		this.contryName = contryName;
+		this.isGet = 0;
 	}
 }
