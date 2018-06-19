@@ -1,18 +1,15 @@
 package com.dl.activity.schedule;
 
 import javax.annotation.Resource;
-
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
-
-import com.dl.base.constant.EmptyParam;
+import com.dl.base.param.EmptyParam;
 import com.dl.lottery.api.ILotteryPrintService;
 import com.dl.lottery.api.ILotteryRewardService;
 import com.dl.member.api.IUserBonusService;
 import com.dl.order.api.IOrderService;
 import com.dl.shop.payment.api.IpaymentService;
-
 import lombok.extern.slf4j.Slf4j;
 
 /**
