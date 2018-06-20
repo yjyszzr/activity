@@ -25,7 +25,7 @@ import com.dl.activity.enums.ActivityEnums;
 import com.dl.activity.model.DlWorldCupContry;
 import com.dl.activity.model.DlWorldCupPlan;
 import com.dl.activity.model.DlWorldCupPlanConfig;
-import com.dl.activity.param.EmptyParam;
+import com.dl.base.param.EmptyParam;
 import com.dl.activity.param.PlanStrParam;
 import com.dl.activity.param.StrParam;
 import com.dl.activity.service.DlWorldCupContryService;

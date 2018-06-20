@@ -3,7 +3,7 @@ import com.dl.base.result.BaseResult;
 import com.dl.base.result.ResultGenerator;
 import com.dl.activity.dto.WCContryDTO;
 import com.dl.activity.model.DlWorldCupContry;
-import com.dl.activity.param.EmptyParam;
+import com.dl.base.param.EmptyParam;
 import com.dl.activity.service.DlWorldCupContryService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
