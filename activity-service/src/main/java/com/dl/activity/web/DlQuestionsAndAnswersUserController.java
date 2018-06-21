@@ -48,26 +48,15 @@ public class DlQuestionsAndAnswersUserController {
 		return ResultGenerator.genSuccessResult();
 	}
 
-	@PostMapping("/delete")
-	public BaseResult delete(@RequestParam Integer id) {
-		dlQuestionsAndAnswersUserService.deleteById(id);
-		return ResultGenerator.genSuccessResult();
-	}
-
-	@PostMapping("/update")
-	public BaseResult update(DlQuestionsAndAnswersUser dlQuestionsAndAnswersUser) {
-		dlQuestionsAndAnswersUserService.update(dlQuestionsAndAnswersUser);
-		return ResultGenerator.genSuccessResult();
-	}
-
-	@PostMapping("/detail")
-	public BaseResult detail(@RequestParam Integer id) {
+	@PostMapping("/userAnswersDetail")
+	public BaseResult userAnswersDetail(@RequestParam Integer id) {
 		DlQuestionsAndAnswersUser dlQuestionsAndAnswersUser = dlQuestionsAndAnswersUserService.findById(id);
 		return ResultGenerator.genSuccessResult(null, dlQuestionsAndAnswersUser);
 	}
 
-	@PostMapping("/list")
-	public BaseResult list(@RequestBody StrParam strParam) {
+	@ApiOperation(value = "用户竞猜答题列表", notes = "用户竞猜答题列表")
+	@PostMapping("/userAnswersList")
+	public BaseResult<List<UserPeriodDTO>> userAnswersList(@RequestBody StrParam strParam) {
 		// Integer userId = SessionUtil.getUserId();
 		Integer userId = 400093;
 		List<UserPeriodDTO> list = dlQuestionsAndAnswersUserService.findByUserId(userId);
