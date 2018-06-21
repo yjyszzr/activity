@@ -1,0 +1,47 @@
+package com.dl.activity.dto;
+
+import io.swagger.annotations.ApiModelProperty;
+
+import java.util.List;
+
+import lombok.Data;
+
+@Data
+public class MatchInfoDTO {
+
+	@ApiModelProperty("赛事Id")
+	private Integer matchId;
+
+	@ApiModelProperty("主队简称")
+	private String homeTeamAbbr;
+
+	@ApiModelProperty("主队Logo")
+	private String homeTeamPic;
+
+	@ApiModelProperty("客队简称")
+	private String visitingTeamAbbr;
+
+	@ApiModelProperty("客队Logo")
+	private String visitingTeamPic;
+
+	@ApiModelProperty("截止时间")
+	private Integer stopTime;
+
+	@ApiModelProperty("再投注金额")
+	private String onceBettingAmount;
+
+	@ApiModelProperty("倍率")
+	private Integer multiple;
+
+	@ApiModelProperty("答题时间状态:0已结束,1开始,2未开始")
+	private Integer answerTimeStatus;
+
+	@ApiModelProperty("答案状态:0未公布,1已公布")
+	private Integer answerStatus;
+
+	@ApiModelProperty("问题及答案")
+	private List<QuestionAndAnswersDTO> questionAndAnswersList;
+
+	@ApiModelProperty("用户答案")
+	private List<QuestionAndAnswersDTO> userAnswersList;
+}

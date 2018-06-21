@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dl.activity.dao.DlQuestionsAndAnswersUserMapper">
+  <resultMap id="BaseResultMap" type="com.dl.activity.model.DlQuestionsAndAnswersUser">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="question_id" jdbcType="INTEGER" property="questionId" />
+    <result column="user_answer" jdbcType="VARCHAR" property="userAnswer" />
+    <result column="answer_time" jdbcType="INTEGER" property="answerTime" />
+    <result column="period" jdbcType="VARCHAR" property="period" />
+    <result column="get_award" jdbcType="TINYINT" property="getAward" />
+    <result column="multiple" jdbcType="INTEGER" property="multiple" />
+    <result column="bonus_amount" jdbcType="DECIMAL" property="bonusAmount" />
+  </resultMap>
+  
+  <select  id = "getTodayAllOrderAmount"  resultType="java.math.BigDecimal" >
+		SELECT
+			SUM( ticket_amount ) 
+		FROM
+			dl_order 
+		WHERE
+			order_status IN ( 3, 4, 5, 6, 7 ) 
+			AND user_id = #{userId}
+			AND DATE_FORMAT( FROM_UNIXTIME( pay_time ), '%Y-%m-%d' ) = #{currentTime}
+	  </select>
+	  
+</mapper>

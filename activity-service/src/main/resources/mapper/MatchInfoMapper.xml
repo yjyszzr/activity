@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dl.activity.dao2.MatchInfoMapper">
+  <resultMap id="BaseResultMap" type="com.dl.activity.model.MatchInfo">
+    <id column="match_id" jdbcType="INTEGER" property="matchId" />
+    <result column="home_team_id" jdbcType="INTEGER" property="homeTeamId" />
+    <result column="home_team_abbr" jdbcType="VARCHAR" property="homeTeamAbbr" />
+    <result column="home_team_pic" jdbcType="VARCHAR" property="homeTeamPic" />
+    <result column="visiting_team_id" jdbcType="INTEGER" property="visitingTeamId" />
+    <result column="visiting_team_abbr" jdbcType="VARCHAR" property="visitingTeamAbbr" />
+    <result column="visiting_team_pic" jdbcType="VARCHAR" property="visitingTeamPic" />
+  </resultMap>
+	  <select id="getMatchInfo" parameterType="Integer" resultMap="BaseResultMap">
+		SELECT
+		 t1.match_id,
+			t1.visiting_team_abbr visiting_team_abbr,
+			t2.team_pic visiting_team_pic,
+			t1.home_team_abbr home_team_abbr,
+			t3.team_pic home_team_pic
+		FROM
+			dl_match t1,
+			dl_league_team t2,
+			dl_league_team t3 
+		WHERE
+			t1.visiting_team_id = t2.sporttery_teamid 
+			AND t1.home_team_id = t3.sporttery_teamid 
+			AND t1.match_id = #{matchId}
+	  </select>
+</mapper>

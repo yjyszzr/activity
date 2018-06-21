@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dl.activity.dao.DlQuestionsAndAnswersMapper">
+  <resultMap id="BaseResultMap" type="com.dl.activity.model.DlQuestionsAndAnswers">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="match_id" jdbcType="INTEGER" property="matchId" />
+    <result column="start_time" jdbcType="INTEGER" property="startTime" />
+    <result column="end_time" jdbcType="INTEGER" property="endTime" />
+    <result column="scope_of_activity" jdbcType="TINYINT" property="scopeOfActivity" />
+    <result column="limit_lottery_amount" jdbcType="DECIMAL" property="limitLotteryAmount" />
+    <result column="bonus_pool" jdbcType="DECIMAL" property="bonusPool" />
+    <result column="question_and_answer" jdbcType="VARCHAR" property="questionAndAnswer" />
+    <result column="num_of_people" jdbcType="INTEGER" property="numOfPeople" />
+    <result column="create_time" jdbcType="INTEGER" property="createTime" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="guessing_title" jdbcType="VARCHAR" property="guessingTitle" />
+    <result column="answer_show_time" jdbcType="INTEGER" property="answerShowTime" />
+    <result column="period" jdbcType="VARCHAR" property="period" />
+  </resultMap>
+</mapper>
