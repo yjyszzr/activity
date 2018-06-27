@@ -56,11 +56,6 @@ public class DlQuestionsAndAnswersUser {
 	private Byte getAward;
 
 	/**
-	 * 倍率
-	 */
-	private Integer multiple;
-
-	/**
 	 * 奖金金额
 	 */
 	@Column(name = "bonus_amount")
@@ -189,25 +184,6 @@ public class DlQuestionsAndAnswersUser {
 	 */
 	public void setGetAward(Byte getAward) {
 		this.getAward = getAward;
-	}
-
-	/**
-	 * 获取倍率
-	 *
-	 * @return multiple - 倍率
-	 */
-	public Integer getMultiple() {
-		return multiple;
-	}
-
-	/**
-	 * 设置倍率
-	 *
-	 * @param multiple
-	 *            倍率
-	 */
-	public void setMultiple(Integer multiple) {
-		this.multiple = multiple;
 	}
 
 	/**

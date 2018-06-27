@@ -14,7 +14,6 @@ import net.sf.json.JSONArray;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.dl.activity.dto.MatchInfoDTO;
@@ -22,6 +21,7 @@ import com.dl.activity.dto.QuestionAndAnswersDTO;
 import com.dl.activity.dto.UserPeriodDTO;
 import com.dl.activity.model.DlQuestionsAndAnswers;
 import com.dl.activity.model.DlQuestionsAndAnswersUser;
+import com.dl.activity.param.AddAnswersParam;
 import com.dl.activity.param.MatchIdParam;
 import com.dl.activity.param.StrParam;
 import com.dl.activity.service.DlQuestionsAndAnswersService;
@@ -42,16 +42,26 @@ public class DlQuestionsAndAnswersUserController {
 	@Resource
 	private DlQuestionsAndAnswersService dlQuestionsAndAnswersService;
 
+	@ApiOperation(value = "添加答题", notes = "添加答题")
 	@PostMapping("/add")
-	public BaseResult add(DlQuestionsAndAnswersUser dlQuestionsAndAnswersUser) {
-		dlQuestionsAndAnswersUserService.save(dlQuestionsAndAnswersUser);
+	public BaseResult add(@RequestBody AddAnswersParam addAnswersParam) {
+		// 每增加一个答题用户 奖池金额增加1元 答题人数累加一个
+		// dlQuestionsAndAnswersService.findById(id)
+		// dlQuestionsAndAnswersService.update(model);
+		// dlQuestionsAndAnswersUserService.save(dlQuestionsAndAnswersUser);
 		return ResultGenerator.genSuccessResult();
 	}
 
+	/**
+	 * 用户点进去之后
+	 * 
+	 * @param matchIdParam
+	 * @return
+	 */
+	@ApiOperation(value = "用户竞猜答题详情页", notes = "用户竞猜答题详情页")
 	@PostMapping("/userAnswersDetail")
-	public BaseResult userAnswersDetail(@RequestParam Integer id) {
-		DlQuestionsAndAnswersUser dlQuestionsAndAnswersUser = dlQuestionsAndAnswersUserService.findById(id);
-		return ResultGenerator.genSuccessResult(null, dlQuestionsAndAnswersUser);
+	public BaseResult<MatchInfoDTO> userAnswersDetail(@RequestBody MatchIdParam matchIdParam) {
+		return guessingCompetitionDetails(matchIdParam);
 	}
 
 	@ApiOperation(value = "用户竞猜答题列表", notes = "用户竞猜答题列表")
@@ -59,10 +69,16 @@ public class DlQuestionsAndAnswersUserController {
 	public BaseResult<List<UserPeriodDTO>> userAnswersList(@RequestBody StrParam strParam) {
 		// Integer userId = SessionUtil.getUserId();
 		Integer userId = 400093;
-		List<UserPeriodDTO> list = dlQuestionsAndAnswersUserService.findByUserId(userId);
-		return ResultGenerator.genSuccessResult(null, list);
+		List<UserPeriodDTO> periodList = dlQuestionsAndAnswersUserService.findByUserId(userId);
+		return ResultGenerator.genSuccessResult(null, periodList);
 	}
 
+	/**
+	 * 首次进入
+	 * 
+	 * @param matchIdParam
+	 * @return
+	 */
 	@ApiOperation(value = "竞猜答题详情页", notes = "竞猜答题详情页")
 	@PostMapping("/guessingCompetitionDetails")
 	public BaseResult<MatchInfoDTO> guessingCompetitionDetails(@RequestBody MatchIdParam matchIdParam) {
@@ -116,13 +132,18 @@ public class DlQuestionsAndAnswersUserController {
 				BigDecimal bigAmount = dlQuestionsAndAnswersUserService.getTodayAllOrderAmount(userId, currentDate);
 				if (bigAmount == null) {
 					bigAmount = new BigDecimal(0);
-					matchInfo.setOnceBettingAmount("0");
-					matchInfo.setMultiple(0);
+					matchInfo.setOnceBettingAmount(questionsAndAnswers.getLimitLotteryAmount());
+					matchInfo.setChance(0);
 				} else {
-					BigDecimal onceBettingAmount = questionsAndAnswers.getLimitLotteryAmount().subtract(bigAmount.divideAndRemainder(questionsAndAnswers.getLimitLotteryAmount())[1].setScale(0, BigDecimal.ROUND_HALF_UP));
-					Integer num = bigAmount.divide(questionsAndAnswers.getLimitLotteryAmount()).intValue();
-					matchInfo.setOnceBettingAmount(onceBettingAmount.toString());
-					matchInfo.setMultiple(num + 1);
+					BigDecimal onceBettingAmount = questionsAndAnswers.getLimitLotteryAmount().subtract(bigAmount);
+					if (onceBettingAmount.doubleValue() >= 0) {
+						matchInfo.setOnceBettingAmount(bigAmount);
+						matchInfo.setChance(1);
+					} else {
+						BigDecimal num = new BigDecimal(0);
+						matchInfo.setOnceBettingAmount(num.subtract(onceBettingAmount));
+						matchInfo.setChance(0);
+					}
 				}
 			}
 			matchInfo.setQuestionAndAnswersList(questionAndAnswerList);

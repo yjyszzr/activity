@@ -6,8 +6,8 @@ import lombok.Data;
 @Data
 public class UserPeriodDTO {
 
-	@ApiModelProperty("用户答题Id")
-	public Integer userQuestionAndAnswersId;
+	@ApiModelProperty("赛事Id")
+	public Integer matchId;
 
 	@ApiModelProperty("期次")
 	public String period;

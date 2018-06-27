@@ -56,7 +56,7 @@ public class DlQuestionsAndAnswersUserService extends AbstractService<DlQuestion
 		for (int i = 0; i < questionsAndAnswersUserList.size(); i++) {
 			UserPeriodDTO userPeriod = new UserPeriodDTO();
 			userPeriod.setPeriod(questionsAndAnswersUserList.get(i).getPeriod());
-			userPeriod.setUserQuestionAndAnswersId(questionsAndAnswersUserList.get(i).getId());
+			userPeriod.setMatchId(questionsAndAnswersUserList.get(i).getMatchId());
 			userPeriodlist.add(userPeriod);
 		}
 		return userPeriodlist;

@@ -11,7 +11,6 @@
     <result column="answer_time" jdbcType="INTEGER" property="answerTime" />
     <result column="period" jdbcType="VARCHAR" property="period" />
     <result column="get_award" jdbcType="TINYINT" property="getAward" />
-    <result column="multiple" jdbcType="INTEGER" property="multiple" />
     <result column="bonus_amount" jdbcType="DECIMAL" property="bonusAmount" />
   </resultMap>
   

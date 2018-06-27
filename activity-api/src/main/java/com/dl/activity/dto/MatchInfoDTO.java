@@ -2,6 +2,7 @@ package com.dl.activity.dto;
 
 import io.swagger.annotations.ApiModelProperty;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import lombok.Data;
@@ -28,10 +29,10 @@ public class MatchInfoDTO {
 	private Integer stopTime;
 
 	@ApiModelProperty("再投注金额")
-	private String onceBettingAmount;
+	private BigDecimal onceBettingAmount;
 
-	@ApiModelProperty("倍率")
-	private Integer multiple;
+	@ApiModelProperty("机会:有没有投注机会0:没有1有")
+	private Integer chance;
 
 	@ApiModelProperty("答题时间状态:0已结束,1开始,2未开始")
 	private Integer answerTimeStatus;
