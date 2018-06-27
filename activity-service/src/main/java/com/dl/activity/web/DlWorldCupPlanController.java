@@ -113,10 +113,10 @@ public class DlWorldCupPlanController {
 			competition.setDescribetion(desc1);
 			// b、第二阶段等待期：6月25日22:00:01至6月29日05:00:00； 大于1529935200 小于 1530201900
 		} else if (currentTimeInt > startTime2 && currentTimeInt <= endTime2) {
-			// competition.setBettingNum(0);
-			competition.setBettingNum(1);
+			competition.setBettingNum(0);
+			// competition.setBettingNum(bettingNum);
 			competition.setJumpStatus(2);
-			competition.setJumpStatus(3);
+			// competition.setJumpStatus(3);
 			competition.setDescribetion(desc2);
 			// c、第三阶段竞猜期：6月29日05:00:01至7月6日22:00:00。大于1530201900 小于 1530885600
 		} else if (currentTimeInt > startTime3 && currentTimeInt <= endTime3) {
