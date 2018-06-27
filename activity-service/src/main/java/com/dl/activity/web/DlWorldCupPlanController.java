@@ -83,8 +83,8 @@ public class DlWorldCupPlanController {
 			endTime3 = config.getEndTime3();
 			desc3 = config.getDesc3();
 		}
-		// Integer userId = 400305;
-		Integer userId = SessionUtil.getUserId();
+		Integer userId = 400372;
+		// Integer userId = SessionUtil.getUserId();
 		BigDecimal amount = dlWorldCupPlanService.findAllOrderAmount(userId, startTime1);
 		int amountInt = 0;
 		if (amount != null) {
@@ -105,11 +105,11 @@ public class DlWorldCupPlanController {
 		// a、第一阶段竞猜期：活动开始至6月25日22:00:00；小于 1529935200
 		if (currentTimeInt <= endTime1) {
 			competition.setBettingNum(bettingNum);
-			if (bettingNum != 0) {
-				competition.setJumpStatus(1);
-			} else {
-				competition.setJumpStatus(0);
-			}
+			// if (bettingNum != 0) {
+			competition.setJumpStatus(1);
+			// } else {
+			// competition.setJumpStatus(0);
+			// }
 			competition.setDescribetion(desc1);
 			// b、第二阶段等待期：6月25日22:00:01至6月29日05:00:00； 大于1529935200 小于 1530201900
 		} else if (currentTimeInt > startTime2 && currentTimeInt <= endTime2) {
