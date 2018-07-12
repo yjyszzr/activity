@@ -75,7 +75,7 @@ public class DlWorldCupPlanService extends AbstractService<DlWorldCupPlan> {
 					dto.setRst4(plan.getStatus4());
 					dto.setRst2(plan.getStatusGyj());
 					dto.setRst1(plan.getStatusGj());
-					dto.setRstAllTrue(plan.getRewardTimeAllTrue());
+					dto.setRstAllTrue(plan.getStatusAllTrue());
 					dto.setRst16Amount(plan.getRewardAmount16().toString());
 					dto.setRst8Amount(plan.getRewardAmount8().toString());
 					dto.setRst4Amount(plan.getRewardAmount4().toString());
