@@ -22,6 +22,7 @@ import com.dl.activity.dto.WCContryDTO;
 import com.dl.activity.dto.WCPlanCellDTO;
 import com.dl.activity.dto.WCPlanDTO;
 import com.dl.activity.model.DlWorldCupPlan;
+import com.dl.activity.model.Reward;
 import com.dl.base.service.AbstractService;
 import com.dl.base.util.DateUtil;
 import com.dl.base.util.SessionUtil;
@@ -70,18 +71,24 @@ public class DlWorldCupPlanService extends AbstractService<DlWorldCupPlan> {
 				this.parsePlanJson(planJson, dto, contryMap);
 				Integer isOpen = plan.getIsOpen();
 				if (1 == isOpen) {
-					dto.setRst16(plan.getStatus16());
-					dto.setRst8(plan.getStatus8());
-					dto.setRst4(plan.getStatus4());
-					dto.setRst2(plan.getStatusGyj());
-					dto.setRst1(plan.getStatusGj());
-					dto.setRstAllTrue(plan.getStatusAllTrue());
+					dto.setRstAllTrue(plan.getStatusAllTrue() == 1 ? 1 : 2);
+					dto.setRst16(plan.getStatus16() == 1 ? 1 : 2);
+					dto.setRst8(plan.getStatus8() == 1 ? 1 : 2);
+					dto.setRst4(plan.getStatus4() == 1 ? 1 : 2);
+					dto.setRst2(plan.getStatusGyj() == 1 ? 1 : 2);
+					dto.setRst1(plan.getStatusGj() == 1 ? 1 : 2);
+					dto.setIsGetAll(plan.getStatusAllTrue() == 1 ? 1 : 0);
+					dto.setIsGet16(plan.getStatus16() == 1 ? 1 : 0);
+					dto.setIsGet8(plan.getStatus8() == 1 ? 1 : 0);
+					dto.setIsGet4(plan.getStatus4() == 1 ? 1 : 0);
+					dto.setIsGet2(plan.getStatusGyj() == 1 ? 1 : 0);
+					dto.setIsGet1(plan.getStatusGj() == 1 ? 1 : 0);
+					dto.setRstAllTrueAmount(plan.getRewardAmountAllTrue().toString());
 					dto.setRst16Amount(plan.getRewardAmount16().toString());
 					dto.setRst8Amount(plan.getRewardAmount8().toString());
 					dto.setRst4Amount(plan.getRewardAmount4().toString());
 					dto.setRst2Amount(plan.getRewardAmountGyj().toString());
 					dto.setRst1Amount(plan.getRewardAmountGj().toString());
-					dto.setRstAllTrueAmount(plan.getRewardAmountAllTrue().toString());
 				}
 				dtos.add(dto);
 			}
@@ -175,5 +182,9 @@ public class DlWorldCupPlanService extends AbstractService<DlWorldCupPlan> {
 		Condition condition = new Condition(DlWorldCupPlan.class);
 		condition.createCriteria().andEqualTo("userId", userId);
 		return this.findByCondition(condition);
+	}
+
+	public List<Reward> rewardList() {
+		return dlWorldCupPlanMapper.rewardList();
 	}
 }

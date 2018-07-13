@@ -31,6 +31,13 @@
     <result column="is_open" jdbcType="TINYINT" property="isOpen" />
   </resultMap>
   
+  <resultMap id="rewardListMap"  type="com.dl.activity.model.Reward">
+    <result column="prize" jdbcType="VARCHAR" property="prize" />
+    <result column="quota" jdbcType="DECIMAL" property="quota" />
+    <result column="people_num" jdbcType="INTEGER" property="peopleNum" />
+    <result column="average" jdbcType="DECIMAL" property="average" />
+  </resultMap>
+  
   <sql id="allFields">
   id,user_id,add_time,modify_time,plan_json,status_16,reward_time_16,reward_amount_16,status_8,reward_time_8,reward_amount_8,
   status_4,reward_time_4,reward_amount_4,status_gyj,reward_time_gyj,reward_amount_gyj,status_gj,reward_time_gj,reward_amount_gj,
@@ -56,5 +63,9 @@
 		 and
 		  a.user_id = #{userId}
 			and a.pay_time > #{startTime}
+	  </select>
+	<select  id = "rewardList"  resultMap="rewardListMap" >
+		SELECT  * 	FROM
+			dl_world_cup_reward_pool  
 	  </select>
 </mapper>

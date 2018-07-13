@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.dl.activity.dto.DlWorldCupContryDTO;
 import com.dl.activity.dto.GuessingCompetitionDTO;
+import com.dl.activity.dto.RewardDTO;
 import com.dl.activity.dto.SixteenGroupFourDTO;
 import com.dl.activity.dto.SixteenGroupSixteenDTO;
 import com.dl.activity.dto.SixteenGroupTwoDTO;
@@ -27,6 +28,7 @@ import com.dl.activity.enums.ActivityEnums;
 import com.dl.activity.model.DlWorldCupContry;
 import com.dl.activity.model.DlWorldCupPlan;
 import com.dl.activity.model.DlWorldCupPlanConfig;
+import com.dl.activity.model.Reward;
 import com.dl.activity.param.PlanStrParam;
 import com.dl.activity.param.StrParam;
 import com.dl.activity.service.DlWorldCupContryService;
@@ -281,5 +283,21 @@ public class DlWorldCupPlanController {
 		Integer userId = 400382;
 		List<WCPlanDTO> worldCupPlanList = dlWorldCupPlanService.worldCupPlanList(userId);
 		return ResultGenerator.genSuccessResult(null, worldCupPlanList);
+	}
+
+	@ApiOperation(value = "获奖记录", notes = "获奖记录")
+	@PostMapping("/rewardList")
+	public BaseResult<List<RewardDTO>> rewardList(@RequestBody EmptyParam param) {
+		List<Reward> rewardList = dlWorldCupPlanService.rewardList();
+		List<RewardDTO> rewardDTOList = new ArrayList<RewardDTO>();
+		for (int i = 0; i < rewardList.size(); i++) {
+			RewardDTO reward = new RewardDTO();
+			reward.setAverage(rewardList.get(i).getAverage());
+			reward.setPeopleNum(rewardList.get(i).getPeopleNum());
+			reward.setPrize(rewardList.get(i).getPrize());
+			reward.setQuota(rewardList.get(i).getQuota());
+			rewardDTOList.add(reward);
+		}
+		return ResultGenerator.genSuccessResult(null, rewardDTOList);
 	}
 }
