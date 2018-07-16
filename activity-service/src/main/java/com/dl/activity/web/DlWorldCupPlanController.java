@@ -279,8 +279,8 @@ public class DlWorldCupPlanController {
 	@ApiOperation(value = "我的世界杯推演记录", notes = "我的世界杯推演记录")
 	@PostMapping("/list")
 	public BaseResult<List<WCPlanDTO>> list(@RequestBody EmptyParam param) {
-		// Integer userId = SessionUtil.getUserId();
-		Integer userId = 400382;
+		Integer userId = SessionUtil.getUserId();
+		// Integer userId = 400382;
 		List<WCPlanDTO> worldCupPlanList = dlWorldCupPlanService.worldCupPlanList(userId);
 		return ResultGenerator.genSuccessResult(null, worldCupPlanList);
 	}
