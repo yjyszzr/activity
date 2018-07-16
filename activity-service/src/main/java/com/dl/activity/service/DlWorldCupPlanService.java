@@ -109,7 +109,7 @@ public class DlWorldCupPlanService extends AbstractService<DlWorldCupPlan> {
 				WCPlanCellDTO dto = new WCPlanCellDTO(contryId, contryDto.getContryName());
 				dto.setIsGet(0);
 				String is1 = contryDto.getIs1();
-				if ("A1".equals(is1)) {
+				if ("C1".equals(is1)) {
 					dto.setIsGet(1);
 				}
 				planDto.setPlan1(dto);
