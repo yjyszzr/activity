@@ -85,8 +85,8 @@ public class DlWorldCupPlanController {
 			endTime3 = config.getEndTime3();
 			desc3 = config.getDesc3();
 		}
-		Integer userId = 400372;
-		// Integer userId = SessionUtil.getUserId();
+		// Integer userId = 400372;
+		Integer userId = SessionUtil.getUserId();
 		BigDecimal amount = dlWorldCupPlanService.findAllOrderAmount(userId, startTime1);
 		int amountInt = 0;
 		if (amount != null) {
