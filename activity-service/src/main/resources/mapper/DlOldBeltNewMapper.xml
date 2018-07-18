@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dl.activity.dao.DlOldBeltNewMapper">
+  <resultMap id="BaseResultMap" type="com.dl.activity.model.DlOldBeltNew">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="inviter_user_id" jdbcType="INTEGER" property="inviterUserId" />
+    <result column="inviter_encryption_user_id" jdbcType="VARCHAR" property="inviterEncryptionUserId" />
+    <result column="register_user_id" jdbcType="INTEGER" property="registerUserId" />
+    <result column="consumption_status" jdbcType="INTEGER" property="consumptionStatus" />
+  </resultMap>
+  
+  <select id="finInvitationsByUserId"   parameterType="Integer"   resultMap="BaseResultMap">
+	  select 
+	  	* 
+	  from
+	  	dl_old_belt_new 
+	  where 
+	  	inviter_user_id = #{userId}
+  </select>
+</mapper>
