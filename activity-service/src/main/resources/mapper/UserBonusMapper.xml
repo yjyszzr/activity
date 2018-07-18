@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dl.activity.dao.UserBonusMapper">
+  <resultMap id="BaseResultMap" type="com.dl.activity.model.UserBonus">
+    <id column="user_bonus_id" jdbcType="INTEGER" property="userBonusId" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="bonus_id" jdbcType="INTEGER" property="bonusId" />
+    <result column="bonus_sn" jdbcType="VARCHAR" property="bonusSn" />
+    <result column="bonus_price" jdbcType="DECIMAL" property="bonusPrice" />
+    <result column="receive_time" jdbcType="INTEGER" property="receiveTime" />
+    <result column="used_time" jdbcType="INTEGER" property="usedTime" />
+    <result column="start_time" jdbcType="INTEGER" property="startTime" />
+    <result column="end_time" jdbcType="INTEGER" property="endTime" />
+    <result column="add_time" jdbcType="INTEGER" property="addTime" />
+    <result column="order_sn" jdbcType="VARCHAR" property="orderSn" />
+    <result column="pay_log_id" jdbcType="INTEGER" property="payLogId" />
+    <result column="bonus_status" jdbcType="VARCHAR" property="bonusStatus" />
+    <result column="is_delete" jdbcType="INTEGER" property="isDelete" />
+    <result column="use_range" jdbcType="INTEGER" property="useRange" />
+    <result column="min_goods_amount" jdbcType="DECIMAL" property="minGoodsAmount" />
+  </resultMap>
+  
+  <insert id ="insertBatchUserBonus" parameterType="java.util.List" >
+      insert into dl_user_bonus(user_bonus_id,user_id,bonus_id,bonus_sn,bonus_price,receive_time,start_time,end_time,bonus_status,is_delete,use_range,min_goods_amount)
+            values
+            <foreach collection ="list" item="item" index= "index" separator =",">
+                (
+                #{item.userBonusId},
+                #{item.userId},
+                #{item.bonusId},
+                #{item.bonusSn},
+                #{item.bonusPrice},
+                #{item.receiveTime},
+                #{item.startTime},
+                #{item.endTime},
+                #{item.bonusStatus},
+                #{item.isDelete},
+                #{item.useRange},
+                #{item.minGoodsAmount}
+                )
+            </foreach >
+   </insert >
+</mapper>
