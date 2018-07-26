@@ -20,11 +20,13 @@ public class MatchInfoService extends AbstractService<MatchInfo> {
 		MatchInfoDTO matchInfoDTO = new MatchInfoDTO();
 		MatchInfo matchInfo = new MatchInfo();
 		matchInfo = matchInfoMapper.getMatchInfo(matchId);
-		matchInfoDTO.setHomeTeamAbbr(matchInfo.getHomeTeamAbbr());
-		matchInfoDTO.setHomeTeamPic(matchInfo.getHomeTeamPic());
-		matchInfoDTO.setMatchId(matchInfo.getMatchId());
-		matchInfoDTO.setVisitingTeamAbbr(matchInfo.getVisitingTeamAbbr());
-		matchInfoDTO.setVisitingTeamPic(matchInfo.getVisitingTeamPic());
+		if (matchInfo != null) {
+			matchInfoDTO.setHomeTeamAbbr(matchInfo.getHomeTeamAbbr());
+			matchInfoDTO.setHomeTeamPic(matchInfo.getHomeTeamPic());
+			matchInfoDTO.setMatchId(matchInfo.getMatchId());
+			matchInfoDTO.setVisitingTeamAbbr(matchInfo.getVisitingTeamAbbr());
+			matchInfoDTO.setVisitingTeamPic(matchInfo.getVisitingTeamPic());
+		}
 		return matchInfoDTO;
 	}
 }

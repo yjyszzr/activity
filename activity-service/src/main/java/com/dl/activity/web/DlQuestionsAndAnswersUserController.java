@@ -29,6 +29,7 @@ import com.dl.activity.service.DlQuestionsAndAnswersUserService;
 import com.dl.base.result.BaseResult;
 import com.dl.base.result.ResultGenerator;
 import com.dl.base.util.DateUtilNew;
+import com.dl.base.util.SessionUtil;
 
 /**
  * Created by CodeGenerator on 2018/06/21.
@@ -67,8 +68,8 @@ public class DlQuestionsAndAnswersUserController {
 	@ApiOperation(value = "用户竞猜答题列表", notes = "用户竞猜答题列表")
 	@PostMapping("/userAnswersList")
 	public BaseResult<List<UserPeriodDTO>> userAnswersList(@RequestBody StrParam strParam) {
-		// Integer userId = SessionUtil.getUserId();
-		Integer userId = 400093;
+		Integer userId = SessionUtil.getUserId();
+		// Integer userId = 400093;
 		List<UserPeriodDTO> periodList = dlQuestionsAndAnswersUserService.findByUserId(userId);
 		return ResultGenerator.genSuccessResult(null, periodList);
 	}
@@ -127,8 +128,8 @@ public class DlQuestionsAndAnswersUserController {
 						}
 					}
 				}
-				// String currentDate = DateUtilNew.getCurrentYearMonthDay();
-				String currentDate = "2018-05-08";
+				String currentDate = DateUtilNew.getCurrentYearMonthDay();
+				// String currentDate = "2018-05-08";
 				BigDecimal bigAmount = dlQuestionsAndAnswersUserService.getTodayAllOrderAmount(userId, currentDate);
 				if (bigAmount == null) {
 					bigAmount = new BigDecimal(0);
