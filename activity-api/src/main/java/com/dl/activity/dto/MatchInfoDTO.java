@@ -49,6 +49,6 @@ public class MatchInfoDTO {
 	@ApiModelProperty("问题及答案")
 	private List<QuestionAndAnswersDTO> questionAndAnswersList;
 
-	@ApiModelProperty("用户答案")
-	private List<QuestionAndAnswersDTO> userAnswersList;
+	// @ApiModelProperty("用户答案")
+	// private List<QuestionAndAnswersDTO> userAnswersList;
 }

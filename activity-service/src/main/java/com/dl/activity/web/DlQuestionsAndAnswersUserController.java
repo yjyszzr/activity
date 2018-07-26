@@ -117,8 +117,8 @@ public class DlQuestionsAndAnswersUserController {
 			} else if (questionsAndAnswers.getEndTime() < currentTime) {
 				matchInfo.setAnswerTimeStatus(0);
 			}
-			Integer userId = SessionUtil.getUserId();
-			// Integer userId = 400093;
+			// Integer userId = SessionUtil.getUserId();
+			Integer userId = 400408;
 			// 判断用户是否登录
 			if (userId != null) {
 				// 查询用户是否答题
@@ -131,37 +131,40 @@ public class DlQuestionsAndAnswersUserController {
 					List<QuestionAndAnswersDTO> usesQuestionAndAnswerList = (List<QuestionAndAnswersDTO>) JSONArray.toCollection(jsonArrayForUser, QuestionAndAnswersDTO.class);
 					if (questionsAndAnswers.getStatus() == 2) {
 						matchInfo.setAnswerStatus(1);
-						matchInfo.setUserAnswersList(usesQuestionAndAnswerList);
+						// matchInfo.setUserAnswersList(usesQuestionAndAnswerList);
 					} else {
 						matchInfo.setAnswerStatus(0);
-						// 用户答案转成Map
-						Map<Integer, QuestionAndAnswersDTO> usesQuestionAndAnswerMap = new HashMap<Integer, QuestionAndAnswersDTO>(usesQuestionAndAnswerList.size());
-						usesQuestionAndAnswerList.forEach(item -> usesQuestionAndAnswerMap.put(item.getQuestionNum(), item));
-						// 将用户答案写到题干
-						for (int i = 0; i < questionAndAnswerList.size(); i++) {
-							QuestionAndAnswersDTO userAnswer = new QuestionAndAnswersDTO();
-							userAnswer = usesQuestionAndAnswerMap.get(questionAndAnswerList.get(i).getQuestionNum());
-							questionAndAnswerList.get(i).setAnswerStatus1(userAnswer.getAnswerStatus1());
-							questionAndAnswerList.get(i).setAnswerStatus2(userAnswer.getAnswerStatus2());
-						}
 					}
-				}
-				String currentDate = DateUtilNew.getCurrentYearMonthDay();
-				// String currentDate = "2018-05-08";
-				BigDecimal bigAmount = dlQuestionsAndAnswersUserService.getTodayAllOrderAmount(userId, currentDate);
-				if (bigAmount == null) {
-					bigAmount = new BigDecimal(0);
-					matchInfo.setOnceBettingAmount(questionsAndAnswers.getLimitLotteryAmount());
-					matchInfo.setChance(0);
+					// 用户答案转成Map
+					Map<Integer, QuestionAndAnswersDTO> usesQuestionAndAnswerMap = new HashMap<Integer, QuestionAndAnswersDTO>(usesQuestionAndAnswerList.size());
+					usesQuestionAndAnswerList.forEach(item -> usesQuestionAndAnswerMap.put(item.getQuestionNum(), item));
+					// 将用户答案写到题干
+					for (int i = 0; i < questionAndAnswerList.size(); i++) {
+						QuestionAndAnswersDTO userAnswer = new QuestionAndAnswersDTO();
+						userAnswer = usesQuestionAndAnswerMap.get(questionAndAnswerList.get(i).getQuestionNum());
+						questionAndAnswerList.get(i).setRightAnswerStatus1(questionAndAnswerList.get(i).getAnswerStatus1());
+						questionAndAnswerList.get(i).setRightAnswerStatus2(questionAndAnswerList.get(i).getAnswerStatus2());
+						questionAndAnswerList.get(i).setAnswerStatus1(userAnswer.getAnswerStatus1());
+						questionAndAnswerList.get(i).setAnswerStatus2(userAnswer.getAnswerStatus2());
+					}
 				} else {
-					BigDecimal onceBettingAmount = questionsAndAnswers.getLimitLotteryAmount().subtract(bigAmount);
-					if (onceBettingAmount.doubleValue() >= 0) {
-						matchInfo.setOnceBettingAmount(bigAmount);
-						matchInfo.setChance(1);
-					} else {
-						BigDecimal num = new BigDecimal(0);
-						matchInfo.setOnceBettingAmount(num.subtract(onceBettingAmount));
+					String currentDate = DateUtilNew.getCurrentYearMonthDay();
+					// String currentDate = "2018-05-08";
+					BigDecimal bigAmount = dlQuestionsAndAnswersUserService.getTodayAllOrderAmount(userId, currentDate);
+					if (bigAmount == null) {
+						bigAmount = new BigDecimal(0);
+						matchInfo.setOnceBettingAmount(questionsAndAnswers.getLimitLotteryAmount());
 						matchInfo.setChance(0);
+					} else {
+						BigDecimal onceBettingAmount = questionsAndAnswers.getLimitLotteryAmount().subtract(bigAmount);
+						if (onceBettingAmount.doubleValue() >= 0) {
+							matchInfo.setOnceBettingAmount(bigAmount);
+							matchInfo.setChance(1);
+						} else {
+							BigDecimal num = new BigDecimal(0);
+							matchInfo.setOnceBettingAmount(num.subtract(onceBettingAmount));
+							matchInfo.setChance(0);
+						}
 					}
 				}
 			}

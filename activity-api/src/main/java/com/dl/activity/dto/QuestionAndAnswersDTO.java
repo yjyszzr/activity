@@ -18,10 +18,16 @@ public class QuestionAndAnswersDTO {
 	@ApiModelProperty("答案1状态")
 	public Integer answerStatus1;
 
+	@ApiModelProperty("正确答案1状态")
+	public Integer rightAnswerStatus1;
+
 	@ApiModelProperty("答案2")
 	public String answerSetting2;
 
 	@ApiModelProperty("答案2状态")
 	public Integer answerStatus2;
+
+	@ApiModelProperty("正确答案2状态")
+	public Integer rightAnswerStatus2;
 
 }
