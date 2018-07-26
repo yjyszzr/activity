@@ -47,7 +47,7 @@ public class DlQuestionsAndAnswersUserController {
 	@PostMapping("/add")
 	public BaseResult add(@RequestBody AddAnswersParam addAnswersParam) {
 		// 每增加一个答题用户 奖池金额增加1元 答题人数累加一个
-		DlQuestionsAndAnswers questionsAndAnswers = dlQuestionsAndAnswersService.findById(addAnswersParam.getMatchId());
+		DlQuestionsAndAnswers questionsAndAnswers = dlQuestionsAndAnswersService.findById(Integer.parseInt(addAnswersParam.getMatchId()));
 		// 添加一个人
 		questionsAndAnswers.setNumOfPeople(questionsAndAnswers.getNumOfPeople() + 1);
 		// 添加一块钱

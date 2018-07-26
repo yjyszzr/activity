@@ -6,7 +6,7 @@ import lombok.Data;
 @Data
 public class AddAnswersParam {
 	@ApiModelProperty(value = "赛事Id")
-	public Integer matchId;
+	public String matchId;
 
 	@ApiModelProperty(value = "答案列表")
 	public String answers;
