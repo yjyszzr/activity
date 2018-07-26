@@ -75,11 +75,12 @@ public class DlQuestionsAndAnswersUserController {
 	 * @param matchIdParam
 	 * @return
 	 */
-	@ApiOperation(value = "用户竞猜答题详情页", notes = "用户竞猜答题详情页")
-	@PostMapping("/userAnswersDetail")
-	public BaseResult<MatchInfoDTO> userAnswersDetail(@RequestBody MatchIdParam matchIdParam) {
-		return guessingCompetitionDetails(matchIdParam);
-	}
+	// @ApiOperation(value = "用户竞猜答题详情页", notes = "用户竞猜答题详情页")
+	// @PostMapping("/userAnswersDetail")
+	// public BaseResult<MatchInfoDTO> userAnswersDetail(@RequestBody
+	// MatchIdParam matchIdParam) {
+	// return guessingCompetitionDetails(matchIdParam);
+	// }
 
 	@ApiOperation(value = "用户竞猜答题列表", notes = "用户竞猜答题列表")
 	@PostMapping("/userAnswersList")
@@ -117,8 +118,8 @@ public class DlQuestionsAndAnswersUserController {
 			} else if (questionsAndAnswers.getEndTime() < currentTime) {
 				matchInfo.setAnswerTimeStatus(0);
 			}
-			// Integer userId = SessionUtil.getUserId();
-			Integer userId = 400408;
+			Integer userId = SessionUtil.getUserId();
+			// Integer userId = 400408;
 			// 判断用户是否登录
 			if (userId != null) {
 				// 查询用户是否答题
