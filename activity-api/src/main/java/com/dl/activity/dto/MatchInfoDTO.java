@@ -40,6 +40,12 @@ public class MatchInfoDTO {
 	@ApiModelProperty("答案状态:0未公布,1已公布")
 	private Integer answerStatus;
 
+	@ApiModelProperty("人数")
+	private Integer numOfPeople;
+
+	@ApiModelProperty("奖池金额")
+	private String bonusPool;
+
 	@ApiModelProperty("问题及答案")
 	private List<QuestionAndAnswersDTO> questionAndAnswersList;
 

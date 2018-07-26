@@ -88,6 +88,7 @@ public class DlQuestionsAndAnswersUserController {
 		if (questionsAndAnswers != null) {
 			// 解析题干以及题设Json
 			JSONArray jsonArray = JSONArray.fromObject(questionsAndAnswers.getQuestionAndAnswer());
+			@SuppressWarnings("unchecked")
 			List<QuestionAndAnswersDTO> questionAndAnswerList = (List<QuestionAndAnswersDTO>) JSONArray.toCollection(jsonArray, QuestionAndAnswersDTO.class);
 			Integer currentTime = DateUtilNew.getCurrentTimeLong();
 			// 如果开始时间大于当前时间并且小于结束时间则表示可以开始
@@ -100,8 +101,8 @@ public class DlQuestionsAndAnswersUserController {
 			} else if (questionsAndAnswers.getEndTime() < currentTime) {
 				matchInfo.setAnswerTimeStatus(0);
 			}
-			// Integer userId = SessionUtil.getUserId();
-			Integer userId = 400093;
+			Integer userId = SessionUtil.getUserId();
+			// Integer userId = 400093;
 			// 判断用户是否登录
 			if (userId != null) {
 				// 查询用户是否答题
@@ -110,6 +111,7 @@ public class DlQuestionsAndAnswersUserController {
 				if (questionsAndAnswersUser != null) {
 					JSONArray jsonArrayForUser = JSONArray.fromObject(questionsAndAnswersUser.getUserAnswer());
 					// 解析用户答案Json
+					@SuppressWarnings("unchecked")
 					List<QuestionAndAnswersDTO> usesQuestionAndAnswerList = (List<QuestionAndAnswersDTO>) JSONArray.toCollection(jsonArrayForUser, QuestionAndAnswersDTO.class);
 					if (questionsAndAnswers.getStatus() == 2) {
 						matchInfo.setAnswerStatus(1);
@@ -148,8 +150,10 @@ public class DlQuestionsAndAnswersUserController {
 				}
 			}
 			matchInfo.setQuestionAndAnswersList(questionAndAnswerList);
+			matchInfo.setStopTime(questionsAndAnswers.getEndTime());
+			matchInfo.setNumOfPeople(questionsAndAnswers.getNumOfPeople());
+			matchInfo.setBonusPool(questionsAndAnswers.getBonusPool().toString());
 		}
-		matchInfo.setStopTime(questionsAndAnswers.getEndTime());
 		return ResultGenerator.genSuccessResult(null, matchInfo);
 	}
 }
