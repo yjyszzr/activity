@@ -47,23 +47,26 @@ public class DlQuestionsAndAnswersUserController {
 	@PostMapping("/add")
 	public BaseResult add(@RequestBody AddAnswersParam addAnswersParam) {
 		// 每增加一个答题用户 奖池金额增加1元 答题人数累加一个
-		DlQuestionsAndAnswers questionsAndAnswers = dlQuestionsAndAnswersService.findById(Integer.parseInt(addAnswersParam.getMatchId()));
-		// 添加一个人
-		questionsAndAnswers.setNumOfPeople(questionsAndAnswers.getNumOfPeople() + 1);
-		// 添加一块钱
-		BigDecimal big = new BigDecimal(1);
-		questionsAndAnswers.setBonusPool(big.add(questionsAndAnswers.getBonusPool()));
-		dlQuestionsAndAnswersService.update(questionsAndAnswers);
-		DlQuestionsAndAnswersUser dlQuestionsAndAnswersUser = new DlQuestionsAndAnswersUser();
-		dlQuestionsAndAnswersUser.setId(0);
-		dlQuestionsAndAnswersUser.setUserAnswer(addAnswersParam.getAnswers());
-		dlQuestionsAndAnswersUser.setMatchId(questionsAndAnswers.getMatchId());
-		Integer userId = SessionUtil.getUserId();
-		dlQuestionsAndAnswersUser.setUserId(userId);
-		dlQuestionsAndAnswersUser.setPeriod(questionsAndAnswers.getPeriod());
-		dlQuestionsAndAnswersUser.setQuestionId(questionsAndAnswers.getId());
-		dlQuestionsAndAnswersUserService.save(dlQuestionsAndAnswersUser);
-		return ResultGenerator.genSuccessResult();
+		DlQuestionsAndAnswers questionsAndAnswers = dlQuestionsAndAnswersService.getQuestionsAndAnswers(Integer.parseInt(addAnswersParam.getMatchId()));
+		if (questionsAndAnswers != null) {
+			// 添加一个人
+			questionsAndAnswers.setNumOfPeople(questionsAndAnswers.getNumOfPeople() + 1);
+			// 添加一块钱
+			BigDecimal big = new BigDecimal(1);
+			questionsAndAnswers.setBonusPool(big.add(questionsAndAnswers.getBonusPool()));
+			dlQuestionsAndAnswersService.update(questionsAndAnswers);
+			DlQuestionsAndAnswersUser dlQuestionsAndAnswersUser = new DlQuestionsAndAnswersUser();
+			dlQuestionsAndAnswersUser.setId(0);
+			dlQuestionsAndAnswersUser.setUserAnswer(addAnswersParam.getAnswers());
+			dlQuestionsAndAnswersUser.setMatchId(questionsAndAnswers.getMatchId());
+			Integer userId = SessionUtil.getUserId();
+			dlQuestionsAndAnswersUser.setUserId(userId);
+			dlQuestionsAndAnswersUser.setPeriod(questionsAndAnswers.getPeriod());
+			dlQuestionsAndAnswersUser.setQuestionId(questionsAndAnswers.getId());
+			dlQuestionsAndAnswersUserService.save(dlQuestionsAndAnswersUser);
+			return ResultGenerator.genSuccessResult("保存成功");
+		}
+		return ResultGenerator.genSuccessResult("赛事为空");
 	}
 
 	/**
@@ -114,8 +117,8 @@ public class DlQuestionsAndAnswersUserController {
 			} else if (questionsAndAnswers.getEndTime() < currentTime) {
 				matchInfo.setAnswerTimeStatus(0);
 			}
-			// Integer userId = SessionUtil.getUserId();
-			Integer userId = 400093;
+			Integer userId = SessionUtil.getUserId();
+			// Integer userId = 400093;
 			// 判断用户是否登录
 			if (userId != null) {
 				// 查询用户是否答题
