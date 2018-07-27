@@ -16,10 +16,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.dl.activity.dto.BeforePeriodNoteDTO;
 import com.dl.activity.dto.MatchInfoDTO;
 import com.dl.activity.dto.QuestionAndAnswersDTO;
 import com.dl.activity.dto.UserPeriodDTO;
 import com.dl.activity.model.DlQuestionsAndAnswers;
+import com.dl.activity.model.DlQuestionsAndAnswersForBeforeNote;
 import com.dl.activity.model.DlQuestionsAndAnswersUser;
 import com.dl.activity.param.AddAnswersParam;
 import com.dl.activity.param.MatchIdParam;
@@ -81,6 +83,23 @@ public class DlQuestionsAndAnswersUserController {
 	// MatchIdParam matchIdParam) {
 	// return guessingCompetitionDetails(matchIdParam);
 	// }
+	@ApiOperation(value = "获取往期记录", notes = "获取往期记录")
+	@PostMapping("/beforePeriodNote")
+	public BaseResult<BeforePeriodNoteDTO> getBeforePeriodNote(@RequestBody MatchIdParam matchIdParam) {
+		DlQuestionsAndAnswers questionsAndAnswers = new DlQuestionsAndAnswers();
+		DlQuestionsAndAnswersForBeforeNote answersNote = new DlQuestionsAndAnswersForBeforeNote();
+		questionsAndAnswers = dlQuestionsAndAnswersService.getQuestionsAndAnswers(matchIdParam.getMatchId());
+		answersNote = dlQuestionsAndAnswersUserService.findBeforePeriodNoteBymatchId(questionsAndAnswers.getId());
+		BeforePeriodNoteDTO beforePeriodNote = new BeforePeriodNoteDTO();
+		if (answersNote != null) {
+			beforePeriodNote.setBonusPool(answersNote.getBonusPool().toString());
+			beforePeriodNote.setNumOfPeople(answersNote.getPrizewinningNum() == null ? 0 : answersNote.getPrizewinningNum());
+			BigDecimal bonusPool = new BigDecimal(answersNote.getBonusPool().toString());
+			BigDecimal PrizewinningNum = new BigDecimal(answersNote.getPrizewinningNum() == null ? "0" : answersNote.getPrizewinningNum().toString());
+			beforePeriodNote.setReward(bonusPool.divide(PrizewinningNum, 3, BigDecimal.ROUND_HALF_DOWN).toString());
+		}
+		return ResultGenerator.genSuccessResult(null, beforePeriodNote);
+	}
 
 	@ApiOperation(value = "用户竞猜答题列表", notes = "用户竞猜答题列表")
 	@PostMapping("/userAnswersList")

@@ -14,6 +14,13 @@
     <result column="bonus_amount" jdbcType="DECIMAL" property="bonusAmount" />
   </resultMap>
   
+  <resultMap id="questionsAndAnswersMap"  type="com.dl.activity.model.DlQuestionsAndAnswersForBeforeNote">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="match_id" jdbcType="INTEGER" property="matchId" />
+    <result column="prizewinning_num"  jdbcType="INTEGER"  property="prizewinningNum" />
+    <result column="bonus_pool" jdbcType="DECIMAL" property="bonusPool" />
+  </resultMap>
+  
   <select  id = "getTodayAllOrderAmount"  resultType="java.math.BigDecimal" >
 		SELECT
 			SUM( ticket_amount ) 
@@ -23,6 +30,15 @@
 			order_status IN ( 3, 4, 5, 6, 7 ) 
 			AND user_id = #{userId}
 			AND DATE_FORMAT( FROM_UNIXTIME( pay_time ), '%Y-%m-%d' ) = #{currentTime}
+	  </select>
+	  
+  <select  id = "findBeforePeriodNoteBymatchId"   resultMap="questionsAndAnswersMap" >
+		SELECT
+			id,match_id,prizewinning_num,bonus_pool
+		FROM
+			dl_questions_and_answers 
+		WHERE
+			id = ( SELECT id FROM dl_questions_and_answers WHERE id &lt;  #{id} ORDER BY id DESC LIMIT 1 )
 	  </select>
 	  
 </mapper>
