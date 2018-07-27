@@ -90,20 +90,23 @@ public class DlQuestionsAndAnswersUserController {
 		DlQuestionsAndAnswersForBeforeNote answersNote = new DlQuestionsAndAnswersForBeforeNote();
 		questionsAndAnswers = dlQuestionsAndAnswersService.getQuestionsAndAnswers(matchIdParam.getMatchId());
 		answersNote = dlQuestionsAndAnswersService.findBeforePeriodNoteBymatchId(questionsAndAnswers.getId());
-		Integer userId = SessionUtil.getUserId();
-		DlQuestionsAndAnswersUser userAnswerInfo = dlQuestionsAndAnswersUserService.findUserAnswerMatchId(answersNote.getMatchId(), userId);
+		// Integer userId = SessionUtil.getUserId();
+		Integer userId = 400408;
 		BeforePeriodNoteDTO beforePeriodNote = new BeforePeriodNoteDTO();
-		// 判断上期是否参与
-		if (userAnswerInfo == null) {
-			beforePeriodNote.setParticipateOrNot(0);
-		} else {
-			// 判断是否中奖
-			if (userAnswerInfo.getGetAward() == 0 || userAnswerInfo.getGetAward() == null) {
-				beforePeriodNote.setGetAwardOrNot(0);
+		if (userId != null) {
+			DlQuestionsAndAnswersUser userAnswerInfo = dlQuestionsAndAnswersUserService.findUserAnswerMatchId(answersNote.getMatchId(), userId);
+			// 判断上期是否参与
+			if (userAnswerInfo == null) {
+				beforePeriodNote.setParticipateOrNot(0);
 			} else {
-				beforePeriodNote.setGetAwardOrNot(1);
+				// 判断是否中奖
+				if (null == userAnswerInfo.getGetAward() || userAnswerInfo.getGetAward() == 0) {
+					beforePeriodNote.setGetAwardOrNot(0);
+				} else {
+					beforePeriodNote.setGetAwardOrNot(1);
+				}
+				beforePeriodNote.setParticipateOrNot(1);
 			}
-			beforePeriodNote.setParticipateOrNot(1);
 		}
 		if (answersNote != null) {
 			beforePeriodNote.setBonusPool(answersNote.getBonusPool().toString());
