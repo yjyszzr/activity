@@ -20,4 +20,22 @@
     <result column="answer_show_time" jdbcType="INTEGER" property="answerShowTime" />
     <result column="period" jdbcType="VARCHAR" property="period" />
   </resultMap>
+  
+    
+  <resultMap id="questionsAndAnswersMap"  type="com.dl.activity.model.DlQuestionsAndAnswersForBeforeNote">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="match_id" jdbcType="INTEGER" property="matchId" />
+    <result column="prizewinning_num"  jdbcType="INTEGER"  property="prizewinningNum" />
+    <result column="bonus_pool" jdbcType="DECIMAL" property="bonusPool" />
+  </resultMap>
+  	  
+  <select  id = "findBeforePeriodNoteBymatchId"   resultMap="questionsAndAnswersMap" >
+		SELECT
+			id,match_id,prizewinning_num,bonus_pool
+		FROM
+			dl_questions_and_answers 
+		WHERE
+			id = ( SELECT id FROM dl_questions_and_answers WHERE id &lt;  #{id} ORDER BY id DESC LIMIT 1 )
+	  </select>
+	  
 </mapper>

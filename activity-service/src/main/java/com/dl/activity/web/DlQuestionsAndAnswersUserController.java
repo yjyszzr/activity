@@ -89,8 +89,22 @@ public class DlQuestionsAndAnswersUserController {
 		DlQuestionsAndAnswers questionsAndAnswers = new DlQuestionsAndAnswers();
 		DlQuestionsAndAnswersForBeforeNote answersNote = new DlQuestionsAndAnswersForBeforeNote();
 		questionsAndAnswers = dlQuestionsAndAnswersService.getQuestionsAndAnswers(matchIdParam.getMatchId());
-		answersNote = dlQuestionsAndAnswersUserService.findBeforePeriodNoteBymatchId(questionsAndAnswers.getId());
+		answersNote = dlQuestionsAndAnswersService.findBeforePeriodNoteBymatchId(questionsAndAnswers.getId());
+		Integer userId = SessionUtil.getUserId();
+		DlQuestionsAndAnswersUser userAnswerInfo = dlQuestionsAndAnswersUserService.findUserAnswerMatchId(answersNote.getMatchId(), userId);
 		BeforePeriodNoteDTO beforePeriodNote = new BeforePeriodNoteDTO();
+		// 判断上期是否参与
+		if (userAnswerInfo == null) {
+			beforePeriodNote.setParticipateOrNot(0);
+		} else {
+			// 判断是否中奖
+			if (userAnswerInfo.getGetAward() == 0 || userAnswerInfo.getGetAward() == null) {
+				beforePeriodNote.setGetAwardOrNot(0);
+			} else {
+				beforePeriodNote.setGetAwardOrNot(1);
+			}
+			beforePeriodNote.setParticipateOrNot(1);
+		}
 		if (answersNote != null) {
 			beforePeriodNote.setBonusPool(answersNote.getBonusPool().toString());
 			beforePeriodNote.setNumOfPeople(answersNote.getPrizewinningNum() == null ? 0 : answersNote.getPrizewinningNum());

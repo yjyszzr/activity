@@ -14,7 +14,6 @@ import tk.mybatis.mapper.entity.Condition;
 import com.dl.activity.dao.DlQuestionsAndAnswersUserMapper;
 import com.dl.activity.dto.MatchInfoDTO;
 import com.dl.activity.dto.UserPeriodDTO;
-import com.dl.activity.model.DlQuestionsAndAnswersForBeforeNote;
 import com.dl.activity.model.DlQuestionsAndAnswersUser;
 import com.dl.base.service.AbstractService;
 
@@ -64,8 +63,13 @@ public class DlQuestionsAndAnswersUserService extends AbstractService<DlQuestion
 	}
 
 	@Transactional(value = "transactionManager1")
-	public DlQuestionsAndAnswersForBeforeNote findBeforePeriodNoteBymatchId(Integer id) {
-		return dlQuestionsAndAnswersUserMapper.findBeforePeriodNoteBymatchId(id);
+	public DlQuestionsAndAnswersUser findUserAnswerMatchId(Integer matchId, Integer userId) {
+		Condition c = new Condition(DlQuestionsAndAnswersUser.class);
+		c.createCriteria().andEqualTo("matchId", matchId).andEqualTo("userId", userId);
+		List<DlQuestionsAndAnswersUser> list = this.findByCondition(c);
+		if (list.size() > 0) {
+			return list.get(0);
+		}
+		return null;
 	}
-
 }

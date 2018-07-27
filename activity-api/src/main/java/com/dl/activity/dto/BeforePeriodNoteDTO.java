@@ -17,4 +17,10 @@ public class BeforePeriodNoteDTO {
 	@ApiModelProperty("奖池金额")
 	private String bonusPool;
 
+	@ApiModelProperty("是否参与,1参与,0未参与")
+	private Integer participateOrNot;
+
+	@ApiModelProperty("是否中奖0未中奖 1 中奖")
+	private Integer getAwardOrNot;
+
 }
