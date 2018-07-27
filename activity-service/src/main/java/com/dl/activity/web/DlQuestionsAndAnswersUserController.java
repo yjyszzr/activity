@@ -90,8 +90,8 @@ public class DlQuestionsAndAnswersUserController {
 		DlQuestionsAndAnswersForBeforeNote answersNote = new DlQuestionsAndAnswersForBeforeNote();
 		questionsAndAnswers = dlQuestionsAndAnswersService.getQuestionsAndAnswers(matchIdParam.getMatchId());
 		answersNote = dlQuestionsAndAnswersService.findBeforePeriodNoteBymatchId(questionsAndAnswers.getId());
-		// Integer userId = SessionUtil.getUserId();
-		Integer userId = 400408;
+		Integer userId = SessionUtil.getUserId();
+		// Integer userId = 400408;
 		BeforePeriodNoteDTO beforePeriodNote = new BeforePeriodNoteDTO();
 		if (userId != null) {
 			DlQuestionsAndAnswersUser userAnswerInfo = dlQuestionsAndAnswersUserService.findUserAnswerMatchId(answersNote.getMatchId(), userId);
@@ -192,13 +192,18 @@ public class DlQuestionsAndAnswersUserController {
 				} else {
 					String currentDate = DateUtilNew.getCurrentYearMonthDay();
 					// String currentDate = "2018-05-08";
+
 					BigDecimal bigAmount = dlQuestionsAndAnswersUserService.getTodayAllOrderAmount(userId, currentDate);
+					// 临时测试使用
+					BigDecimal big500 = new BigDecimal(500);
+					bigAmount = bigAmount.add(big500);
+					// 临时测试使用
 					if (bigAmount == null) {
 						bigAmount = new BigDecimal(0);
 						matchInfo.setOnceBettingAmount(questionsAndAnswers.getLimitLotteryAmount());
 						matchInfo.setChance(0);
 					} else {
-						BigDecimal onceBettingAmount = questionsAndAnswers.getLimitLotteryAmount().subtract(bigAmount);
+						BigDecimal onceBettingAmount = bigAmount.subtract(questionsAndAnswers.getLimitLotteryAmount());
 						if (onceBettingAmount.doubleValue() >= 0) {
 							matchInfo.setOnceBettingAmount(bigAmount);
 							matchInfo.setChance(1);
