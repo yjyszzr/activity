@@ -109,8 +109,13 @@ public class DlQuestionsAndAnswersUserController {
 			beforePeriodNote.setBonusPool(answersNote.getBonusPool().toString());
 			beforePeriodNote.setNumOfPeople(answersNote.getPrizewinningNum() == null ? 0 : answersNote.getPrizewinningNum());
 			BigDecimal bonusPool = new BigDecimal(answersNote.getBonusPool().toString());
-			BigDecimal PrizewinningNum = new BigDecimal(answersNote.getPrizewinningNum() == null ? "0" : answersNote.getPrizewinningNum().toString());
-			beforePeriodNote.setReward(bonusPool.divide(PrizewinningNum, 3, BigDecimal.ROUND_HALF_DOWN).toString());
+			BigDecimal prizewinningNum = new BigDecimal(answersNote.getPrizewinningNum() == null ? "0" : answersNote.getPrizewinningNum().toString());
+			BigDecimal bigDecimal = new BigDecimal("0");
+			if (prizewinningNum.compareTo(bigDecimal) == 0) {
+				beforePeriodNote.setReward("0");
+			} else {
+				beforePeriodNote.setReward(bonusPool.divide(prizewinningNum, 3, BigDecimal.ROUND_HALF_DOWN).toString());
+			}
 		}
 		return ResultGenerator.genSuccessResult(null, beforePeriodNote);
 	}
