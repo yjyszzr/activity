@@ -65,6 +65,7 @@ public class DlQuestionsAndAnswersUserController {
 			dlQuestionsAndAnswersUser.setUserId(userId);
 			dlQuestionsAndAnswersUser.setPeriod(questionsAndAnswers.getPeriod());
 			dlQuestionsAndAnswersUser.setQuestionId(questionsAndAnswers.getId());
+			dlQuestionsAndAnswersUser.setAnswerTime(DateUtilNew.getCurrentTimeLong());
 			dlQuestionsAndAnswersUserService.save(dlQuestionsAndAnswersUser);
 			return ResultGenerator.genSuccessResult("保存成功");
 		}
