@@ -155,6 +155,13 @@ public class DlQuestionsAndAnswersUserController {
 			JSONArray jsonArray = JSONArray.fromObject(questionsAndAnswers.getQuestionAndAnswer());
 			@SuppressWarnings("unchecked")
 			List<QuestionAndAnswersDTO> questionAndAnswerList = (List<QuestionAndAnswersDTO>) JSONArray.toCollection(jsonArray, QuestionAndAnswersDTO.class);
+			// 等于2或者等于3表示已经公布正确答案 2开奖或者3待派奖
+			if (questionsAndAnswers.getStatus() == 2 || questionsAndAnswers.getStatus() == 3) {
+				for (int i = 0; i < questionAndAnswerList.size(); i++) {
+					questionAndAnswerList.get(i).setRightAnswerStatus1(questionAndAnswerList.get(i).getAnswerStatus1());
+					questionAndAnswerList.get(i).setRightAnswerStatus2(questionAndAnswerList.get(i).getAnswerStatus2());
+				}
+			}
 			Integer currentTime = DateUtilNew.getCurrentTimeLong();
 			// 如果开始时间大于当前时间并且小于结束时间则表示可以开始
 			if (questionsAndAnswers.getStartTime() < currentTime && questionsAndAnswers.getEndTime() > currentTime) {
@@ -166,8 +173,8 @@ public class DlQuestionsAndAnswersUserController {
 			} else if (questionsAndAnswers.getEndTime() < currentTime) {
 				matchInfo.setAnswerTimeStatus(0);
 			}
-			Integer userId = SessionUtil.getUserId();
-			// Integer userId = 400419;
+			// Integer userId = SessionUtil.getUserId();
+			Integer userId = 400419;
 			// 判断用户是否登录
 			if (userId != null) {
 				// 查询用户是否答题
@@ -181,14 +188,12 @@ public class DlQuestionsAndAnswersUserController {
 					@SuppressWarnings("unchecked")
 					List<QuestionAndAnswersDTO> usesQuestionAndAnswerList = (List<QuestionAndAnswersDTO>) JSONArray.toCollection(jsonArrayForUser, QuestionAndAnswersDTO.class);
 					// 用户答案转成Map
-					Map<Integer, QuestionAndAnswersDTO> usesQuestionAndAnswerMap = new HashMap<Integer, QuestionAndAnswersDTO>(usesQuestionAndAnswerList.size());
-					usesQuestionAndAnswerList.forEach(item -> usesQuestionAndAnswerMap.put(item.getQuestionNum(), item));
+					Map<Integer, QuestionAndAnswersDTO> userQuestionAndAnswerMap = new HashMap<Integer, QuestionAndAnswersDTO>(usesQuestionAndAnswerList.size());
+					usesQuestionAndAnswerList.forEach(item -> userQuestionAndAnswerMap.put(item.getQuestionNum(), item));
 					// 将用户答案写到题干
 					for (int i = 0; i < questionAndAnswerList.size(); i++) {
 						QuestionAndAnswersDTO userAnswer = new QuestionAndAnswersDTO();
-						userAnswer = usesQuestionAndAnswerMap.get(questionAndAnswerList.get(i).getQuestionNum());
-						questionAndAnswerList.get(i).setRightAnswerStatus1(questionAndAnswerList.get(i).getAnswerStatus1());
-						questionAndAnswerList.get(i).setRightAnswerStatus2(questionAndAnswerList.get(i).getAnswerStatus2());
+						userAnswer = userQuestionAndAnswerMap.get(questionAndAnswerList.get(i).getQuestionNum());
 						questionAndAnswerList.get(i).setAnswerStatus1(userAnswer.getAnswerStatus1());
 						questionAndAnswerList.get(i).setAnswerStatus2(userAnswer.getAnswerStatus2());
 					}
