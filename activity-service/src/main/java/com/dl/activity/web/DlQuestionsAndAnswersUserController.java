@@ -160,8 +160,8 @@ public class DlQuestionsAndAnswersUserController {
 				for (int i = 0; i < questionAndAnswerList.size(); i++) {
 					questionAndAnswerList.get(i).setRightAnswerStatus1(questionAndAnswerList.get(i).getAnswerStatus1());
 					questionAndAnswerList.get(i).setRightAnswerStatus2(questionAndAnswerList.get(i).getAnswerStatus2());
-					questionAndAnswerList.get(i).setAnswerSetting1("0");
-					questionAndAnswerList.get(i).setAnswerSetting2("0");
+					questionAndAnswerList.get(i).setAnswerStatus1(0);
+					questionAndAnswerList.get(i).setAnswerStatus2(0);
 				}
 			}
 			Integer currentTime = DateUtilNew.getCurrentTimeLong();
