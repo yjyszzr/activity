@@ -174,7 +174,7 @@ public class DlQuestionsAndAnswersUserController {
 				DlQuestionsAndAnswersUser questionsAndAnswersUser = dlQuestionsAndAnswersUserService.getQuestionsAndAnswersForUser(userId, questionsAndAnswers.getId());
 				// 如果不为空 则该用户答过题 将题干和该用户的答案返回
 				if (questionsAndAnswersUser != null) {
-					matchInfo.setUserGetAwardStatus(questionsAndAnswersUser.getGetAward());
+					matchInfo.setUserGetAwardStatus(questionsAndAnswersUser.getGetAward() == null ? 2 : questionsAndAnswersUser.getGetAward());
 					matchInfo.setReward(questionsAndAnswersUser.getBonusAmount() == null ? "" : questionsAndAnswersUser.getBonusAmount().toString());
 					JSONArray jsonArrayForUser = JSONArray.fromObject(questionsAndAnswersUser.getUserAnswer());
 					// 解析用户答案Json
@@ -195,7 +195,7 @@ public class DlQuestionsAndAnswersUserController {
 				} else {
 					String currentDate = DateUtilNew.getCurrentYearMonthDay();
 					// String currentDate = "2018-05-08";
-
+					matchInfo.setUserGetAwardStatus(3);
 					BigDecimal bigAmount = dlQuestionsAndAnswersUserService.getTodayAllOrderAmount(userId, currentDate);
 					// 临时测试使用
 					// BigDecimal bigAmount = new BigDecimal(500);
