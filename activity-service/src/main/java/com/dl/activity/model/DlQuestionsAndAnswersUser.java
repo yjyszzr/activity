@@ -53,7 +53,7 @@ public class DlQuestionsAndAnswersUser {
 	 * 是否中奖0未中奖 1 中奖
 	 */
 	@Column(name = "get_award")
-	private Byte getAward;
+	private Integer getAward;
 
 	/**
 	 * 奖金金额
@@ -172,7 +172,7 @@ public class DlQuestionsAndAnswersUser {
 	 *
 	 * @return get_award - 是否中奖0未中奖 1 中奖
 	 */
-	public Byte getGetAward() {
+	public Integer getGetAward() {
 		return getAward;
 	}
 
@@ -182,7 +182,7 @@ public class DlQuestionsAndAnswersUser {
 	 * @param getAward
 	 *            是否中奖0未中奖 1 中奖
 	 */
-	public void setGetAward(Byte getAward) {
+	public void setGetAward(Integer getAward) {
 		this.getAward = getAward;
 	}
 

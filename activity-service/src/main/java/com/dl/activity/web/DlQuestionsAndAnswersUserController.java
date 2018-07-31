@@ -128,8 +128,8 @@ public class DlQuestionsAndAnswersUserController {
 	@ApiOperation(value = "用户竞猜答题列表", notes = "用户竞猜答题列表")
 	@PostMapping("/userAnswersList")
 	public BaseResult<List<UserPeriodDTO>> userAnswersList(@RequestBody StrParam strParam) {
-		 Integer userId = SessionUtil.getUserId();
-//		Integer userId = 400397;
+		Integer userId = SessionUtil.getUserId();
+		// Integer userId = 400397;
 		if (userId != null) {
 			List<UserPeriodDTO> periodList = dlQuestionsAndAnswersUserService.findByUserId(userId);
 			return ResultGenerator.genSuccessResult(null, periodList);
@@ -166,24 +166,20 @@ public class DlQuestionsAndAnswersUserController {
 			} else if (questionsAndAnswers.getEndTime() < currentTime) {
 				matchInfo.setAnswerTimeStatus(0);
 			}
-			 Integer userId = SessionUtil.getUserId();
-//			Integer userId = 400419;
+			// Integer userId = SessionUtil.getUserId();
+			Integer userId = 400419;
 			// 判断用户是否登录
 			if (userId != null) {
 				// 查询用户是否答题
 				DlQuestionsAndAnswersUser questionsAndAnswersUser = dlQuestionsAndAnswersUserService.getQuestionsAndAnswersForUser(userId, questionsAndAnswers.getId());
 				// 如果不为空 则该用户答过题 将题干和该用户的答案返回
 				if (questionsAndAnswersUser != null) {
+					matchInfo.setUserGetAwardStatus(questionsAndAnswersUser.getGetAward());
+					matchInfo.setReward(questionsAndAnswersUser.getBonusAmount() == null ? "" : questionsAndAnswersUser.getBonusAmount().toString());
 					JSONArray jsonArrayForUser = JSONArray.fromObject(questionsAndAnswersUser.getUserAnswer());
 					// 解析用户答案Json
 					@SuppressWarnings("unchecked")
 					List<QuestionAndAnswersDTO> usesQuestionAndAnswerList = (List<QuestionAndAnswersDTO>) JSONArray.toCollection(jsonArrayForUser, QuestionAndAnswersDTO.class);
-					if (questionsAndAnswers.getStatus() == 2) {
-						matchInfo.setAnswerStatus(1);
-						// matchInfo.setUserAnswersList(usesQuestionAndAnswerList);
-					} else {
-						matchInfo.setAnswerStatus(0);
-					}
 					// 用户答案转成Map
 					Map<Integer, QuestionAndAnswersDTO> usesQuestionAndAnswerMap = new HashMap<Integer, QuestionAndAnswersDTO>(usesQuestionAndAnswerList.size());
 					usesQuestionAndAnswerList.forEach(item -> usesQuestionAndAnswerMap.put(item.getQuestionNum(), item));

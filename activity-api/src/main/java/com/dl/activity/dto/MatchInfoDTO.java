@@ -37,8 +37,8 @@ public class MatchInfoDTO {
 	@ApiModelProperty("答题时间状态:0已结束,1开始,2未开始")
 	private Integer answerTimeStatus;
 
-	@ApiModelProperty("答案状态:0未公布,1已公布")
-	private Integer answerStatus;
+	@ApiModelProperty("答案状态:空是待开奖,0是未中奖,1中奖")
+	private Integer userGetAwardStatus;
 
 	@ApiModelProperty("人数")
 	private Integer numOfPeople;
@@ -46,9 +46,9 @@ public class MatchInfoDTO {
 	@ApiModelProperty("奖池金额")
 	private String bonusPool;
 
+	@ApiModelProperty("获奖金额")
+	private String reward;
+
 	@ApiModelProperty("问题及答案")
 	private List<QuestionAndAnswersDTO> questionAndAnswersList;
-
-	// @ApiModelProperty("用户答案")
-	// private List<QuestionAndAnswersDTO> userAnswersList;
 }
