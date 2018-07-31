@@ -173,8 +173,8 @@ public class DlQuestionsAndAnswersUserController {
 			} else if (questionsAndAnswers.getEndTime() < currentTime) {
 				matchInfo.setAnswerTimeStatus(0);
 			}
-			// Integer userId = SessionUtil.getUserId();
-			Integer userId = 400419;
+			Integer userId = SessionUtil.getUserId();
+			// Integer userId = 400419;
 			// 判断用户是否登录
 			if (userId != null) {
 				// 查询用户是否答题
