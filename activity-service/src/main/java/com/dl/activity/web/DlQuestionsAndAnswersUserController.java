@@ -118,7 +118,7 @@ public class DlQuestionsAndAnswersUserController {
 			if (prizewinningNum.compareTo(bigDecimal) == 0) {
 				beforePeriodNote.setReward("0");
 			} else {
-				beforePeriodNote.setReward(bonusPool.divide(prizewinningNum, 3, BigDecimal.ROUND_HALF_DOWN).toString());
+				beforePeriodNote.setReward(bonusPool.divide(prizewinningNum, 2, BigDecimal.ROUND_HALF_DOWN).toString());
 			}
 		}
 		return ResultGenerator.genSuccessResult(null, beforePeriodNote);
