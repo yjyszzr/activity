@@ -195,11 +195,9 @@ public class DlQuestionsAndAnswersUserController {
 					String currentDate = DateUtilNew.getCurrentYearMonthDay();
 					// String currentDate = "2018-05-08";
 
-					// BigDecimal bigAmount =
-					// dlQuestionsAndAnswersUserService.getTodayAllOrderAmount(userId,
-					// currentDate);
+					BigDecimal bigAmount = dlQuestionsAndAnswersUserService.getTodayAllOrderAmount(userId, currentDate);
 					// 临时测试使用
-					BigDecimal bigAmount = new BigDecimal(500);
+					// BigDecimal bigAmount = new BigDecimal(500);
 					// 临时测试使用
 					if (bigAmount == null) {
 						bigAmount = new BigDecimal(0);
