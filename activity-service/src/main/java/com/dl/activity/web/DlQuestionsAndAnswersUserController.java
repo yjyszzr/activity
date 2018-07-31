@@ -124,13 +124,18 @@ public class DlQuestionsAndAnswersUserController {
 		return ResultGenerator.genSuccessResult(null, beforePeriodNote);
 	}
 
+	@SuppressWarnings("unused")
 	@ApiOperation(value = "用户竞猜答题列表", notes = "用户竞猜答题列表")
 	@PostMapping("/userAnswersList")
 	public BaseResult<List<UserPeriodDTO>> userAnswersList(@RequestBody StrParam strParam) {
-		Integer userId = SessionUtil.getUserId();
-		// Integer userId = 400093;
-		List<UserPeriodDTO> periodList = dlQuestionsAndAnswersUserService.findByUserId(userId);
-		return ResultGenerator.genSuccessResult(null, periodList);
+		 Integer userId = SessionUtil.getUserId();
+//		Integer userId = 400397;
+		if (userId != null) {
+			List<UserPeriodDTO> periodList = dlQuestionsAndAnswersUserService.findByUserId(userId);
+			return ResultGenerator.genSuccessResult(null, periodList);
+		} else {
+			return ResultGenerator.genSuccessResult("用户未登录");
+		}
 	}
 
 	/**
@@ -161,8 +166,8 @@ public class DlQuestionsAndAnswersUserController {
 			} else if (questionsAndAnswers.getEndTime() < currentTime) {
 				matchInfo.setAnswerTimeStatus(0);
 			}
-			Integer userId = SessionUtil.getUserId();
-			// Integer userId = 400408;
+			 Integer userId = SessionUtil.getUserId();
+//			Integer userId = 400419;
 			// 判断用户是否登录
 			if (userId != null) {
 				// 查询用户是否答题
