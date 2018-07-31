@@ -37,7 +37,7 @@ public class MatchInfoDTO {
 	@ApiModelProperty("答题时间状态:0已结束,1开始,2未开始")
 	private Integer answerTimeStatus;
 
-	@ApiModelProperty("答案状态:0是未中奖,1中奖,2待开奖,3未投注")
+	@ApiModelProperty("答案状态:0是未中奖,1中奖,2派奖,3未投注4待开奖")
 	private Integer userGetAwardStatus;
 
 	@ApiModelProperty("人数")
