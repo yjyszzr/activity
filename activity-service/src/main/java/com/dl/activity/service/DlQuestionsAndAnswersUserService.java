@@ -49,9 +49,7 @@ public class DlQuestionsAndAnswersUserService extends AbstractService<DlQuestion
 
 	@Transactional(value = "transactionManager1")
 	public List<UserPeriodDTO> findByUserId(Integer userId) {
-		Condition c = new Condition(DlQuestionsAndAnswersUser.class);
-		c.createCriteria().andEqualTo("userId", userId);
-		List<DlQuestionsAndAnswersUser> questionsAndAnswersUserList = this.findByCondition(c);
+		List<DlQuestionsAndAnswersUser> questionsAndAnswersUserList = dlQuestionsAndAnswersUserMapper.findByUserId(userId);
 		List<UserPeriodDTO> userPeriodlist = new ArrayList<UserPeriodDTO>();
 		for (int i = 0; i < questionsAndAnswersUserList.size(); i++) {
 			UserPeriodDTO userPeriod = new UserPeriodDTO();

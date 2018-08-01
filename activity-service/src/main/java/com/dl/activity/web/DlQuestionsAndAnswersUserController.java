@@ -128,8 +128,8 @@ public class DlQuestionsAndAnswersUserController {
 	@ApiOperation(value = "用户竞猜答题列表", notes = "用户竞猜答题列表")
 	@PostMapping("/userAnswersList")
 	public BaseResult<List<UserPeriodDTO>> userAnswersList(@RequestBody StrParam strParam) {
-		Integer userId = SessionUtil.getUserId();
-		// Integer userId = 400397;
+		// Integer userId = SessionUtil.getUserId();
+		Integer userId = 400397;
 		if (userId != null) {
 			List<UserPeriodDTO> periodList = dlQuestionsAndAnswersUserService.findByUserId(userId);
 			return ResultGenerator.genSuccessResult(null, periodList);
