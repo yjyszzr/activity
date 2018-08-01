@@ -92,13 +92,14 @@ public class DlQuestionsAndAnswersUserController {
 		questionsAndAnswers = dlQuestionsAndAnswersService.getQuestionsAndAnswers(matchIdParam.getMatchId());
 		answersNote = dlQuestionsAndAnswersService.findBeforePeriodNoteBymatchId(questionsAndAnswers.getId());
 		Integer userId = SessionUtil.getUserId();
-		// Integer userId = 400408;
+		// Integer userId = 400429;
 		BeforePeriodNoteDTO beforePeriodNote = new BeforePeriodNoteDTO();
 		if (userId != null) {
 			DlQuestionsAndAnswersUser userAnswerInfo = dlQuestionsAndAnswersUserService.findUserAnswerMatchId(answersNote.getMatchId(), userId);
 			// 判断上期是否参与
 			if (userAnswerInfo == null) {
 				beforePeriodNote.setParticipateOrNot(0);
+				beforePeriodNote.setGetAwardOrNot(0);
 			} else {
 				// 判断是否中奖
 				if (null == userAnswerInfo.getGetAward() || userAnswerInfo.getGetAward() == 0) {
