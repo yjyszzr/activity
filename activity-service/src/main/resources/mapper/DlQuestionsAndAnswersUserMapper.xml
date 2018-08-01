@@ -13,6 +13,11 @@
     <result column="get_award" jdbcType="TINYINT" property="getAward" />
     <result column="bonus_amount" jdbcType="DECIMAL" property="bonusAmount" />
   </resultMap>
+  <resultMap id="questionsAndAnswersUserMap" type="com.dl.activity.model.DlQuestionsAndAnswersUser">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="match_id" jdbcType="INTEGER" property="matchId" />
+    <result column="period" jdbcType="VARCHAR" property="period" />
+  </resultMap>
   
   <select  id = "getTodayAllOrderAmount"  resultType="java.math.BigDecimal" >
 		SELECT
@@ -24,7 +29,7 @@
 			AND user_id = #{userId}
 			AND DATE_FORMAT( FROM_UNIXTIME( pay_time ), '%Y-%m-%d' ) = #{currentTime}
 	  </select>
-	<select id="findByUserId" resultType="com.dl.activity.model.DlQuestionsAndAnswersUser">
+	<select id="findByUserId" resultMap="questionsAndAnswersUserMap">
 		 select * from  dl_questions_and_answers_user where user_id = #{userId} order By  answer_time DESC
 	</select>
 </mapper>
