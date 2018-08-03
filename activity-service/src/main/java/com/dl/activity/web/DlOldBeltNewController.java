@@ -35,6 +35,7 @@ import com.dl.base.result.BaseResult;
 import com.dl.base.result.ResultGenerator;
 import com.dl.base.util.RandomUtil;
 import com.dl.base.util.RegexUtil;
+import com.dl.base.util.SessionUtil;
 
 /**
  * Created by CodeGenerator on 2018/07/17.
@@ -156,8 +157,8 @@ public class DlOldBeltNewController {
 	@ApiOperation(value = "分享链接userId", notes = "分享链接userId")
 	@PostMapping("/shareMyLinks")
 	public BaseResult<DlShareLinkDTO> shareMyLinks(@RequestBody StrParam strParam) {
-		// Integer userId = SessionUtil.getUserId();
-		Integer userId = 400387;
+		Integer userId = SessionUtil.getUserId();
+		// Integer userId = 400387;
 		DlShareLinkDTO shareLink = new DlShareLinkDTO();
 		String ecodeUserId = AESUtils.ecodes(userId.toString(), AESUtils.INVITING_SECRET_KEY);
 		shareLink.setUserld(ecodeUserId);
@@ -173,33 +174,39 @@ public class DlOldBeltNewController {
 	@ApiOperation(value = "邀请人数和奖励", notes = "邀请人数和奖励")
 	@PostMapping("/invitationNumAndReward")
 	public BaseResult<DlNumAndRewardDTO> invitationNumAndReward(@RequestBody StrParam strParam) {
-		// Integer userId = SessionUtil.getUserId();
-		Integer userId = 400387;
-		List<DlOldBeltNew> dlOldBeltNewList = dlOldBeltNewService.finInvitationsByUserId(userId);
+		Integer userId = SessionUtil.getUserId();
+		// Integer userId = 400387;
 		Integer rewardAmount = 0;
 		Integer invitationNum = 0;
-		for (int i = 0; i < dlOldBeltNewList.size(); i++) {
-			if (dlOldBeltNewList.get(i).getConsumptionStatus() == 1) {
-				rewardAmount += 20;
-				invitationNum++;
-			}
-		}
-		if (invitationNum >= 10 && invitationNum < 20) {
-			rewardAmount += 15;
-		} else if (invitationNum >= 20 && invitationNum < 30) {
-			rewardAmount += 30;
-		} else if (invitationNum >= 30 && invitationNum < 40) {
-			rewardAmount += 50;
-		} else if (invitationNum >= 40 && invitationNum < 50) {
-			rewardAmount += 70;
-		} else if (invitationNum >= 50 && invitationNum < 100) {
-			rewardAmount += 100;
-		} else if (invitationNum >= 100) {
-			rewardAmount += 200;
-		}
 		DlNumAndRewardDTO numAndReward = new DlNumAndRewardDTO();
-		numAndReward.setInvitationNum(invitationNum);
-		numAndReward.setReward(rewardAmount);
+		if (userId != null) {
+			List<DlOldBeltNew> dlOldBeltNewList = dlOldBeltNewService.finInvitationsByUserId(userId);
+			for (int i = 0; i < dlOldBeltNewList.size(); i++) {
+				if (dlOldBeltNewList.get(i).getConsumptionStatus() == 1) {
+					rewardAmount += 20;
+					invitationNum++;
+				}
+			}
+			if (invitationNum >= 10 && invitationNum < 20) {
+				rewardAmount += 15;
+			} else if (invitationNum >= 20 && invitationNum < 30) {
+				rewardAmount += 30;
+			} else if (invitationNum >= 30 && invitationNum < 40) {
+				rewardAmount += 50;
+			} else if (invitationNum >= 40 && invitationNum < 50) {
+				rewardAmount += 70;
+			} else if (invitationNum >= 50 && invitationNum < 100) {
+				rewardAmount += 100;
+			} else if (invitationNum >= 100) {
+				rewardAmount += 200;
+			}
+			numAndReward.setInvitationNum(invitationNum.toString());
+			numAndReward.setReward(rewardAmount.toString());
+		} else {
+			numAndReward.setInvitationNum("-");
+			numAndReward.setReward("-");
+		}
+
 		return ResultGenerator.genSuccessResult(null, numAndReward);
 	}
 }

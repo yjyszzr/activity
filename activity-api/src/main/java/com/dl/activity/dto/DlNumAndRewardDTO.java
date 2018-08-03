@@ -9,9 +9,9 @@ import lombok.Data;
 public class DlNumAndRewardDTO {
 
 	@ApiModelProperty("邀请人数")
-	private Integer invitationNum;
+	private String invitationNum;
 
 	@ApiModelProperty("奖金")
-	private Integer reward;
+	private String reward;
 
 }
