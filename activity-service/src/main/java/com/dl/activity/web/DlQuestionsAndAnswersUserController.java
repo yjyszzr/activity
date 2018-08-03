@@ -92,25 +92,26 @@ public class DlQuestionsAndAnswersUserController {
 		questionsAndAnswers = dlQuestionsAndAnswersService.getQuestionsAndAnswers(matchIdParam.getMatchId());
 		answersNote = dlQuestionsAndAnswersService.findBeforePeriodNoteBymatchId(questionsAndAnswers.getId());
 		Integer userId = SessionUtil.getUserId();
-		// Integer userId = 400429;
-		BeforePeriodNoteDTO beforePeriodNote = new BeforePeriodNoteDTO();
-		if (userId != null) {
-			DlQuestionsAndAnswersUser userAnswerInfo = dlQuestionsAndAnswersUserService.findUserAnswerMatchId(answersNote.getMatchId(), userId);
-			// 判断上期是否参与
-			if (userAnswerInfo == null) {
-				beforePeriodNote.setParticipateOrNot(0);
-				beforePeriodNote.setGetAwardOrNot(0);
-			} else {
-				// 判断是否中奖
-				if (null == userAnswerInfo.getGetAward() || userAnswerInfo.getGetAward() == 0) {
+		// Integer userId = 400419;
+		BeforePeriodNoteDTO beforePeriodNote = null;
+		if (answersNote != null) {
+			beforePeriodNote = new BeforePeriodNoteDTO();
+			if (userId != null) {
+				DlQuestionsAndAnswersUser userAnswerInfo = dlQuestionsAndAnswersUserService.findUserAnswerMatchId(answersNote.getMatchId(), userId);
+				// 判断上期是否参与
+				if (userAnswerInfo == null) {
+					beforePeriodNote.setParticipateOrNot(0);
 					beforePeriodNote.setGetAwardOrNot(0);
 				} else {
-					beforePeriodNote.setGetAwardOrNot(1);
+					// 判断是否中奖
+					if (null == userAnswerInfo.getGetAward() || userAnswerInfo.getGetAward() == 0) {
+						beforePeriodNote.setGetAwardOrNot(0);
+					} else {
+						beforePeriodNote.setGetAwardOrNot(1);
+					}
+					beforePeriodNote.setParticipateOrNot(1);
 				}
-				beforePeriodNote.setParticipateOrNot(1);
 			}
-		}
-		if (answersNote != null) {
 			beforePeriodNote.setBonusPool(answersNote.getBonusPool().toString());
 			beforePeriodNote.setNumOfPeople(answersNote.getPrizewinningNum() == null ? 0 : answersNote.getPrizewinningNum());
 			BigDecimal bonusPool = new BigDecimal(answersNote.getBonusPool().toString());
@@ -121,6 +122,8 @@ public class DlQuestionsAndAnswersUserController {
 			} else {
 				beforePeriodNote.setReward(bonusPool.divide(prizewinningNum, 2, BigDecimal.ROUND_HALF_DOWN).toString());
 			}
+		} else {
+
 		}
 		return ResultGenerator.genSuccessResult(null, beforePeriodNote);
 	}
