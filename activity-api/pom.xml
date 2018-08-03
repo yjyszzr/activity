@@ -51,7 +51,19 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
-
+	<distributionManagement>
+	        <repository>
+	            <id>deployRelease</id>
+	            <name>pugutang Internal Repository</name>
+	            <url>http://39.107.121.76:8081/repository/maven-releases/</url>
+	        </repository>
+	        <snapshotRepository>
+	            <id>deploySnapshot</id>
+	            <name>pugutang Internal Repository</name>
+	            <url>http://39.107.121.76:8081/repository/maven-snapshots/</url>
+	            <uniqueVersion>false</uniqueVersion>
+	        </snapshotRepository>
+	 </distributionManagement>
     <build>
         <plugins>
             <plugin>
