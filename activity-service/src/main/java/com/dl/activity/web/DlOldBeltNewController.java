@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import tk.mybatis.mapper.entity.Condition;
+
 import com.dl.activity.config.MemberConfig;
 import com.dl.activity.core.ProjectConstant;
 import com.dl.activity.dto.DlNumAndRewardDTO;
@@ -141,7 +143,12 @@ public class DlOldBeltNewController {
 			dlOldBeltNew.setInviterEncryptionUserId(userRegisterParam.getInvitationUserId());
 			dlOldBeltNew.setInviterUserId(Integer.parseInt(dcodeUserId));
 			dlOldBeltNew.setRegisterUserId(userId);
-			dlOldBeltNewService.save(dlOldBeltNew);
+			Condition condition = new Condition(DlOldBeltNew.class);
+			condition.createCriteria().andCondition("register_user_id =", userId);
+			List<DlOldBeltNew> dlOldBeltNewList = dlOldBeltNewService.findByCondition(condition);
+			if (dlOldBeltNewList.size() == 0) {
+				dlOldBeltNewService.save(dlOldBeltNew);
+			}
 			stringRedisTemplate.delete(ProjectConstant.SMS_PREFIX + ProjectConstant.REGISTER_TPLID + "_" + userRegisterParam.getMobile());
 			return ResultGenerator.genSuccessResult("领取成功!");
 		}
