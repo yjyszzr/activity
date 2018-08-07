@@ -80,7 +80,7 @@ public class DlOldBeltNewController {
 		if (ProjectConstant.VERIFY_TYPE_REG.equals(smsType)) {
 			User user = userService.findBy("mobile", smsParam.getMobile());
 			if (user != null) {
-				if (user.getRegFrom().equals("老带新")) {
+				if (user.getRegFrom().equals("ldx")) {// 判断是不是老带新活动的老用户
 					return ResultGenerator.genResult(VerificationEnums.ALREADY_REGISTER_AND_RECEIVE_REWARD.getcode(), VerificationEnums.ALREADY_REGISTER_AND_RECEIVE_REWARD.getMsg());
 				}
 				return ResultGenerator.genResult(VerificationEnums.ALREADY_REGISTER.getcode(), VerificationEnums.ALREADY_REGISTER.getMsg());
