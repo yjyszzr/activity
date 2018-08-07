@@ -189,7 +189,7 @@ public class DlOldBeltNewController {
 		if (userId != null) {
 			List<DlOldBeltNew> dlOldBeltNewList = dlOldBeltNewService.finInvitationsByUserId(userId);
 			for (int i = 0; i < dlOldBeltNewList.size(); i++) {
-				if (dlOldBeltNewList.get(i).getConsumptionStatus() == 1) {
+				if (dlOldBeltNewList.get(i).getConsumptionStatus() == 2) {
 					rewardAmount += 20;
 					invitationNum++;
 				}
