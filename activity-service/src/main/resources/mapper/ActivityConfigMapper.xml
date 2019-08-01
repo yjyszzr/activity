@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dl.activity.dao.ActivityConfigMapper">
+  <resultMap id="BaseResultMap" type="com.dl.activity.model.ActivityConfig">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="act_id" jdbcType="INTEGER" property="act_id" />
+    <result column="gear_position" jdbcType="VARCHAR" property="gear_position" />
+    <result column="gear_position_money" jdbcType="VARCHAR" property="gear_position_money" />
+  </resultMap>
+  
+</mapper>
