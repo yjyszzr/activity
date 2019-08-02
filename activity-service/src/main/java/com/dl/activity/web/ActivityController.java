@@ -1,5 +1,7 @@
 package com.dl.activity.web;
 
+import java.math.BigDecimal;
+
 import javax.annotation.Resource;
 
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -20,9 +22,11 @@ import com.dl.base.result.BaseResult;
 import com.dl.base.result.ResultGenerator;
 import com.dl.base.util.DateUtil;
 import com.dl.base.util.SessionUtil;
+import com.dl.member.api.IUserAccountService;
 import com.dl.member.api.IUserService;
 import com.dl.member.dto.UserDTO;
 import com.dl.member.enums.MemberEnums;
+import com.dl.member.param.RecharegeParam;
 import com.dl.member.param.UserIdParam;
 import com.github.pagehelper.util.StringUtil;
 
@@ -42,6 +46,9 @@ public class ActivityController {
 	
 	@Resource
 	private ActivityAccountService activityAccountService;
+	
+	@Resource
+	private IUserAccountService userAccountService;
 	
 	@Resource
 	private IUserService userService;
@@ -183,4 +190,55 @@ public class ActivityController {
 		}
 		return ResultGenerator.genSuccessResult("succ", "success");
 	}
+	
+	/**
+	 * 提取收益  收益转现
+	 * 
+	 * @param strParam
+	 * @return
+	 */
+	@ApiOperation(value = "提取收益", notes = "提取收益")
+	@PostMapping("/rewardToMoney")
+	public BaseResult<String> rewardToMoney(@RequestBody StrParam strParam) {
+		Integer userId = SessionUtil.getUserId();
+		int currentTime = DateUtil.getCurrentTimeLong();
+		UserIdParam userIdParam = new UserIdParam();
+		userIdParam.setUserId(userId);
+		BaseResult<UserDTO> buserDto = userService.queryUserInfo(userIdParam);
+		if(buserDto!=null && buserDto.getData()!=null) {
+			UserDTO userDto = buserDto.getData();
+			//1获取邀请人信息
+			double reward = Double.parseDouble(StringUtil.isNotEmpty(strParam.getStr())?strParam.getStr():"0");//提取金额
+			ActivityUserInfo activityUserInfo = activityUserInfoService.getUserInfoByUserId(userDto.getParentUserId());
+			if(activityUserInfo!=null) {//有数据则修改
+				double withdrawable_reward = StringUtil.isNotEmpty(activityUserInfo.getWithdrawable_reward())?Double.parseDouble(activityUserInfo.getWithdrawable_reward()):0;
+				if(withdrawable_reward>=reward) {//可提取金额大于等于提取金额
+					activityUserInfo.setWithdrawable_reward((withdrawable_reward-reward)+"");
+					activityUserInfoService.updateActivityUserInfoByParentId(activityUserInfo);
+					//5.记录推广活动收益流水
+					ActivityAccount account = new ActivityAccount();
+					account.setUser_id(userId);
+					account.setMobile(userDto.getMobile());
+					account.setAdd_time(currentTime);
+					account.setReward_money(reward+"");
+					account.setType(ActivityAccountEnums.TYPE_7.getCode());
+					activityAccountService.insertActivityAccount(account);
+					
+					//更改用户余额并记录账户流水
+					RecharegeParam recharegeParam = new RecharegeParam();
+					recharegeParam.setAmount(BigDecimal.valueOf(reward));
+					recharegeParam.setUserId(userId);
+					recharegeParam.setPayId("8");
+					recharegeParam.setGiveAmount("0");
+					recharegeParam.setOrderSn(userId+""+currentTime);
+					userAccountService.activityRewardUserMoney(recharegeParam);
+				}
+			}
+		}else {
+			return ResultGenerator.genFailResult("用户不存在！");
+		}
+		return ResultGenerator.genSuccessResult("succ", "success");
+	}
+	
+	
 }
