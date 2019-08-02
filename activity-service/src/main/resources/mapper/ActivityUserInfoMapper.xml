@@ -19,5 +19,55 @@
   	<result column="invitation_add_reward" jdbcType="VARCHAR" property="invitation_add_reward" />
   </resultMap>
   
+  <insert id="insertActivityUserInfo" parameterType="BaseResultMap">
+	insert into dl_activity_user_info(
+		id,
+		user_id,
+		mobile,
+		invitation_number,
+		invitation_number_reward,
+		history_invitation_number,
+		history_invitation_number_reward,
+		withdrawable_reward,
+		history_total_withdrawable_reward,
+		month_return_reward,
+		history_total_return_reward,
+		invitation_add_reward
+	)values(
+		UUID(),
+		#{user_id},
+		#{mobile},
+		#{invitation_number},
+		#{invitation_number_reward},
+		#{history_invitation_number},
+		#{history_invitation_number_reward},
+		#{withdrawable_reward},
+		#{history_total_withdrawable_reward},
+		#{month_return_reward},
+		#{history_total_return_reward},
+		#{invitation_add_reward}
+	)
+  </insert>
+  
+  <select id="getUserInfoByUserId" parameterType="java.lang.String" resultType="BaseResultMap">
+  		select * from dl_activity_user_info	WHERE  user_id = #{user_id}
+  </select>
+  
+  <update id="updateActivityUserInfoByParentId" parameterType="BaseResultMap">
+  		UPDATE 
+  			dl_activity_user_info  
+		SET
+	  		 invitation_number = #{invitation_number},
+	  		 invitation_number_reward = #{invitation_number_reward},
+	  		 history_invitation_number = #{history_invitation_number},
+	  		 history_invitation_number_reward = #{history_invitation_number_reward},
+	  		 withdrawable_reward = #{withdrawable_reward},
+	  		 history_total_withdrawable_reward = #{history_total_withdrawable_reward},
+	  		 month_return_reward = #{month_return_reward},
+	  		 history_total_return_reward = #{history_total_return_reward},
+	  		 invitation_add_reward = #{invitation_add_reward}
+	  	WHERE 
+	  		user_id = #{user_id}
+  </update>
   
 </mapper>

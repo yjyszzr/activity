@@ -18,4 +18,12 @@ public class ActivityAccountService extends AbstractService<ActivityAccount> {
 	@Resource
 	private ActivityAccountMapper activityAccountMapper;
 
+	/**
+	 * 记录推广活动收益流水
+	 * @param account
+	 * @return
+	 */
+	public Integer insertActivityAccount(ActivityAccount account) {
+		return activityAccountMapper.insertActivityAccount(account);
+	}
 }
