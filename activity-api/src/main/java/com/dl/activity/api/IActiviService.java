@@ -17,4 +17,12 @@ public interface IActiviService {
      */
     @PostMapping("/activity/invitationNumAndReward")
     BaseResult<String> invitationNumAndReward(@RequestBody StrParam strParam);
+    
+    /**
+     * 推广活动-购彩累计
+     * @param 
+     * @return
+     */
+    @PostMapping("/activity/buyLotteryRerurnReward")
+    BaseResult<String> buyLotteryRerurnReward(@RequestBody StrParam strParam);
 }

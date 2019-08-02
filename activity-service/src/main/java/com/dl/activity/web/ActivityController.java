@@ -92,7 +92,11 @@ public class ActivityController {
 					}else {//没有邀请人信息  插入
 						activityUserInfo = new ActivityUserInfo();
 						activityUserInfo.setUser_id(userDto.getParentUserId());
-						activityUserInfo.setMobile(userDto.getMobile());
+						userIdParam.setUserId(userDto.getParentUserId());
+						BaseResult<UserDTO> parentbuser = userService.queryUserInfo(userIdParam);
+						if(parentbuser!=null && parentbuser.getData()!=null) {
+							activityUserInfo.setMobile(parentbuser.getData().getMobile());
+						}
 						activityUserInfo.setInvitation_number(1);
 						activityUserInfo.setInvitation_number_reward(reward+"");
 						activityUserInfo.setHistory_invitation_number(1);
@@ -109,8 +113,69 @@ public class ActivityController {
 					account.setUser_id(userDto.getParentUserId());
 					account.setMobile(userDto.getMobile());
 					account.setAdd_time(currentTime);
+					account.setReward_money(reward+"");
 					account.setType(ActivityAccountEnums.TYPE_1.getCode());
 					activityAccountService.insertActivityAccount(account);
+				}
+			}else {
+				return ResultGenerator.genFailResult("用户不存在！");
+			}
+		}
+		return ResultGenerator.genSuccessResult("succ", "success");
+	}
+	
+	/**
+	 * 累计消费返利
+	 * 
+	 * @param strParam
+	 * @return
+	 */
+	@ApiOperation(value = "购彩返利", notes = "购彩返利")
+	@PostMapping("/buyLotteryRerurnReward")
+	public BaseResult<String> buyLotteryRerurnReward(@RequestBody StrParam strParam) {
+		Integer userId = SessionUtil.getUserId();
+		//推广活动流程begin
+		//1.查询推广活动是否有效
+		Activity activity = activityService.queryActivity(3);//参数3是荣耀奖
+		if(activity==null) {//没有活动
+			return ResultGenerator.genResult(MemberEnums.ACTIVITY_NOT_VALID.getcode(), MemberEnums.ACTIVITY_NOT_VALID.getMsg());
+		}
+		//2.判断此次购彩时间是否在活动期间 在活动期间则修改用用户信息表未生效
+		int currentTime = DateUtil.getCurrentTimeLong();
+		if(Integer.valueOf(activity.getStart_time())<=currentTime && Integer.valueOf(activity.getEnd_time())>=currentTime) {
+			//3.查询当前是否二级用户，奖励是否已经领取过（生效）
+			UserIdParam userIdParam = new UserIdParam();
+			userIdParam.setUserId(userId);
+			BaseResult<UserDTO> buserDto = userService.queryUserInfo(userIdParam);
+			if(buserDto!=null && buserDto.getData()!=null) {
+				UserDTO userDto = buserDto.getData();
+				if(userDto.getIsStatus()==1 && userDto.getParentUserId()!=null && !"".equals(userDto.getParentUserId().toString())) {//是二级用户且已经充值103
+					//4.维护推广活动用户信息
+					double buyMoney = Double.parseDouble(StringUtil.isNotEmpty(strParam.getStr())?strParam.getStr():"0");//购彩金额
+					int returnBl = activity.getNumber()/100;//购彩返利百分比
+					double reward = 0;
+					if(buyMoney>0) {
+						reward = buyMoney*returnBl/100;
+					}
+						//4.1获取当前用户的邀请人信息
+					ActivityUserInfo activityUserInfo = activityUserInfoService.getUserInfoByUserId(userDto.getParentUserId());
+					if(activityUserInfo!=null) {//有数据则修改
+						activityUserInfo.setMonth_return_reward((StringUtil.isNotEmpty(activityUserInfo.getMonth_return_reward())?(Double.parseDouble(activityUserInfo.getMonth_return_reward())+reward):reward)+"");
+						activityUserInfo.setHistory_total_return_reward((StringUtil.isNotEmpty(activityUserInfo.getHistory_total_return_reward())?(Double.parseDouble(activityUserInfo.getHistory_total_return_reward())+reward):reward)+"");
+						activityUserInfo.setWithdrawable_reward((StringUtil.isNotEmpty(activityUserInfo.getWithdrawable_reward())?(Double.parseDouble(activityUserInfo.getWithdrawable_reward())+reward):reward)+"");
+						activityUserInfo.setHistory_total_withdrawable_reward((StringUtil.isNotEmpty(activityUserInfo.getHistory_total_withdrawable_reward())?(Double.parseDouble(activityUserInfo.getHistory_total_withdrawable_reward())+reward):reward)+"");
+						activityUserInfo.setInvitation_add_reward((StringUtil.isNotEmpty(activityUserInfo.getInvitation_add_reward())?(Double.parseDouble(activityUserInfo.getInvitation_add_reward())+buyMoney):buyMoney)+"");
+						activityUserInfoService.updateActivityUserInfoByParentId(activityUserInfo);
+						
+						//5.记录推广活动收益流水
+						ActivityAccount account = new ActivityAccount();
+						account.setUser_id(userDto.getParentUserId());
+						account.setMobile(userDto.getMobile());
+						account.setAdd_time(currentTime);
+						account.setReward_money(reward+"");
+						account.setType(ActivityAccountEnums.TYPE_3.getCode());
+						activityAccountService.insertActivityAccount(account);
+					}
 				}
 			}else {
 				return ResultGenerator.genFailResult("用户不存在！");
