@@ -9,7 +9,7 @@
       <result column="act_id" jdbcType="INTEGER" property="act_id" />
       <result column="user_id" jdbcType="INTEGER" property="user_id" />
       <result column="gear_position" jdbcType="VARCHAR" property="gear_position" />
-      <result column="gear_position_money" jdbcType="VARCHAR" property="gear_position_money" />
+      <result column="config_id" jdbcType="INTEGER" property="config_id" />
       <result column="add_time" jdbcType="TIMESTAMP" property="add_time" />
   </resultMap>
 

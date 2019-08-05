@@ -17,7 +17,7 @@
     <result column="purchase_num" jdbcType="INTEGER" property="purchase_num" />
     <result column="status" jdbcType="INTEGER" property="status" />
     <result column="use_range" jdbcType="INTEGER" property="use_range" />
-    <result column="reward_money" jdbcType="VARCHAR" property="reward_money" />
+    <result column="reward_money" jdbcType="DOUBLE" property="reward_money" />
     <result column="number" jdbcType="INTEGER" property="number" />
     <result column="is_del" jdbcType="VARCHAR" property="is_del" />
   </resultMap>
