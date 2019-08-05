@@ -19,7 +19,7 @@
       <result column="invitation_add_reward" jdbcType="DECIMAL" property="invitation_add_reward" />
   </resultMap>
   
-  <insert id="insertActivityUserInfo" parameterType="BaseResultMap">
+  <insert id="insertActivityUserInfo" parameterType="com.dl.activity.model.ActivityUserInfo">
 	insert into dl_activity_user_info(
 		id,
 		user_id,
@@ -49,11 +49,11 @@
 	)
   </insert>
   
-  <select id="getUserInfoByUserId" parameterType="java.lang.String" resultType="BaseResultMap">
+  <select id="getUserInfoByUserId" parameterType="java.lang.String" resultMap="BaseResultMap">
   		select * from dl_activity_user_info	WHERE  user_id = #{user_id}
   </select>
   
-  <update id="updateActivityUserInfoByParentId" parameterType="BaseResultMap">
+  <update id="updateActivityUserInfoByParentId" parameterType="com.dl.activity.model.ActivityUserInfo">
   		UPDATE 
   			dl_activity_user_info  
 		SET

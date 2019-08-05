@@ -9,7 +9,7 @@
     <result column="user_id" jdbcType="INTEGER" property="user_id" />
     <result column="mobile" jdbcType="VARCHAR" property="mobile" />
     <result column="add_time" jdbcType="INTEGER" property="add_time" />
-    <result column="reward_money" jdbcType="VARCHAR" property="reward_money" />
+    <result column="reward_money" jdbcType="DOUBLE" property="reward_money" />
     <result column="type" jdbcType="INTEGER" property="type" />
   </resultMap>
   
