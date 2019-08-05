@@ -11,8 +11,8 @@
     <result column="act_type" jdbcType="INTEGER" property="act_type" />
     <result column="act_img" jdbcType="VARCHAR" property="act_img" />
     <result column="act_url" jdbcType="VARCHAR" property="act_url" />
-    <result column="start_time" jdbcType="VARCHAR" property="start_time" />
-    <result column="end_time" jdbcType="VARCHAR" property="end_time" />
+    <result column="start_time" jdbcType="INTEGER" property="start_time" />
+    <result column="end_time" jdbcType="INTEGER" property="end_time" />
     <result column="is_finish" jdbcType="INTEGER" property="is_finish" />
     <result column="purchase_num" jdbcType="INTEGER" property="purchase_num" />
     <result column="status" jdbcType="INTEGER" property="status" />
@@ -21,13 +21,13 @@
     <result column="number" jdbcType="INTEGER" property="number" />
     <result column="is_del" jdbcType="VARCHAR" property="is_del" />
   </resultMap>
-  
-  <select id ="queryActivityList" parameterType="BaseResultMap" resultMap="BaseResultMap">
-  	select * from dl_activity where is_finish=0 and is_del=0 and start_time and start_time<=UNIX_TIMESTAMP(NOW()) and end_time>=UNIX_TIMESTAMP(NOW())
+
+  <select id ="queryActivityList"  resultMap="BaseResultMap">
+  	select * from dl_activity where is_finish=0 and is_del=0  and start_time &lt;= UNIX_TIMESTAMP(NOW()) and end_time &gt;= UNIX_TIMESTAMP(NOW())
   </select>
-  
+
   <select id ="getActivity" parameterType="INTEGER" resultMap="BaseResultMap">
-  	select * from dl_activity where is_finish=0 and is_del=0 and start_time and start_time<=UNIX_TIMESTAMP(NOW()) and end_time>=UNIX_TIMESTAMP(NOW()) and act_type=#{act_type}
+  	select * from dl_activity where is_finish=0 and is_del=0 and start_time and start_time &lt;= UNIX_TIMESTAMP(NOW()) and end_time &gt;= UNIX_TIMESTAMP(NOW()) and act_type=#{act_type}
   </select>
   
 </mapper>

@@ -13,7 +13,7 @@
     <result column="type" jdbcType="INTEGER" property="type" />
   </resultMap>
   
-  <insert id="insertActivityAccount" parameterType="BaseResultMap">
+  <insert id="insertActivityAccount" parameterType="com.dl.activity.model.ActivityAccount">
   	insert into dl_activity_account(
   		id,
   		user_id,

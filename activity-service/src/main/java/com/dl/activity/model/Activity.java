@@ -1,7 +1,8 @@
 package com.dl.activity.model;
 
-import java.math.BigDecimal;
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Table(name = "dl_activity")
 public class Activity {
@@ -45,13 +46,13 @@ public class Activity {
      * 活动开始时间
      */
     @Column(name = "start_time")
-    private String start_time;
+    private Integer start_time;
     
     /**
      * 活动结束时间
      */
     @Column(name = "end_time")
-    private String end_time;
+    private Integer end_time;
     
     /**
      * 活动状态 0-有效 1-无效	
@@ -143,19 +144,19 @@ public class Activity {
 		this.act_url = act_url;
 	}
 
-	public String getStart_time() {
+	public Integer getStart_time() {
 		return start_time;
 	}
 
-	public void setStart_time(String start_time) {
+	public void setStart_time(Integer start_time) {
 		this.start_time = start_time;
 	}
 
-	public String getEnd_time() {
+	public Integer getEnd_time() {
 		return end_time;
 	}
 
-	public void setEnd_time(String end_time) {
+	public void setEnd_time(Integer end_time) {
 		this.end_time = end_time;
 	}
 
