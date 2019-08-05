@@ -1,15 +1,5 @@
 package com.dl.activity.web;
 
-import java.math.BigDecimal;
-
-import javax.annotation.Resource;
-
-import org.springframework.data.redis.core.StringRedisTemplate;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
 import com.dl.activity.enums.ActivityAccountEnums;
 import com.dl.activity.model.Activity;
 import com.dl.activity.model.ActivityAccount;
@@ -29,8 +19,15 @@ import com.dl.member.enums.MemberEnums;
 import com.dl.member.param.RecharegeParam;
 import com.dl.member.param.UserIdParam;
 import com.github.pagehelper.util.StringUtil;
-
 import io.swagger.annotations.ApiOperation;
+import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import javax.annotation.Resource;
+import java.math.BigDecimal;
 
 /**
  * Created by CodeGenerator on 2018/07/17.
@@ -120,7 +117,7 @@ public class ActivityController {
 					account.setUser_id(userDto.getParentUserId());
 					account.setMobile(userDto.getMobile());
 					account.setAdd_time(currentTime);
-					account.setReward_money(reward+"");
+					account.setReward_money(reward);
 					account.setType(ActivityAccountEnums.TYPE_1.getCode());
 					activityAccountService.insertActivityAccount(account);
 				}
@@ -179,7 +176,7 @@ public class ActivityController {
 						account.setUser_id(userDto.getParentUserId());
 						account.setMobile(userDto.getMobile());
 						account.setAdd_time(currentTime);
-						account.setReward_money(reward+"");
+						account.setReward_money(reward);
 						account.setType(ActivityAccountEnums.TYPE_3.getCode());
 						activityAccountService.insertActivityAccount(account);
 					}
@@ -220,7 +217,7 @@ public class ActivityController {
 					account.setUser_id(userId);
 					account.setMobile(userDto.getMobile());
 					account.setAdd_time(currentTime);
-					account.setReward_money(reward+"");
+					account.setReward_money(reward);
 					account.setType(ActivityAccountEnums.TYPE_7.getCode());
 					activityAccountService.insertActivityAccount(account);
 					

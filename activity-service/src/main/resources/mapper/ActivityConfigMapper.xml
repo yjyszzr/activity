@@ -10,5 +10,9 @@
     <result column="gear_position" jdbcType="VARCHAR" property="gear_position" />
     <result column="gear_position_money" jdbcType="VARCHAR" property="gear_position_money" />
   </resultMap>
+
+    <select id = "queryGearByActId"  parameterType="Integer" resultMap="BaseResultMap">
+        select * from  dl_activity_config where act_id = #{act_id} and gear_position =#{gear_position}
+    </select>
   
 </mapper>

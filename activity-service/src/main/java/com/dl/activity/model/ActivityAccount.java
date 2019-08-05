@@ -1,7 +1,8 @@
 package com.dl.activity.model;
 
-import java.math.BigDecimal;
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Table(name = "dl_activity_account")
 public class ActivityAccount {
@@ -33,10 +34,10 @@ public class ActivityAccount {
      * 
      */
     @Column(name = "reward_money")
-    private String reward_money;
+    private Double reward_money;
     
     /**
-     * 邀请人1；单笔购彩3；累计购彩5；提取收益7
+     * 邀请人1；单笔购彩3；累计购彩5；提取收益7；邀请人数达到额外奖励挡位9；
      */
     @Column(name = "type")
     private Integer type;
@@ -73,11 +74,11 @@ public class ActivityAccount {
 		this.add_time = add_time;
 	}
 
-	public String getReward_money() {
+	public Double getReward_money() {
 		return reward_money;
 	}
 
-	public void setReward_money(String reward_money) {
+	public void setReward_money(Double reward_money) {
 		this.reward_money = reward_money;
 	}
 
