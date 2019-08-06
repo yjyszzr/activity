@@ -6,7 +6,6 @@
       WARNING - @mbg.generated
     -->
       <id column="id" jdbcType="INTEGER" property="id" />
-      <result column="act_id" jdbcType="INTEGER" property="act_id" />
       <result column="user_id" jdbcType="INTEGER" property="user_id" />
       <result column="gear_position" jdbcType="VARCHAR" property="gear_position" />
       <result column="config_id" jdbcType="INTEGER" property="config_id" />
@@ -14,13 +13,13 @@
   </resultMap>
 
     <select id="hasReceivedConfigDuring" parameterType="com.dl.activity.param.GearHasReceivedParam" resultType="Integer">
-        select count(1) from dl_activity_config_user_receive where user_id = #{user_id} and act_id = #{act_id} and gear_position = #{gear_position}  and
+        select count(1) from dl_activity_config_user_receive where user_id = #{user_id} and config_id = #{config_id} and gear_position = #{gear_position}  and
         unix_timestamp(add_time) between  #{act_start_time} and #{act_end_time}
     </select>
 
     <insert id="saveReceived"   keyProperty="gearReceivedId" parameterType="com.dl.activity.param.GearHasReceivedParam" useGeneratedKeys="true">
-        INSERT INTO dl_activity_config_user_receive(act_id,user_id,gear_position,gear_position_money,add_time)
-        VALUES(#{act_id},#{user_id},#{gear_position},#{gear_position_money},#{add_time});
+        INSERT INTO dl_activity_config_user_receive(user_id,gear_position,config_id,add_time)
+        VALUES(#{user_id},#{gear_position},#{config_id},#{add_time});
     </insert>
 
 

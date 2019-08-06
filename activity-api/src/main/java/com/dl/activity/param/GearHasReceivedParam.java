@@ -16,6 +16,7 @@ import java.io.Serializable;
 public class GearHasReceivedParam implements Serializable{
 
     private Integer act_id;
+    private Integer config_id;
     private Integer user_id;
     private String gear_position;
     private String gear_position_money;

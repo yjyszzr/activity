@@ -15,18 +15,17 @@
   
   <insert id="insertActivityAccount" parameterType="com.dl.activity.model.ActivityAccount">
   	insert into dl_activity_account(
-  		id,
   		user_id,
   		mobile,
   		add_time,
   		reward_money,
   		type
   	)values(
-  		UUID(),
   		#{user_id},
 		#{mobile},
 		#{add_time},
-		#{reward_money}
+		#{reward_money},
+		#{type}
   	)
   </insert>
   

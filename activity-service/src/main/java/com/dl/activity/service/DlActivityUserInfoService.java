@@ -1,11 +1,8 @@
 package com.dl.activity.service;
 
-import com.dl.activity.dao.DlActivityUserInfoMapper;
+import com.dl.activity.dao.ActivityUserInfoMapper;
 import com.dl.activity.enums.ActivityEnums;
-import com.dl.activity.model.Activity;
-import com.dl.activity.model.ActivityAccount;
-import com.dl.activity.model.ActivityConfig;
-import com.dl.activity.model.DlActivityUserInfo;
+import com.dl.activity.model.*;
 import com.dl.activity.param.ActUserInitParam;
 import com.dl.activity.param.GearHasReceivedParam;
 import com.dl.activity.param.ReceiveActPraiseParam;
@@ -17,7 +14,6 @@ import com.dl.base.util.SessionUtil;
 import com.dl.member.api.IUserService;
 import com.dl.member.dto.UserDTO;
 import com.dl.member.param.StrParam;
-import com.dl.member.param.UserIdRealParam;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,9 +22,9 @@ import java.util.Date;
 
 @Service
 @Transactional(value = "transactionManager1")
-public class DlActivityUserInfoService extends AbstractService<DlActivityUserInfo> {
+public class DlActivityUserInfoService extends AbstractService<ActivityUserInfo> {
     @Resource
-    private DlActivityUserInfoMapper dlActivityUserInfoMapper;
+    private ActivityUserInfoMapper activityUserInfoMapper;
 
     @Resource
     private ActivityAccountService activityAccountService;
@@ -51,10 +47,10 @@ public class DlActivityUserInfoService extends AbstractService<DlActivityUserInf
      * @return
      */
     public Integer initActUserInfo(ActUserInitParam actUserInitParam){
-        DlActivityUserInfo actUserInfo = new DlActivityUserInfo();
-        actUserInfo.setUserId(actUserInitParam.getUserId());
+        ActivityUserInfo actUserInfo = new ActivityUserInfo();
+        actUserInfo.setUser_id(actUserInitParam.getUserId());
         actUserInfo.setMobile(actUserInitParam.getMobile());
-        return  dlActivityUserInfoMapper.insertWithReturnId(actUserInfo);
+        return  activityUserInfoMapper.insertWithReturnId(actUserInfo);
     }
 
     /**
@@ -65,20 +61,10 @@ public class DlActivityUserInfoService extends AbstractService<DlActivityUserInf
     public BaseResult<String> receiveTgActPrize(ReceiveActPraiseParam receiveActPraiseParam){
         Integer userId = SessionUtil.getUserId();
         String invitedMobile = "";
-        String inviteMobile = "";
         Double gearPositionMoney = 0d;
-        Integer parentUserId = 0;
         BaseResult<UserDTO> userDtoRst = iUserService.userInfoExceptPassReal(new StrParam());
         if(userDtoRst.isSuccess()){
             invitedMobile = userDtoRst.getData().getMobile();//被邀请人手机号
-            parentUserId = userDtoRst.getData().getParentUserId();//邀请人user_id
-            UserIdRealParam userIdReal = new UserIdRealParam();
-            userIdReal.setUserId(parentUserId);
-            BaseResult<UserDTO> userDtoRst_ = iUserService.queryUserInfoReal(userIdReal);
-            if(userDtoRst_.isSuccess()){
-                inviteMobile = userDtoRst_.getData().getMobile();
-            }
-
         }
 
         Activity activity = activityService.queryActivity(Integer.valueOf(receiveActPraiseParam.getActType()));
@@ -88,13 +74,12 @@ public class DlActivityUserInfoService extends AbstractService<DlActivityUserInf
 
         ActivityConfig activityConfig = activityConfigService.queryGearByActId(Integer.valueOf(receiveActPraiseParam.getActId()),receiveActPraiseParam.getGearPosition());
         if(activityConfig != null){
-            java.text.DecimalFormat myformat=new java.text.DecimalFormat("#0.00");
             gearPositionMoney = Double.parseDouble(activityConfig.getGear_position_money());
         }
 
         GearHasReceivedParam gearHasReceivedParam = new GearHasReceivedParam();
-        gearHasReceivedParam.setUser_id(parentUserId);
-        gearHasReceivedParam.setAct_id(Integer.valueOf(receiveActPraiseParam.getActId()));
+        gearHasReceivedParam.setUser_id(userId);
+        gearHasReceivedParam.setConfig_id(Integer.valueOf(activityConfig.getId()));
         gearHasReceivedParam.setGear_position(receiveActPraiseParam.getGearPosition());
         gearHasReceivedParam.setAdd_time(new Date());
         gearHasReceivedParam.setAct_start_time(activity.getStart_time());
@@ -105,23 +90,23 @@ public class DlActivityUserInfoService extends AbstractService<DlActivityUserInf
         }
 
 
-        DlActivityUserInfo actUserInfo = new DlActivityUserInfo();
-        actUserInfo.setUserId(parentUserId);
-        actUserInfo.setMobile(inviteMobile);
-        actUserInfo.setWithdrawableReward(gearPositionMoney);
-        actUserInfo.setHistoryTotalWithdrawableReward(gearPositionMoney);
-        if(receiveActPraiseParam.getActType().equals(2)){//伯乐奖
-            actUserInfo.setInvitationNumberReward(gearPositionMoney);
+        ActivityUserInfo actUserInfo = new ActivityUserInfo();
+        actUserInfo.setUser_id(userId);
+        actUserInfo.setMobile(invitedMobile);
+        actUserInfo.setWithdrawable_reward(gearPositionMoney);
+        actUserInfo.setHistory_total_withdrawable_reward(gearPositionMoney);
+        if(receiveActPraiseParam.getActType().equals(3)){//伯乐奖
+            actUserInfo.setInvitation_number_reward(gearPositionMoney);
         }
 
-        int saveRst = dlActivityUserInfoMapper.addSomeUserInfo(actUserInfo);
+        int saveRst = activityUserInfoMapper.addSomeUserInfo(actUserInfo);
         if(saveRst > 0){
             activityConfigReceiveService.saveReceivedGear(gearHasReceivedParam);
         }
 
         ActivityAccount activityAccount = new ActivityAccount();
         activityAccount.setMobile(invitedMobile);
-        activityAccount.setUser_id(parentUserId);
+        activityAccount.setUser_id(userId);
         activityAccount.setAdd_time(DateUtil.getCurrentTimeLong());
         activityAccount.setType(receiveActPraiseParam.getActType().equals("2")?9:5);//活动类型2-伯乐奖对应活动流水类型中的9,3-荣耀奖对应...5
         activityAccount.setAdd_time(DateUtil.getCurrentTimeLong());

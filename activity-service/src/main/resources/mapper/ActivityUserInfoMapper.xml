@@ -2,15 +2,11 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.dl.activity.dao.ActivityUserInfoMapper">
   <resultMap id="BaseResultMap" type="com.dl.activity.model.ActivityUserInfo">
-    <!--
-      WARNING - @mbg.generated
-    -->
       <id column="id" jdbcType="INTEGER" property="id" />
-      <result column="user_id" jdbcType="INTEGER" property="user_id" />
+      <result column="user_id" jdbcType="INTEGER" property="user_id"/>
       <result column="mobile" jdbcType="VARCHAR" property="mobile" />
       <result column="invitation_number" jdbcType="INTEGER" property="invitation_number" />
       <result column="invitation_number_reward" jdbcType="DECIMAL" property="invitation_number_reward" />
-      <result column="history_invitation_number" jdbcType="INTEGER" property="history_invitation_number" />
       <result column="history_invitation_number_reward" jdbcType="DECIMAL" property="history_invitation_number_reward" />
       <result column="withdrawable_reward" jdbcType="DECIMAL" property="withdrawable_reward" />
       <result column="history_total_withdrawable_reward" jdbcType="DECIMAL" property="history_total_withdrawable_reward" />
@@ -48,6 +44,11 @@
 		#{invitation_add_reward}
 	)
   </insert>
+
+    <insert id="insertWithReturnId" keyProperty="actUserId" parameterType="com.dl.activity.model.ActivityUserInfo" useGeneratedKeys="true">
+	INSERT INTO dl_activity_user_info(user_id,mobile)
+	VALUES(#{user_id},#{mobile})
+  </insert>
   
   <select id="getUserInfoByUserId" parameterType="java.lang.String" resultMap="BaseResultMap">
   		select * from dl_activity_user_info	WHERE  user_id = #{user_id}
@@ -69,5 +70,16 @@
 	  	WHERE 
 	  		user_id = #{user_id}
   </update>
+
+    <update id = "addSomeUserInfo" parameterType="com.dl.activity.model.ActivityUserInfo">
+        update dl_activity_user_info
+        <trim prefix = "set" suffixOverrides=",">
+            <if test = "#{withdrawable_reward}!=null">withdrawable_reward=withdrawable_reward+#{withdrawable_reward},</if>
+            <if test = "#{history_total_withdrawable_reward}!=null">history_total_withdrawable_reward=history_total_withdrawable_reward+#{history_total_withdrawable_reward},</if>
+            <if test = "#{invitation_number}!=null & #{invitation_number}! ">invitation_number=invitation_number+#{invitation_number},</if>
+        </trim>
+        where user_id = #{user_id}
+    </update>
+
   
 </mapper>
