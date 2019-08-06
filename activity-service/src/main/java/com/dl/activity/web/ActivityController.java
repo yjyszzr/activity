@@ -83,7 +83,7 @@ public class ActivityController {
 		Integer userId = SessionUtil.getUserId();
 		//推广活动流程begin
 		//1.查询推广活动是否有效
-		Activity activity = activityService.queryActivity(2);//参数2是伯乐奖
+		Activity activity = activityService.queryActivity(3);//参数3是伯乐奖
 		if(activity==null) {//没有伯乐活动
 			return ResultGenerator.genResult(MemberEnums.ACTIVITY_NOT_VALID.getcode(), MemberEnums.ACTIVITY_NOT_VALID.getMsg());
 		}
@@ -159,7 +159,7 @@ public class ActivityController {
 		Integer userId = SessionUtil.getUserId();
 		//推广活动流程begin
 		//1.查询推广活动是否有效
-		Activity activity = activityService.queryActivity(3);//参数3是荣耀奖
+		Activity activity = activityService.queryActivity(4);//参数4是荣耀奖
 		if(activity==null) {//没有活动
 			return ResultGenerator.genResult(MemberEnums.ACTIVITY_NOT_VALID.getcode(), MemberEnums.ACTIVITY_NOT_VALID.getMsg());
 		}
@@ -275,7 +275,7 @@ public class ActivityController {
 			//1获取邀请人信息
 			ActivityUserInfo activityUserInfo = activityUserInfoService.getUserInfoByUserId(userId);
 			//2推广活动
-			Activity activity = activityService.queryActivity(2);//参数2是伯乐奖
+			Activity activity = activityService.queryActivity(3);//参数3是伯乐奖
 			tgdto.setActivity(activity);
 			tgdto.setActivityUserInfo(activityUserInfo);
 			if(activity==null) {//没有伯乐活动
@@ -299,7 +299,7 @@ public class ActivityController {
 				}
 				tgdto.setAcitvityBl(acitvityBl);
 			}
-			Activity activity3 = activityService.queryActivity(3);//参数2是荣耀奖
+			Activity activity3 = activityService.queryActivity(4);//参数4是荣耀奖
 			if(activity3==null) {//没有伯乐活动
 				return ResultGenerator.genResult(MemberEnums.ACTIVITY_NOT_VALID.getcode(), MemberEnums.ACTIVITY_NOT_VALID.getMsg());
 			}else {
