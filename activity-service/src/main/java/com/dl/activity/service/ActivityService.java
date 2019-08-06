@@ -1,20 +1,15 @@
 package com.dl.activity.service;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.stream.Collectors;
-
-import javax.annotation.Resource;
-
+import com.dl.activity.dao.ActivityMapper;
+import com.dl.activity.model.Activity;
+import com.dl.base.service.AbstractService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.dl.activity.dao.ActivityMapper;
-import com.dl.activity.model.Activity;
-import com.dl.activity.model.ActivityBonus;
-import com.dl.base.service.AbstractService;
-
-import lombok.extern.slf4j.Slf4j;
+import javax.annotation.Resource;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional(value = "transactionManager1")
@@ -40,6 +35,7 @@ public class ActivityService extends AbstractService<Activity> {
 	
 	public Activity queryActivity(Integer type) {
 		Activity activity = activityMapper.getActivity(type);
-		return activity;
+		return activity == null?null:activity;
 	}
+
 }
