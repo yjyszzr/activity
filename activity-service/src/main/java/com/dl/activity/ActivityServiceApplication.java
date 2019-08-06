@@ -19,7 +19,7 @@ import com.dl.base.configurer.WebMvcConfigurer;
 @MapperScan(basePackages = { ProjectConstant.MAPPER_PACKAGE, "com.dl.activity.dao2" })
 @EnableTransactionManagement
 @EnableEurekaClient
-@EnableFeignClients({"com.dl.order.api","com.dl.lottery.api","com.dl.member.api","com.dl.shop.payment.api"})
+@EnableFeignClients({"com.dl.order.api","com.dl.activity.api","com.dl.lottery.api","com.dl.member.api","com.dl.shop.payment.api"})
 public class ActivityServiceApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(ActivityServiceApplication.class, args);
