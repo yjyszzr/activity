@@ -108,7 +108,7 @@ public class DlActivityUserInfoService extends AbstractService<ActivityUserInfo>
         activityAccount.setMobile(invitedMobile);
         activityAccount.setUser_id(userId);
         activityAccount.setAdd_time(DateUtil.getCurrentTimeLong());
-        activityAccount.setType(receiveActPraiseParam.getActType().equals("2")?9:5);//活动类型2-伯乐奖对应活动流水类型中的9,3-荣耀奖对应...5
+        activityAccount.setType(receiveActPraiseParam.getActType().equals("3")?9:5);//活动类型3-伯乐奖对应活动流水类型中的9,4-荣耀奖对应...5
         activityAccount.setAdd_time(DateUtil.getCurrentTimeLong());
         activityAccount.setReward_money(gearPositionMoney);
         int updateRst = activityAccountService.insertActivityAccount(activityAccount);
