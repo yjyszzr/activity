@@ -19,7 +19,7 @@ public interface IActService {
 
 
     @ApiOperation(value = "根据活动类型查询活动集合信息", notes = "根据活动类型查询活动集合信息")
-    @RequestMapping(path="/queryActsByType", method= RequestMethod.POST)
+    @RequestMapping(path="/activity/queryActsByType", method= RequestMethod.POST)
     public BaseResult<ActivityDTO> queryActsByType(@RequestBody ActTypeParam actTypeParam);
 
 }

@@ -35,10 +35,9 @@ public class DlActivityUserInfoController {
         return ResultGenerator.genSuccessResult("初始活动用户信息成功",actUserId);
     }
 
-
     /**
      * 领取推广活动的奖励：(给推广活动用户加相应的金额和流水)
-     * @param ActUserInitParam
+     * @param ReceiveActPraiseParam
      * @param request
      * @return
      */
