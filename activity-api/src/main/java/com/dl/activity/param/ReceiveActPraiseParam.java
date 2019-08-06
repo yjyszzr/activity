@@ -22,7 +22,7 @@ public class ReceiveActPraiseParam implements Serializable{
     @NotBlank(message = "活动id不能为空")
     private String actId;
 
-    @ApiModelProperty(value = "活动类型：2 - 伯乐奖 3-荣耀奖")
+    @ApiModelProperty(value = "活动类型：3 - 伯乐奖 4-荣耀奖")
     @NotBlank(message = "活动类型不能为空")
     private String actType;
 
