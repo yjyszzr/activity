@@ -19,9 +19,9 @@ import com.dl.activity.model.ActivityAccount;
 import com.dl.activity.model.ActivityConfig;
 import com.dl.activity.model.ActivityTgDTO;
 import com.dl.activity.model.ActivityUserInfo;
+import com.dl.activity.param.ActTypeParam;
 import com.dl.activity.param.GearHasReceivedParam;
 import com.dl.activity.param.StrParam;
-import com.dl.activity.param.ActTypeParam;
 import com.dl.activity.service.ActivityAccountService;
 import com.dl.activity.service.ActivityConfigReceiveService;
 import com.dl.activity.service.ActivityConfigService;
@@ -38,6 +38,7 @@ import com.dl.member.enums.MemberEnums;
 import com.dl.member.param.RecharegeParam;
 import com.dl.member.param.UserIdParam;
 import com.github.pagehelper.util.StringUtil;
+
 import io.swagger.annotations.ApiOperation;
 
 /**
@@ -325,6 +326,8 @@ public class ActivityController {
 		}
 		return ResultGenerator.genSuccessResult("succ", tgdto);
 	}
+
+
     @ApiOperation(value = "根据活动类型查询活动集合信息", notes = "根据活动类型查询活动集合信息")
     @PostMapping("/queryActsByType")
     public BaseResult<ActivityDTO> queryActsByType(@RequestBody ActTypeParam actTypeParam){
