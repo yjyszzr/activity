@@ -67,7 +67,7 @@ public class ActivityController {
 	private IUserAccountService userAccountService;
 
 	@Resource
-	private IUserService userService;
+	private IUserService iuserService;
 
 	@Resource
 	private StringRedisTemplate stringRedisTemplate;
@@ -94,12 +94,12 @@ public class ActivityController {
 			//3.查询当前是否二级用户，奖励是否已经领取过（生效）
 			UserIdParam userIdParam = new UserIdParam();
 			userIdParam.setUserId(userId);
-			BaseResult<UserDTO> buserDto = userService.queryUserInfo(userIdParam);
+			BaseResult<UserDTO> buserDto = iuserService.queryUserInfo(userIdParam);
 			if(buserDto!=null && buserDto.getData()!=null) {
 				UserDTO userDto = buserDto.getData();
 				if(userDto.getIsStatus()!=1 && userDto.getParentUserId()!=null && !"".equals(userDto.getParentUserId().toString())) {//是二级用户且奖励未生效
 					//4修改用户信息表为生效
-					userService.updateUserInfoByUserId(userIdParam);
+					iuserService.updateUserInfoByUserId(userIdParam);
 					//5.维护推广活动用户信息
 					double reward = activity.getReward_money()!=null?activity.getReward_money():0;//每邀请一人奖励金额
 						//5.1获取当前用户的邀请人信息
@@ -116,7 +116,7 @@ public class ActivityController {
 						activityUserInfo = new ActivityUserInfo();
 						activityUserInfo.setUser_id(userDto.getParentUserId());
 						userIdParam.setUserId(userDto.getParentUserId());
-						BaseResult<UserDTO> parentbuser = userService.queryUserInfo(userIdParam);
+						BaseResult<UserDTO> parentbuser = iuserService.queryUserInfo(userIdParam);
 						if(parentbuser!=null && parentbuser.getData()!=null) {
 							activityUserInfo.setMobile(parentbuser.getData().getMobile());
 						}
@@ -170,7 +170,7 @@ public class ActivityController {
 			//3.查询当前是否二级用户，奖励是否已经领取过（生效）
 			UserIdParam userIdParam = new UserIdParam();
 			userIdParam.setUserId(userId);
-			BaseResult<UserDTO> buserDto = userService.queryUserInfo(userIdParam);
+			BaseResult<UserDTO> buserDto = iuserService.queryUserInfo(userIdParam);
 			if(buserDto!=null && buserDto.getData()!=null) {
 				UserDTO userDto = buserDto.getData();
 				if(userDto.getIsStatus()==1 && userDto.getParentUserId()!=null && !"".equals(userDto.getParentUserId().toString())) {//是二级用户且已经充值103
@@ -221,7 +221,7 @@ public class ActivityController {
 		int currentTime = DateUtil.getCurrentTimeLong();
 		UserIdParam userIdParam = new UserIdParam();
 		userIdParam.setUserId(userId);
-		BaseResult<UserDTO> buserDto = userService.queryUserInfo(userIdParam);
+		BaseResult<UserDTO> buserDto = iuserService.queryUserInfo(userIdParam);
 		if(buserDto!=null && buserDto.getData()!=null) {
 			UserDTO userDto = buserDto.getData();
 			//1获取邀请人信息
@@ -269,7 +269,7 @@ public class ActivityController {
 		Integer userId = SessionUtil.getUserId();
 		UserIdParam userIdParam = new UserIdParam();
 		userIdParam.setUserId(userId);
-		BaseResult<UserDTO> buserDto = userService.queryUserInfo(userIdParam);
+		BaseResult<UserDTO> buserDto = iuserService.queryUserInfo(userIdParam);
 		ActivityTgDTO tgdto = null;
 		if(buserDto!=null && buserDto.getData()!=null) {
 			tgdto = new ActivityTgDTO();
