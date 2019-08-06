@@ -3,6 +3,7 @@ package com.dl.activity.web;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.annotation.Resource;
 
@@ -343,5 +344,26 @@ public class ActivityController {
         return ResultGenerator.genSuccessResult("success",actDTO);
     }
 
-
+    @ApiOperation(value = "获取返利流水", notes = "获取返利流水")
+    @PostMapping("/queryResultAccount")
+    public BaseResult<List<ActivityAccount>> queryResultAccount(@RequestBody ActTypeParam actTypeParam){
+    	List<ActivityAccount> accountList = activityAccountService.findAll();
+    	if(accountList!=null) {
+    		accountList = accountList.stream().filter(dto ->{
+    			if(dto.getType()==3) {
+    				return true;
+    			}else {
+    				return false;
+    			}
+    		}).collect(Collectors.toList());
+    	}
+        return ResultGenerator.genSuccessResult("success",accountList);
+    }
+    
+    @ApiOperation(value = "获取所有流水", notes = "获取所有流水")
+    @PostMapping("/queryAllAccount")
+    public BaseResult<List<ActivityAccount>> queryAllAccount(@RequestBody ActTypeParam actTypeParam){
+    	List<ActivityAccount> accountList = activityAccountService.findAll();
+        return ResultGenerator.genSuccessResult("success",accountList);
+    }
 }
