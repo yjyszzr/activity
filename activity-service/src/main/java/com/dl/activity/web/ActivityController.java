@@ -1,10 +1,11 @@
 package com.dl.activity.web;
 
+import com.dl.activity.dto.ActivityDTO;
 import com.dl.activity.enums.ActivityAccountEnums;
 import com.dl.activity.model.Activity;
 import com.dl.activity.model.ActivityAccount;
 import com.dl.activity.model.ActivityUserInfo;
-import com.dl.activity.param.StrParam;
+import com.dl.activity.param.ActTypeParam;
 import com.dl.activity.service.ActivityAccountService;
 import com.dl.activity.service.ActivityService;
 import com.dl.activity.service.ActivityUserInfoService;
@@ -15,10 +16,7 @@ import com.dl.base.util.SessionUtil;
 import com.dl.member.api.IUserAccountService;
 import com.dl.member.api.IUserService;
 import com.dl.member.dto.UserDTO;
-import com.dl.member.enums.MemberEnums;
 import com.dl.member.param.RecharegeParam;
-import com.dl.member.param.UserIdParam;
-import com.github.pagehelper.util.StringUtil;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -237,6 +235,22 @@ public class ActivityController {
 		}
 		return ResultGenerator.genSuccessResult("succ", "success");
 	}
+
+
+    @ApiOperation(value = "根据活动类型查询活动集合信息", notes = "根据活动类型查询活动集合信息")
+    @PostMapping("/queryActsByType")
+    public BaseResult<ActivityDTO> queryActsByType(@RequestBody ActTypeParam actTypeParam){
+        Activity act = activityService.queryActivity(actTypeParam.getActType());
+        ActivityDTO actDTO = new ActivityDTO();
+        if(act!=null){
+            actDTO.setActId(act.getAct_id());
+            actDTO.setActType(act.getAct_type());
+            actDTO.setIsFinish(act.getStart_time());
+            actDTO.setStartTime(act.getStart_time());
+            actDTO.setEndTime(act.getEnd_time());
+        }
+        return ResultGenerator.genSuccessResult("success",actDTO);
+    }
 
 
 }

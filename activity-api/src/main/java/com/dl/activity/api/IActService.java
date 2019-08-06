@@ -9,8 +9,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import java.util.List;
-
 @FeignClient(value="activity-service")
 public interface IActService {
 
@@ -21,6 +19,6 @@ public interface IActService {
 
     @ApiOperation(value = "根据活动类型查询活动集合信息", notes = "根据活动类型查询活动集合信息")
     @RequestMapping(path="/queryActsByType", method= RequestMethod.POST)
-    public BaseResult<List<ActivityDTO>> queryActsByType(@RequestBody Integer actType);
+    public BaseResult<ActivityDTO> queryActsByType(@RequestBody Integer actType);
 
 }
