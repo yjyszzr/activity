@@ -29,4 +29,7 @@
   	)
   </insert>
   
+  <select id = "queryAccount"   resultMap="BaseResultMap">
+        select * from  dl_activity_account where user_id = #{user_id}
+    </select>
 </mapper>

@@ -346,8 +346,9 @@ public class ActivityController {
 
     @ApiOperation(value = "获取返利流水", notes = "获取返利流水")
     @PostMapping("/queryResultAccount")
-    public BaseResult<List<ActivityAccount>> queryResultAccount(@RequestBody ActTypeParam actTypeParam){
-    	List<ActivityAccount> accountList = activityAccountService.findAll();
+    public BaseResult<List<ActivityAccount>> queryResultAccount(@RequestBody StrParam strParam){
+    	Integer userId = SessionUtil.getUserId();
+    	List<ActivityAccount> accountList = activityAccountService.queryAccount(userId);
     	if(accountList!=null) {
     		accountList = accountList.stream().filter(dto ->{
     			if(dto.getType()==3) {
@@ -362,8 +363,9 @@ public class ActivityController {
     
     @ApiOperation(value = "获取所有流水", notes = "获取所有流水")
     @PostMapping("/queryAllAccount")
-    public BaseResult<List<ActivityAccount>> queryAllAccount(@RequestBody ActTypeParam actTypeParam){
-    	List<ActivityAccount> accountList = activityAccountService.findAll();
+    public BaseResult<List<ActivityAccount>> queryAllAccount(@RequestBody StrParam strParam){
+    	Integer userId = SessionUtil.getUserId();
+    	List<ActivityAccount> accountList = activityAccountService.queryAccount(userId);
         return ResultGenerator.genSuccessResult("success",accountList);
     }
 }

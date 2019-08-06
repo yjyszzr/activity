@@ -7,6 +7,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 @Service
@@ -25,4 +27,12 @@ public class ActivityAccountService extends AbstractService<ActivityAccount> {
 		return activityAccountMapper.insertActivityAccount(account);
 	}
 
+	/**
+	 * 获取推广流水
+	 * @param account
+	 * @return
+	 */
+	public List<ActivityAccount> queryAccount(Integer userId) {
+		return activityAccountMapper.queryAccount(userId);
+	}
 }
