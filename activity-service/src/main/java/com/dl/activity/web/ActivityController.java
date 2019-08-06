@@ -1,11 +1,28 @@
 package com.dl.activity.web;
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.annotation.Resource;
+
+import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.dl.activity.enums.ActivityAccountEnums;
 import com.dl.activity.model.Activity;
 import com.dl.activity.model.ActivityAccount;
+import com.dl.activity.model.ActivityConfig;
+import com.dl.activity.model.ActivityTgDTO;
 import com.dl.activity.model.ActivityUserInfo;
+import com.dl.activity.param.GearHasReceivedParam;
 import com.dl.activity.param.StrParam;
 import com.dl.activity.service.ActivityAccountService;
+import com.dl.activity.service.ActivityConfigReceiveService;
+import com.dl.activity.service.ActivityConfigService;
 import com.dl.activity.service.ActivityService;
 import com.dl.activity.service.ActivityUserInfoService;
 import com.dl.base.result.BaseResult;
@@ -19,15 +36,8 @@ import com.dl.member.enums.MemberEnums;
 import com.dl.member.param.RecharegeParam;
 import com.dl.member.param.UserIdParam;
 import com.github.pagehelper.util.StringUtil;
-import io.swagger.annotations.ApiOperation;
-import org.springframework.data.redis.core.StringRedisTemplate;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
-import javax.annotation.Resource;
-import java.math.BigDecimal;
+import io.swagger.annotations.ApiOperation;
 
 /**
  * Created by CodeGenerator on 2018/07/17.
@@ -37,7 +47,13 @@ import java.math.BigDecimal;
 public class ActivityController {
 	@Resource
 	private ActivityService activityService;
+	
+	@Resource
+	private ActivityConfigService activityConfigService;
 
+	@Resource
+	private ActivityConfigReceiveService activityConfigReceiveService;
+	
 	@Resource
 	private ActivityUserInfoService activityUserInfoService;
 
@@ -207,7 +223,7 @@ public class ActivityController {
 			UserDTO userDto = buserDto.getData();
 			//1获取邀请人信息
 			double reward = Double.parseDouble(StringUtil.isNotEmpty(strParam.getStr())?strParam.getStr():"0");//提取金额
-			ActivityUserInfo activityUserInfo = activityUserInfoService.getUserInfoByUserId(userDto.getParentUserId());
+			ActivityUserInfo activityUserInfo = activityUserInfoService.getUserInfoByUserId(userId);
 			if(activityUserInfo!=null) {//有数据则修改
 				double withdrawable_reward = activityUserInfo.getWithdrawable_reward()==null?0:activityUserInfo.getWithdrawable_reward();
 				if(withdrawable_reward>=reward) {//可提取金额大于等于提取金额
@@ -239,4 +255,74 @@ public class ActivityController {
 	}
 
 
+	/**
+	 * 获取推广页面信息
+	 *
+	 * @param strParam
+	 * @return
+	 */
+	@ApiOperation(value = "推广活动数据展示", notes = "推广活动数据展示")
+	@PostMapping("/showActivityByTg")
+	public BaseResult<ActivityTgDTO> showActivityByTg(@RequestBody StrParam strParam) {
+		Integer userId = SessionUtil.getUserId();
+		UserIdParam userIdParam = new UserIdParam();
+		userIdParam.setUserId(userId);
+		BaseResult<UserDTO> buserDto = userService.queryUserInfo(userIdParam);
+		ActivityTgDTO tgdto = null;
+		if(buserDto!=null && buserDto.getData()!=null) {
+			tgdto = new ActivityTgDTO();
+			//1获取邀请人信息
+			ActivityUserInfo activityUserInfo = activityUserInfoService.getUserInfoByUserId(userId);
+			//2推广活动
+			Activity activity = activityService.queryActivity(2);//参数2是伯乐奖
+			tgdto.setActivity(activity);
+			tgdto.setActivityUserInfo(activityUserInfo);
+			if(activity==null) {//没有伯乐活动
+				return ResultGenerator.genResult(MemberEnums.ACTIVITY_NOT_VALID.getcode(), MemberEnums.ACTIVITY_NOT_VALID.getMsg());
+			}else {
+				List<ActivityConfig> acitvityBlCon = activityConfigService.queryGearListByActId(activity.getAct_id());
+				List<ActivityConfig> acitvityBl = new ArrayList<>();
+				for (ActivityConfig activityConfig : acitvityBlCon) {
+					GearHasReceivedParam gp = new GearHasReceivedParam();
+					gp.setAct_id(activity.getAct_id());
+					gp.setUser_id(userId);
+					gp.setGear_position(activityConfig.getGear_position());
+					gp.setAct_start_time(activity.getStart_time());
+					gp.setAct_end_time(activity.getEnd_time());
+					if(activityConfigReceiveService.hasReceivedGear(gp)) {
+						activityConfig.setIs_status(1);
+					}else {
+						activityConfig.setIs_status(0);
+					}
+					acitvityBl.add(activityConfig);
+				}
+				tgdto.setAcitvityBl(acitvityBl);
+			}
+			Activity activity3 = activityService.queryActivity(3);//参数2是荣耀奖
+			if(activity3==null) {//没有伯乐活动
+				return ResultGenerator.genResult(MemberEnums.ACTIVITY_NOT_VALID.getcode(), MemberEnums.ACTIVITY_NOT_VALID.getMsg());
+			}else {
+				List<ActivityConfig> acitvityRyCon = activityConfigService.queryGearListByActId(activity3.getAct_id());
+				List<ActivityConfig> acitvityRy = new ArrayList<>();
+				for (ActivityConfig activityConfig : acitvityRyCon) {
+					GearHasReceivedParam gp = new GearHasReceivedParam();
+					gp.setAct_id(activity.getAct_id());
+					gp.setUser_id(userId);
+					gp.setGear_position(activityConfig.getGear_position());
+					gp.setAct_start_time(activity.getStart_time());
+					gp.setAct_end_time(activity.getEnd_time());
+					if(activityConfigReceiveService.hasReceivedGear(gp)) {
+						activityConfig.setIs_status(1);
+					}else {
+						activityConfig.setIs_status(0);
+					}
+					acitvityRy.add(activityConfig);
+				}
+				tgdto.setAcitvityRy(acitvityRy);
+			}
+		}else {
+			return ResultGenerator.genFailResult("用户不存在！");
+		}
+		return ResultGenerator.genSuccessResult("succ", tgdto);
+	}
 }

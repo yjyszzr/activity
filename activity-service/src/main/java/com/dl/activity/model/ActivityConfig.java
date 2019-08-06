@@ -29,6 +29,19 @@ public class ActivityConfig {
     @Column(name = "gear_position_money")
     private String gear_position_money;
 
+    /**
+     * 奖励是否已经领取(联表查询手动赋值)
+     */
+    private Integer is_status;
+
+	public Integer getIs_status() {
+		return is_status;
+	}
+
+	public void setIs_status(Integer is_status) {
+		this.is_status = is_status;
+	}
+
 	public Integer getId() {
 		return id;
 	}

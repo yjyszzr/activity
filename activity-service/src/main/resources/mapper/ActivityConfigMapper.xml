@@ -15,4 +15,8 @@
         select * from  dl_activity_config where act_id = #{act_id} and gear_position =#{gear_position}
     </select>
   
+   <select id = "queryGearListByActId"   resultMap="BaseResultMap">
+        select * from  dl_activity_config where act_id = #{act_id}
+    </select>
+  
 </mapper>
