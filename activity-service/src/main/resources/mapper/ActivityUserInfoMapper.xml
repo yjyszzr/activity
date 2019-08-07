@@ -65,7 +65,7 @@
             <if test = "history_total_withdrawable_reward!=null">history_total_withdrawable_reward = #{history_total_withdrawable_reward},</if>
             <if test = "month_return_reward!=null">month_return_reward = #{month_return_reward},</if>
             <if test = "history_total_return_reward!=null">history_total_return_reward = #{history_total_return_reward},</if>
-            <if test = "invitation_add_reward!=null">invitation_add_reward = #{invitation_add_reward}</if>
+            <if test = "invitation_add_reward!=null">invitation_add_reward = #{invitation_add_reward},</if>
         </trim>
         WHERE user_id = #{user_id}
     </update>
@@ -75,8 +75,8 @@
         <trim prefix = "set" suffixOverrides=",">
             <if test = "#{withdrawable_reward}!=null">withdrawable_reward=withdrawable_reward+#{withdrawable_reward},</if>
             <if test = "#{history_total_withdrawable_reward}!=null">history_total_withdrawable_reward=history_total_withdrawable_reward+#{history_total_withdrawable_reward},</if>
-            <if test = "#{invitation_number_reward}!=null">invitation_number_reward = invitation_number_reward+#{invitation_number_reward}</if>
-            <if test = "#{history_invitation_number_reward}!=null">history_invitation_number_reward = history_invitation_number_reward+#{history_invitation_number_reward}</if>
+            <if test = "#{invitation_number_reward}!=null">invitation_number_reward = invitation_number_reward+#{invitation_number_reward},</if>
+            <if test = "#{history_invitation_number_reward}!=null">history_invitation_number_reward = history_invitation_number_reward+#{history_invitation_number_reward},</if>
         </trim>
         where user_id = #{user_id}
     </update>
