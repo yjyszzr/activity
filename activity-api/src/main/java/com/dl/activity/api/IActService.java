@@ -15,7 +15,7 @@ public interface IActService {
 
     @ApiOperation(value = "初始化推广活动用户信息", notes = "初始化推广活动用户信息")
     @RequestMapping(path="/activity/userInfo/initActUserInfo", method= RequestMethod.POST)
-    public BaseResult<Integer> initActUserInfo(@RequestBody ActUserInitParam actUserInitParam);
+    public BaseResult<String> initActUserInfo(@RequestBody ActUserInitParam actUserInitParam);
 
 
     @ApiOperation(value = "根据活动类型查询活动集合信息", notes = "根据活动类型查询活动集合信息")
