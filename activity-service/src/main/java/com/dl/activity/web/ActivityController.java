@@ -296,7 +296,7 @@ public class ActivityController {
 			tgdto.getActivity().add(activity);
 			tgdto.setActivityUserInfo(activityUserInfo);
 			if(activity==null) {//没有伯乐活动
-				return ResultGenerator.genResult(MemberEnums.ACTIVITY_NOT_VALID.getcode(), MemberEnums.ACTIVITY_NOT_VALID.getMsg());
+//				return ResultGenerator.genResult(MemberEnums.ACTIVITY_NOT_VALID.getcode(), MemberEnums.ACTIVITY_NOT_VALID.getMsg());
 			}else {
 				List<ActivityConfig> acitvityBlCon = activityConfigService.queryGearListByActId(activity.getAct_id());
 				List<ActivityConfig> acitvityBl = new ArrayList<>();
@@ -319,7 +319,7 @@ public class ActivityController {
 			Activity activity3= activityService.queryActivity(4);//参数4是荣耀奖
 			tgdto.getActivity().add(activity3);
 			if(activity3==null) {//没有伯乐活动
-				return ResultGenerator.genResult(MemberEnums.ACTIVITY_NOT_VALID.getcode(), MemberEnums.ACTIVITY_NOT_VALID.getMsg());
+//				return ResultGenerator.genResult(MemberEnums.ACTIVITY_NOT_VALID.getcode(), MemberEnums.ACTIVITY_NOT_VALID.getMsg());
 			}else {
 				List<ActivityConfig> acitvityRyCon = activityConfigService.queryGearListByActId(activity3.getAct_id());
 				List<ActivityConfig> acitvityRy = new ArrayList<>();
