@@ -278,11 +278,7 @@ public class ActivityController {
 			if(activityUserInfo==null) { //若为空
 				activityUserInfo = new ActivityUserInfo();
 				activityUserInfo.setUser_id(userId);
-				userIdParam.setUserId(userId);
-				BaseResult<UserDTO> parentbuser = iuserService.queryUserInfo(userIdParam);
-				if(parentbuser!=null && parentbuser.getData()!=null) {
-					activityUserInfo.setMobile(parentbuser.getData().getMobile());
-				}
+				activityUserInfo.setMobile(buserDto.getData().getMobile());
 				double zero = 0;
 				activityUserInfo.setInvitation_number(0);
 				activityUserInfo.setInvitation_number_reward(zero);
