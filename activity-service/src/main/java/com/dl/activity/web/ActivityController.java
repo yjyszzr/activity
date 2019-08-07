@@ -275,9 +275,29 @@ public class ActivityController {
 			tgdto = new ActivityTgDTO();
 			//1获取邀请人信息
 			ActivityUserInfo activityUserInfo = activityUserInfoService.getUserInfoByUserId(userId);
+			if(activityUserInfo==null) { //若为空
+				activityUserInfo = new ActivityUserInfo();
+				activityUserInfo.setUser_id(userId);
+				userIdParam.setUserId(userId);
+				BaseResult<UserDTO> parentbuser = iuserService.queryUserInfo(userIdParam);
+				if(parentbuser!=null && parentbuser.getData()!=null) {
+					activityUserInfo.setMobile(parentbuser.getData().getMobile());
+				}
+				double zero = 0;
+				activityUserInfo.setInvitation_number(0);
+				activityUserInfo.setInvitation_number_reward(zero);
+				activityUserInfo.setHistory_invitation_number(0);
+				activityUserInfo.setHistory_invitation_number_reward(zero);
+				activityUserInfo.setWithdrawable_reward(zero);
+				activityUserInfo.setHistory_total_withdrawable_reward(zero);
+				activityUserInfo.setMonth_return_reward(zero);
+				activityUserInfo.setHistory_total_return_reward(zero);
+				activityUserInfo.setInvitation_add_reward(zero);
+				activityUserInfoService.insertActivityUserInfo(activityUserInfo);
+			}
 			//2推广活动
 			Activity activity = activityService.queryActivity(3);//参数3是伯乐奖
-			tgdto.setActivity(activity);
+			tgdto.getActivity().add(activity);
 			tgdto.setActivityUserInfo(activityUserInfo);
 			if(activity==null) {//没有伯乐活动
 				return ResultGenerator.genResult(MemberEnums.ACTIVITY_NOT_VALID.getcode(), MemberEnums.ACTIVITY_NOT_VALID.getMsg());
@@ -300,7 +320,8 @@ public class ActivityController {
 				}
 				tgdto.setAcitvityBl(acitvityBl);
 			}
-			Activity activity3 = activityService.queryActivity(4);//参数4是荣耀奖
+			Activity activity3= activityService.queryActivity(4);//参数4是荣耀奖
+			tgdto.getActivity().add(activity3);
 			if(activity3==null) {//没有伯乐活动
 				return ResultGenerator.genResult(MemberEnums.ACTIVITY_NOT_VALID.getcode(), MemberEnums.ACTIVITY_NOT_VALID.getMsg());
 			}else {
