@@ -304,6 +304,7 @@ public class ActivityController {
 					GearHasReceivedParam gp = new GearHasReceivedParam();
 					gp.setAct_id(activity.getAct_id());
 					gp.setUser_id(userId);
+					gp.setConfig_id(activityConfig.getId());
 					gp.setGear_position(activityConfig.getGear_position());
 					gp.setAct_start_time(activity.getStart_time());
 					gp.setAct_end_time(activity.getEnd_time());
@@ -327,6 +328,7 @@ public class ActivityController {
 					GearHasReceivedParam gp = new GearHasReceivedParam();
 					gp.setAct_id(activity.getAct_id());
 					gp.setUser_id(userId);
+					gp.setConfig_id(activityConfig.getId());
 					gp.setGear_position(activityConfig.getGear_position());
 					gp.setAct_start_time(activity.getStart_time());
 					gp.setAct_end_time(activity.getEnd_time());
