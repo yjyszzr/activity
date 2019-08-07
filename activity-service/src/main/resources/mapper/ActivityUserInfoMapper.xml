@@ -18,7 +18,6 @@
   
   <insert id="insertActivityUserInfo" parameterType="com.dl.activity.model.ActivityUserInfo">
 	insert into dl_activity_user_info(
-		id,
 		user_id,
 		mobile,
 		invitation_number,
@@ -31,7 +30,6 @@
 		history_total_return_reward,
 		invitation_add_reward
 	)values(
-		UUID(),
 		#{user_id},
 		#{mobile},
 		#{invitation_number},
