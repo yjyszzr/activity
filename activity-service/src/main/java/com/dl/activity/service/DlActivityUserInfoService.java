@@ -148,7 +148,6 @@ public class DlActivityUserInfoService extends AbstractService<ActivityUserInfo>
             return ResultGenerator.genResult(ActivityEnums.DATA_ALREADY_IN_DB.getCode(),"活动期间已经领取过该档位奖励,不能重复领取.");
         }
 
-
         ActivityUserInfo actUserInfo = new ActivityUserInfo();
         actUserInfo.setUser_id(userId);
         actUserInfo.setMobile(invitedMobile);
