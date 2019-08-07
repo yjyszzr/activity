@@ -14,6 +14,8 @@ public class ActUserInitParam {
 
 	private Integer userId;
 
+	private Integer sonUserId;
+
 	private String mobile;
 
 	

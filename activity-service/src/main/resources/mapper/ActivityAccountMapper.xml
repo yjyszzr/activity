@@ -32,4 +32,8 @@
   <select id = "queryAccount"   resultMap="BaseResultMap">
         select * from  dl_activity_account where user_id = #{user_id}
     </select>
+
+    <select id = "queryAccountByType"   resultMap="BaseResultMap">
+        select * from  dl_activity_account where mobile = #{mobile} and type =#{type}
+    </select>
 </mapper>

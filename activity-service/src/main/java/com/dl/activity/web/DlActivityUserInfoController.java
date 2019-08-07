@@ -4,7 +4,6 @@ import com.dl.activity.param.ActUserInitParam;
 import com.dl.activity.param.ReceiveActPraiseParam;
 import com.dl.activity.service.DlActivityUserInfoService;
 import com.dl.base.result.BaseResult;
-import com.dl.base.result.ResultGenerator;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,16 +22,15 @@ public class DlActivityUserInfoController {
     private DlActivityUserInfoService dlActivityUserInfoService;
 
     /**
-     * 初始化推广活动用户信息:
+     * 查询伯乐奖的邀请配置，初始化或更新被邀请人的信息
      * @param ActUserInitParam
      * @param request
      * @return
      */
-    @ApiOperation(value = "初始化推广活动用户信息", notes = "初始化推广活动用户信息")
+    @ApiOperation(value = "查询伯乐奖的邀请配置，初始化或更新被邀请人的信息", notes = "查询伯乐奖的邀请配置，初始化或更新被邀请人的信息")
     @PostMapping("/initActUserInfo")
-    public BaseResult<Integer> initActUserInfo(@RequestBody ActUserInitParam actUserInitParam) {
-        Integer actUserId = dlActivityUserInfoService.initActUserInfo(actUserInitParam);
-        return ResultGenerator.genSuccessResult("初始活动用户信息成功",actUserId);
+    public BaseResult<String> initActUserInfo(@RequestBody ActUserInitParam actUserInitParam) {
+        return dlActivityUserInfoService.initActUserInfo(actUserInitParam);
     }
 
     /**
