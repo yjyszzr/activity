@@ -154,8 +154,9 @@ public class DlActivityUserInfoService extends AbstractService<ActivityUserInfo>
         actUserInfo.setMobile(invitedMobile);
         actUserInfo.setWithdrawable_reward(gearPositionMoney);
         actUserInfo.setHistory_total_withdrawable_reward(gearPositionMoney);
-        if(receiveActPraiseParam.getActType().equals(3)){//伯乐奖
+        if(receiveActPraiseParam.getActType().equals("3")){//伯乐奖
             actUserInfo.setInvitation_number_reward(gearPositionMoney);
+            actUserInfo.setHistory_invitation_number_reward(gearPositionMoney);
         }
 
         int saveRst = activityUserInfoMapper.addSomeUserInfo(actUserInfo);

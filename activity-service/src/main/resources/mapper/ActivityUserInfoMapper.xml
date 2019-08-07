@@ -75,7 +75,8 @@
         <trim prefix = "set" suffixOverrides=",">
             <if test = "#{withdrawable_reward}!=null">withdrawable_reward=withdrawable_reward+#{withdrawable_reward},</if>
             <if test = "#{history_total_withdrawable_reward}!=null">history_total_withdrawable_reward=history_total_withdrawable_reward+#{history_total_withdrawable_reward},</if>
-            <if test = "#{invitation_number}!=null">invitation_number=invitation_number+#{invitation_number},</if>
+            <if test = "#{invitation_number_reward}!=null">invitation_number_reward = invitation_number_reward+#{invitation_number_reward}</if>
+            <if test = "#{history_invitation_number_reward}!=null">history_invitation_number_reward = history_invitation_number_reward+#{history_invitation_number_reward}</if>
         </trim>
         where user_id = #{user_id}
     </update>
