@@ -6,13 +6,14 @@
       <result column="user_id" jdbcType="INTEGER" property="user_id"/>
       <result column="mobile" jdbcType="VARCHAR" property="mobile" />
       <result column="invitation_number" jdbcType="INTEGER" property="invitation_number" />
-      <result column="invitation_number_reward" jdbcType="DECIMAL" property="invitation_number_reward" />
-      <result column="history_invitation_number_reward" jdbcType="DECIMAL" property="history_invitation_number_reward" />
-      <result column="withdrawable_reward" jdbcType="DECIMAL" property="withdrawable_reward" />
-      <result column="history_total_withdrawable_reward" jdbcType="DECIMAL" property="history_total_withdrawable_reward" />
-      <result column="month_return_reward" jdbcType="DECIMAL" property="month_return_reward" />
-      <result column="history_total_return_reward" jdbcType="DECIMAL" property="history_total_return_reward" />
-      <result column="invitation_add_reward" jdbcType="DECIMAL" property="invitation_add_reward" />
+      <result column="invitation_number_reward" jdbcType="DOUBLE" property="invitation_number_reward" />
+      <result column="history_invitation_number" jdbcType="INTEGER" property="history_invitation_number" />
+      <result column="history_invitation_number_reward" jdbcType="DOUBLE" property="history_invitation_number_reward" />
+      <result column="withdrawable_reward" jdbcType="DOUBLE" property="withdrawable_reward" />
+      <result column="history_total_withdrawable_reward" jdbcType="DOUBLE" property="history_total_withdrawable_reward" />
+      <result column="month_return_reward" jdbcType="DOUBLE" property="month_return_reward" />
+      <result column="history_total_return_reward" jdbcType="DOUBLE" property="history_total_return_reward" />
+      <result column="invitation_add_reward" jdbcType="DOUBLE" property="invitation_add_reward" />
   </resultMap>
   
   <insert id="insertActivityUserInfo" parameterType="com.dl.activity.model.ActivityUserInfo">
@@ -50,7 +51,7 @@
 	VALUES(#{user_id},#{mobile})
   </insert>
   
-  <select id="getUserInfoByUserId" parameterType="java.lang.String" resultMap="BaseResultMap">
+  <select id="getUserInfoByUserId" parameterType="INTEGER" resultMap="BaseResultMap">
   		select * from dl_activity_user_info	WHERE  user_id = #{user_id}
   </select>
   
