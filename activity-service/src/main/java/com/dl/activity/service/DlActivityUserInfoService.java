@@ -109,7 +109,7 @@ public class DlActivityUserInfoService extends AbstractService<ActivityUserInfo>
         activityAccount.setReward_money(rewardMoney);
         activityAccount.setAdd_time(DateUtil.getCurrentTimeLong());
         Integer accountSaveNum = activityAccountMapper.insertActivityAccount(activityAccount);
-        return ResultGenerator .genSuccessResult("success","已经邀请过");
+        return ResultGenerator .genSuccessResult("success","邀请成功");
     }
 
     /**
