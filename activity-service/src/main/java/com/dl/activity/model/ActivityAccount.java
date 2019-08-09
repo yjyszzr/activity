@@ -41,6 +41,10 @@ public class ActivityAccount {
      */
     @Column(name = "type")
     private Integer type;
+    /**
+     * 邀请人1；单笔购彩3；累计购彩5；提取收益7；邀请人数达到额外奖励挡位9；
+     */
+    private String title;
 
     /**
      * 备注
@@ -48,6 +52,14 @@ public class ActivityAccount {
     private String remark;
 
     
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
 	public String getRemark() {
 		return remark;
 	}
