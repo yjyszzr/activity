@@ -227,31 +227,31 @@ public class ActivityController {
 		if(buserDto!=null && buserDto.getData()!=null) {
 			UserDTO userDto = buserDto.getData();
 			//1获取邀请人信息
-			double reward = Double.parseDouble(StringUtil.isNotEmpty(strParam.getStr())?strParam.getStr():"0");//提取金额
+//			double reward = Double.parseDouble(StringUtil.isNotEmpty(strParam.getStr())?strParam.getStr():"0");//提取金额
 			ActivityUserInfo activityUserInfo = activityUserInfoService.getUserInfoByUserId(userId);
 			if(activityUserInfo!=null) {//有数据则修改
 				double withdrawable_reward = activityUserInfo.getWithdrawable_reward()==null?0:activityUserInfo.getWithdrawable_reward();
-				if(withdrawable_reward>=reward) {//可提取金额大于等于提取金额
-					activityUserInfo.setWithdrawable_reward(withdrawable_reward-reward);
+//				if(withdrawable_reward>=reward) {//可提取金额大于等于提取金额
+					activityUserInfo.setWithdrawable_reward(0d);
 					activityUserInfoService.updateActivityUserInfoByParentId(activityUserInfo);
 					//5.记录推广活动收益流水
 					ActivityAccount account = new ActivityAccount();
 					account.setUser_id(userId);
 					account.setMobile(userDto.getMobile());
 					account.setAdd_time(currentTime);
-					account.setReward_money(reward);
+					account.setReward_money(withdrawable_reward);
 					account.setType(ActivityAccountEnums.TYPE_7.getCode());
 					activityAccountService.insertActivityAccount(account);
 
 					//更改用户余额并记录账户流水
 					RecharegeParam recharegeParam = new RecharegeParam();
-					recharegeParam.setAmount(BigDecimal.valueOf(reward));
+					recharegeParam.setAmount(BigDecimal.valueOf(withdrawable_reward));
 					recharegeParam.setUserId(userId);
 					recharegeParam.setPayId("8");
 					recharegeParam.setGiveAmount("0");
 					recharegeParam.setOrderSn(userId+""+currentTime);
 					userAccountService.activityRewardUserMoney(recharegeParam);
-				}
+//				}
 			}
 		}else {
 			return ResultGenerator.genFailResult("用户不存在！");
