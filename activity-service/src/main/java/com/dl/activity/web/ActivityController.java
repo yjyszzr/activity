@@ -249,7 +249,7 @@ public class ActivityController {
 					RecharegeParam recharegeParam = new RecharegeParam();
 					recharegeParam.setAmount(BigDecimal.valueOf(withdrawable_reward));
 					recharegeParam.setUserId(userId);
-					recharegeParam.setPayId("8");
+					recharegeParam.setPayId(account.getId()+"");
 					recharegeParam.setGiveAmount("0");
 					recharegeParam.setOrderSn(account.getId()+"");
 					userAccountService.activityRewardUserMoney(recharegeParam);
