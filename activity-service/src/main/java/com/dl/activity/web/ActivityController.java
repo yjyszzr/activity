@@ -256,7 +256,7 @@ public class ActivityController {
 		}else {
 			return ResultGenerator.genFailResult("用户不存在！");
 		}
-		return ResultGenerator.genSuccessResult("succ", "success");
+		return ResultGenerator.genSuccessResult("succ", "转入可提现账户成功！");
 	}
 
 	/**
