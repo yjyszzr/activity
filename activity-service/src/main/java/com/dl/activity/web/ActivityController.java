@@ -371,6 +371,19 @@ public class ActivityController {
     	Integer userId = SessionUtil.getUserId();
     	List<ActivityAccount> accountList = activityAccountService.queryAccount(userId);
     	for (ActivityAccount activityAccount : accountList) {
+    		if(activityAccount.getType()==1) {
+    			activityAccount.setRemark("成功邀请"+hideMobile(activityAccount.getMobile())+"用户，奖励您");
+    		}else if(activityAccount.getType()==3) {
+    			activityAccount.setRemark("好友完成购彩，奖励您");
+    		}else if(activityAccount.getType()==5) {
+    			activityAccount.setRemark("领取好友累计购彩红包奖励");
+    		}else if(activityAccount.getType()==7) {
+    			activityAccount.setRemark("转入可提现账户");
+    		}else if(activityAccount.getType()==9) {
+    			activityAccount.setRemark("领取累计邀请好友红包奖励");
+    		}else {
+    			activityAccount.setRemark("");
+    		}
     		activityAccount.setMobile(hideMobile(activityAccount.getMobile()));
 		}
     	if(accountList!=null) {
@@ -401,6 +414,19 @@ public class ActivityController {
     	Integer userId = SessionUtil.getUserId();
     	List<ActivityAccount> accountList = activityAccountService.queryAccount(userId);
     	for (ActivityAccount activityAccount : accountList) {
+    		if(activityAccount.getType()==1) {
+    			activityAccount.setRemark("成功邀请"+hideMobile(activityAccount.getMobile())+"用户，奖励您");
+    		}else if(activityAccount.getType()==3) {
+    			activityAccount.setRemark("好友完成购彩，奖励您");
+    		}else if(activityAccount.getType()==5) {
+    			activityAccount.setRemark("领取好友累计购彩红包奖励");
+    		}else if(activityAccount.getType()==7) {
+    			activityAccount.setRemark("转入可提现账户");
+    		}else if(activityAccount.getType()==9) {
+    			activityAccount.setRemark("领取累计邀请好友红包奖励");
+    		}else {
+    			activityAccount.setRemark("");
+    		}
     		activityAccount.setMobile(hideMobile(activityAccount.getMobile()));
 		}
 		ActivityUserInfo activityUserInfo = activityUserInfoService.getUserInfoByUserId(userId);
