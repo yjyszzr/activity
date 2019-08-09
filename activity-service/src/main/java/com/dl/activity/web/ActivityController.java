@@ -251,7 +251,7 @@ public class ActivityController {
 					recharegeParam.setUserId(userId);
 					recharegeParam.setPayId("8");
 					recharegeParam.setGiveAmount("0");
-					recharegeParam.setOrderSn(userId+""+currentTime);
+					recharegeParam.setOrderSn(account.getId()+"");
 					userAccountService.activityRewardUserMoney(recharegeParam);
 					log.info("rewardToMoney执行成功"+withdrawable_reward);
 //				}
