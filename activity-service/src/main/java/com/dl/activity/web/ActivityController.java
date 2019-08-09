@@ -43,12 +43,14 @@ import com.dl.member.param.UserIdParam;
 import com.github.pagehelper.util.StringUtil;
 
 import io.swagger.annotations.ApiOperation;
+import lombok.extern.log4j.Log4j;
 
 /**
  * Created by CodeGenerator on 2018/07/17.
  */
 @RestController
 @RequestMapping("/activity")
+@Log4j
 public class ActivityController {
 	@Resource
 	private ActivityService activityService;
@@ -251,6 +253,7 @@ public class ActivityController {
 					recharegeParam.setGiveAmount("0");
 					recharegeParam.setOrderSn(userId+""+currentTime);
 					userAccountService.activityRewardUserMoney(recharegeParam);
+					log.info("rewardToMoney执行成功"+withdrawable_reward);
 //				}
 			}
 		}else {
