@@ -2,7 +2,9 @@ package com.dl.activity.web;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import javax.annotation.Resource;
@@ -365,9 +367,12 @@ public class ActivityController {
 
     @ApiOperation(value = "获取返利流水", notes = "获取返利流水")
     @PostMapping("/queryResultAccount")
-    public BaseResult<List<ActivityAccount>> queryResultAccount(@RequestBody StrParam strParam){
+    public BaseResult<Map<String, Object>> queryResultAccount(@RequestBody StrParam strParam){
     	Integer userId = SessionUtil.getUserId();
     	List<ActivityAccount> accountList = activityAccountService.queryAccount(userId);
+    	for (ActivityAccount activityAccount : accountList) {
+    		activityAccount.setMobile(hideMobile(activityAccount.getMobile()));
+		}
     	if(accountList!=null) {
     		accountList = accountList.stream().filter(dto ->{
     			if(dto.getType()==3) {
@@ -377,14 +382,45 @@ public class ActivityController {
     			}
     		}).collect(Collectors.toList());
     	}
-        return ResultGenerator.genSuccessResult("success",accountList);
+    	ActivityUserInfo activityUserInfo = activityUserInfoService.getUserInfoByUserId(userId);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("accountList", accountList);
+		if(activityUserInfo==null) {
+			activityUserInfo = new ActivityUserInfo();
+			activityUserInfo.setHistory_invitation_number(0);
+			activityUserInfo.setHistory_total_return_reward(0d);
+		}
+		map.put("history_invitation_number", activityUserInfo.getHistory_invitation_number());
+		map.put("history_total_return_reward", activityUserInfo.getHistory_total_return_reward());
+        return ResultGenerator.genSuccessResult("success",map);
     }
     
     @ApiOperation(value = "获取所有流水", notes = "获取所有流水")
     @PostMapping("/queryAllAccount")
-    public BaseResult<List<ActivityAccount>> queryAllAccount(@RequestBody StrParam strParam){
+    public BaseResult<Map<String, Object>> queryAllAccount(@RequestBody StrParam strParam){
     	Integer userId = SessionUtil.getUserId();
     	List<ActivityAccount> accountList = activityAccountService.queryAccount(userId);
-        return ResultGenerator.genSuccessResult("success",accountList);
+    	for (ActivityAccount activityAccount : accountList) {
+    		activityAccount.setMobile(hideMobile(activityAccount.getMobile()));
+		}
+		ActivityUserInfo activityUserInfo = activityUserInfoService.getUserInfoByUserId(userId);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("accountList", accountList);
+		if(activityUserInfo==null) {
+			activityUserInfo = new ActivityUserInfo();
+			activityUserInfo.setHistory_total_withdrawable_reward(0d);
+			activityUserInfo.setWithdrawable_reward(0d);
+		}
+		map.put("history_total_withdrawable_reward", activityUserInfo.getHistory_total_withdrawable_reward());
+		map.put("withdrawable_reward", activityUserInfo.getWithdrawable_reward());
+        return ResultGenerator.genSuccessResult("success",map);
+    }
+    /**
+     * 隐藏手机号中间4位数
+     * @param mobile
+     * @return
+     */
+    public String hideMobile(String mobile) {
+    	return mobile.substring(0,3)+"****"+mobile.substring(6);
     }
 }
