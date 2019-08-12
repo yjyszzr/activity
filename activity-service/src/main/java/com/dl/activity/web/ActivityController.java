@@ -122,7 +122,7 @@ public class ActivityController {
 						userIdParam.setUserId(userDto.getParentUserId());
 						BaseResult<UserDTO> parentbuser = iuserService.queryUserInfo(userIdParam);
 						if(parentbuser!=null && parentbuser.getData()!=null) {
-							activityUserInfo.setMobile(parentbuser.getData().getMobile());
+							activityUserInfo.setMobile(parentbuser.getData().getRealmobile());
 						}
 						double zero = 0;
 						activityUserInfo.setInvitation_number(1);
@@ -278,12 +278,13 @@ public class ActivityController {
 		ActivityTgDTO tgdto = null;
 		if(buserDto!=null && buserDto.getData()!=null) {
 			tgdto = new ActivityTgDTO();
+			tgdto.setCode(userId);
 			//1获取邀请人信息
 			ActivityUserInfo activityUserInfo = activityUserInfoService.getUserInfoByUserId(userId);
 			if(activityUserInfo==null) { //若为空
 				activityUserInfo = new ActivityUserInfo();
 				activityUserInfo.setUser_id(userId);
-				activityUserInfo.setMobile(buserDto.getData().getMobile());
+				activityUserInfo.setMobile(buserDto.getData().getRealmobile());
 				double zero = 0;
 				activityUserInfo.setInvitation_number(0);
 				activityUserInfo.setInvitation_number_reward(zero);
