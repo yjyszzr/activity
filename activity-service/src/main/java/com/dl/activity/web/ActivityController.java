@@ -139,7 +139,7 @@ public class ActivityController {
 					//6.记录推广活动收益流水
 					ActivityAccount account = new ActivityAccount();
 					account.setUser_id(userDto.getParentUserId());
-					account.setMobile(userDto.getMobile());
+					account.setMobile(userDto.getRealmobile());
 					account.setAdd_time(currentTime);
 					account.setReward_money(reward);
 					account.setType(ActivityAccountEnums.TYPE_1.getCode());
@@ -198,7 +198,7 @@ public class ActivityController {
 						//5.记录推广活动收益流水
 						ActivityAccount account = new ActivityAccount();
 						account.setUser_id(userDto.getParentUserId());
-						account.setMobile(userDto.getMobile());
+						account.setMobile(userDto.getRealmobile());
 						account.setAdd_time(currentTime);
 						account.setReward_money(reward);
 						account.setType(ActivityAccountEnums.TYPE_3.getCode());
@@ -239,7 +239,7 @@ public class ActivityController {
 					//5.记录推广活动收益流水
 					ActivityAccount account = new ActivityAccount();
 					account.setUser_id(userId);
-					account.setMobile(userDto.getMobile());
+					account.setMobile(userDto.getRealmobile());
 					account.setAdd_time(currentTime);
 					account.setReward_money(withdrawable_reward);
 					account.setType(ActivityAccountEnums.TYPE_7.getCode());
