@@ -297,13 +297,13 @@ public class ActivityController {
 				activityUserInfo.setInvitation_add_reward(zero);
 				activityUserInfoService.insertActivityUserInfo(activityUserInfo);
 			}
+			tgdto.setActivityUserInfo(activityUserInfo);
 			//2推广活动
 			Activity activity = activityService.queryActivity(3);//参数3是伯乐奖
-			tgdto.getActivity().add(activity);
-			tgdto.setActivityUserInfo(activityUserInfo);
 			if(activity==null) {//没有伯乐活动
 //				return ResultGenerator.genResult(MemberEnums.ACTIVITY_NOT_VALID.getcode(), MemberEnums.ACTIVITY_NOT_VALID.getMsg());
 			}else {
+				tgdto.getActivity().add(activity);
 				List<ActivityConfig> acitvityBlCon = activityConfigService.queryGearListByActId(activity.getAct_id());
 				List<ActivityConfig> acitvityBl = new ArrayList<>();
 				for (ActivityConfig activityConfig : acitvityBlCon) {
@@ -324,20 +324,20 @@ public class ActivityController {
 				tgdto.setAcitvityBl(acitvityBl);
 			}
 			Activity activity3= activityService.queryActivity(4);//参数4是荣耀奖
-			tgdto.getActivity().add(activity3);
 			if(activity3==null) {//没有伯乐活动
 //				return ResultGenerator.genResult(MemberEnums.ACTIVITY_NOT_VALID.getcode(), MemberEnums.ACTIVITY_NOT_VALID.getMsg());
 			}else {
+				tgdto.getActivity().add(activity3);
 				List<ActivityConfig> acitvityRyCon = activityConfigService.queryGearListByActId(activity3.getAct_id());
 				List<ActivityConfig> acitvityRy = new ArrayList<>();
 				for (ActivityConfig activityConfig : acitvityRyCon) {
 					GearHasReceivedParam gp = new GearHasReceivedParam();
-					gp.setAct_id(activity.getAct_id());
+					gp.setAct_id(activity3.getAct_id());
 					gp.setUser_id(userId);
 					gp.setConfig_id(activityConfig.getId());
 					gp.setGear_position(activityConfig.getGear_position());
-					gp.setAct_start_time(activity.getStart_time());
-					gp.setAct_end_time(activity.getEnd_time());
+					gp.setAct_start_time(activity3.getStart_time());
+					gp.setAct_end_time(activity3.getEnd_time());
 					if(activityConfigReceiveService.hasReceivedGear(gp)) {
 						activityConfig.setIs_status(1);
 					}else {
