@@ -180,11 +180,13 @@ public class ActivityController {
 				if(userDto.getIsStatus()==1 && userDto.getParentUserId()!=null && !"".equals(userDto.getParentUserId().toString())) {//是二级用户且已经充值103
 					//4.维护推广活动用户信息
 					double buyMoney = Double.parseDouble(StringUtil.isNotEmpty(strParam.getStr())?strParam.getStr():"0");//购彩金额
-					int returnBl = activity.getNumber()/100;//购彩返利百分比
+					int returnBl = activity.getNumber();//购彩返利百分比
 					double reward = 0;
 					if(buyMoney>0) {
 						reward = buyMoney*returnBl/100;
 					}
+					//判断返利上限
+					
 						//4.1获取当前用户的邀请人信息
 					ActivityUserInfo activityUserInfo = activityUserInfoService.getUserInfoByUserId(userDto.getParentUserId());
 					if(activityUserInfo!=null) {//有数据则修改
