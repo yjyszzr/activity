@@ -27,7 +27,7 @@
   </select>
 
   <select id ="getActivity" parameterType="INTEGER" resultMap="BaseResultMap">
-  	select * from dl_activity where is_finish=0 and is_del=0 and start_time and start_time &lt;= UNIX_TIMESTAMP(NOW()) and end_time &gt;= UNIX_TIMESTAMP(NOW()) and act_type=#{act_type}
+  	select * from dl_activity where is_finish=0 and is_del=0 and start_time and start_time &lt;= UNIX_TIMESTAMP(NOW()) and end_time &gt;= UNIX_TIMESTAMP(NOW()) and act_type=#{act_type} limit 1
   </select>
   
 </mapper>
